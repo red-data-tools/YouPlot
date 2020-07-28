@@ -1,4 +1,4 @@
-require "uplot/version"
+require 'uplot/version'
 
 module Uplot
   class Error < StandardError; end
