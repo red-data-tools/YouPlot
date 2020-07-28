@@ -1,3 +1,33 @@
 #!/usr/bin/env ruby
 
 require 'uplot'
+require 'unicode_plot'
+require 'optparse'
+
+parser = OptionParser.new
+
+subparsers = Hash.new do |_h, k|
+  warn "no such subcommand: #{k}"
+  exit 1
+end
+
+params = {}
+
+subparsers['hist'] = OptionParser.new.tap do |opt|
+  opt.on('--nbins VAL') { |v| params[:nbins] = v.to_i }
+  opt.on('-p') { |v| params[:p] = v }
+end
+
+parser.order!(ARGV)
+params[:type] = ARGV.shift
+subparsers[params[:type]].parse!(ARGV) unless ARGV.empty?
+
+input_lines = readlines.map(&:chomp)
+
+case params[:type]
+when 'hist', 'histogram'
+  series = input_lines.map(&:to_f)
+  UnicodePlot.histogram(series, nbins: params[:nbins]).render
+end
+
+puts input_lines if params[:p]
