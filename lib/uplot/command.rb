@@ -20,6 +20,18 @@ module Uplot
         sub.on('--nbins VAL') { |v| @params[:nbins] = v.to_i }
         sub.on('-p') { |v| @params[:p] = v }
       end
+      subparsers['histogram'] = subparsers['hist']
+
+      subparsers['line'] = OptionParser.new.tap do |sub|
+        sub.on('--width VAL') { |v| @params[:width] = v.to_i }
+        sub.on('--height VAL') { |v| @params[:height] = v.to_i }
+      end
+      subparsers['lineplot'] = subparsers['line']
+
+      subparsers['lines'] = OptionParser.new.tap do |sub|
+        sub.on('--width VAL') { |v| @params[:width] = v.to_i }
+        sub.on('--height VAL') { |v| @params[:height] = v.to_i }
+      end
 
       subparsers[@ptype].parse!(argv) unless argv.empty?
     end
@@ -50,7 +62,7 @@ module Uplot
         x[i], y[i] = l.split("\t")[0..1].map(&:to_f)
       end
 
-      UnicodePlot.lineplot(x, y)
+      UnicodePlot.lineplot(x, y, width: @params[:width], height: @params[:height])
     end
 
     def lines(input_lines)
@@ -63,7 +75,7 @@ module Uplot
       end
       require 'numo/narray'
       pp Numo::DFloat.cast(cols)
-      plot = UnicodePlot.lineplot(cols[0], cols[1])
+      plot = UnicodePlot.lineplot(cols[0], cols[1], width: @params[:width], height: @params[:height])
       2.upto(n_cols - 1) do |i|
         UnicodePlot.lineplot!(plot, cols[0], cols[i])
       end
