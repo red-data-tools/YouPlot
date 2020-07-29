@@ -1,5 +1,8 @@
 # Uplot
 
+[![Build Status](https://travis-ci.com/kojix2/uplot.svg?branch=master)](https://travis-ci.com/kojix2/uplot)
+[![Gem Version](https://badge.fury.io/rb/u-plot.svg)](https://badge.fury.io/rb/u-plot)
+
 Create ASCII charts on the terminal with data from standard streams in the pipeline. 
 
 :bar_chart: Powered by [UnicodePlot](https://github.com/kojix2/uplot)
@@ -9,7 +12,7 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 ## Installation
 
 ```
-gem install uplot
+gem install u-plot
 ```
 
 ## Usage

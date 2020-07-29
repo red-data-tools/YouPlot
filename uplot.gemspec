@@ -1,7 +1,7 @@
 require_relative 'lib/uplot/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'uplot'
+  spec.name          = 'u-plot'
   spec.version       = Uplot::VERSION
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
