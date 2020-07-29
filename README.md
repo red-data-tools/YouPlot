@@ -5,7 +5,7 @@
 
 Create ASCII charts on the terminal with data from standard streams in the pipeline. 
 
-:bar_chart: Powered by [UnicodePlot](https://github.com/kojix2/uplot)
+:bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
 
 :construction: Under development
 
