@@ -6,17 +6,18 @@ Gem::Specification.new do |spec|
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 
-  spec.summary       = 'Create Ascii charts on your terminal'
-  spec.description   = 'Create Ascii charts on your terminal with pipeline'
+  spec.summary       = 'Create Ascii charts on your terminal.'
+  spec.description   = <<~MSG
+    Create ASCII charts on the terminal with data from standard streams in the 
+    pipeline. 
+  MSG
   spec.homepage      = 'https://github.com/kojix2/uplot'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
 
-  spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
+  spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*']
   spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.executables   = ['uplot']
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'unicode_plot'
