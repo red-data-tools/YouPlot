@@ -1,3 +1,6 @@
+require 'optparse'
+require 'csv'
+
 module Uplot
   class Command
     def initialize(argv)
@@ -9,6 +12,7 @@ module Uplot
     def opt_new
       OptionParser.new do |opt|
         opt.on('-o', '--output', TrueClass) { |v| @output = v }
+        opt.on('-d', '--delimiter', String) { |v| @delimiter = v }
         opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
         opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
         opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
@@ -46,45 +50,48 @@ module Uplot
     def run
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
-        input_lines = input.split(/\R/)
+        input.freeze
+        @delimiter ||= "\t"
+        @headers   ||= false
+        data = CSV.parse(input, headers: @headers, col_sep: @delimiter)
         case @ptype
         when 'hist', 'histogram'
-          histogram(input_lines)
+          histogram(data)
         when 'line', 'lineplot'
-          line(input_lines)
+          line(data)
         when 'lines'
-          lines(input_lines)
+          lines(data)
         end.render($stderr)
 
         print input if @output
       end
     end
 
-    def histogram(input_lines)
-      series = input_lines.map(&:to_f)
+    def histogram(data)
+      series = data.map { |r| r[0].to_f }
       UnicodePlot.histogram(series, **@params.compact)
     end
 
-    def line(input_lines)
-      x = []
-      y = []
-      input_lines.each_with_index do |l, i|
-        x[i], y[i] = l.split("\t")[0..1].map(&:to_f)
+    def line(data)
+      data = data.transpose
+      if data.size == 1
+        y = data[0]
+        x = (1..y.size).to_a
+      else
+        x = data[0]
+        y = data[1]
       end
+      x = x.map(&:to_f)
+      y = y.map(&:to_f)
       UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
-    def lines(input_lines)
-      n_cols = input_lines[0].split("\t").size
-      cols = Array.new(n_cols) { [] }
-      input_lines.each_with_index do |row, i|
-        row.split("\t").each_with_index do |v, j|
-          cols[j][i] = v.to_f
-        end
-      end
-      plot = UnicodePlot.lineplot(cols[0], cols[1], **@params.compact)
-      2.upto(n_cols - 1) do |i|
-        UnicodePlot.lineplot!(plot, cols[0], cols[i])
+    def lines(_input_lines)
+      data = data.transpose
+      data.map { |series| series.map(&:to_f) }
+      plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
+      2.upto(data.size - 1) do |i|
+        UnicodePlot.lineplot!(plot, data[0], data[i])
       end
       plot
     end
