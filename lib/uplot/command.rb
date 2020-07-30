@@ -7,32 +7,48 @@ module Uplot
     end
 
     def parse_options(argv)
-      parser = OptionParser.new.tap do |opt|
-        opt.on('-p', '--print') { |v| @print = v }
-        opt.on('--width VAL') { |v| @params[:width] = v.to_i }
-        opt.on('--height VAL') { |v| @params[:height] = v.to_i }
+      parser = OptionParser.new do |opt|
+        add_common_opts(opt)
       end
-      parser.order!(argv)
-      @ptype = argv.shift
 
       subparsers = Hash.new do |_h, k|
         warn "no such subcommand: #{k}"
         exit 1
       end
 
-      subparsers['hist'] = OptionParser.new.tap do |sub|
-        sub.on('--nbins VAL') { |v| @params[:nbins] = v.to_i }
+      subparsers['hist'] = OptionParser.new do |sub|
+        sub.on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
+        add_common_opts(sub)
       end
       subparsers['histogram'] = subparsers['hist']
 
-      subparsers['line'] = OptionParser.new.tap do |sub|
+      subparsers['line'] = OptionParser.new do |sub|
+        add_common_opts(sub)
       end
       subparsers['lineplot'] = subparsers['line']
 
-      subparsers['lines'] = OptionParser.new.tap do |sub|
+      subparsers['lines'] = OptionParser.new do |sub|
+        add_common_opts(sub)
       end
 
+      parser.banner = <<~MSG
+        Usage:\tuplot <command> [options]
+        Command:\t#{subparsers.keys.join(' ')}
+      MSG
+      parser.order!(argv)
+      @ptype = argv.shift
       subparsers[@ptype].parse!(argv) unless argv.empty?
+    end
+
+    def add_common_opts(opt)
+      opt.on('-o', '--output', TrueClass) { |v| @print = v }
+      opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
+      opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
+      opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
+      opt.on('-b', '--border VAL', Numeric) { |v| @params[:border] = v }
+      opt.on('-m', '--margin VAL', Numeric) { |v| @params[:margin] = v }
+      opt.on('-p', '--padding VAL', Numeric) { |v| @params[:padding] = v }
+      opt.on('-l', '--labels', TrueClass) { |v| @params[:labels] = v }
     end
 
     def run
