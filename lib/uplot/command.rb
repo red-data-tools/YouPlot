@@ -7,7 +7,11 @@ module Uplot
     end
 
     def parse_options(argv)
-      parser = OptionParser.new
+      parser = OptionParser.new.tap do |opt|
+        opt.on('-p', '--print') { |v| @print = v }
+        opt.on('--width VAL') { |v| @params[:width] = v.to_i }
+        opt.on('--height VAL') { |v| @params[:height] = v.to_i }
+      end
       parser.order!(argv)
       @ptype = argv.shift
 
@@ -18,19 +22,14 @@ module Uplot
 
       subparsers['hist'] = OptionParser.new.tap do |sub|
         sub.on('--nbins VAL') { |v| @params[:nbins] = v.to_i }
-        sub.on('-p') { |v| @params[:p] = v }
       end
       subparsers['histogram'] = subparsers['hist']
 
       subparsers['line'] = OptionParser.new.tap do |sub|
-        sub.on('--width VAL') { |v| @params[:width] = v.to_i }
-        sub.on('--height VAL') { |v| @params[:height] = v.to_i }
       end
       subparsers['lineplot'] = subparsers['line']
 
       subparsers['lines'] = OptionParser.new.tap do |sub|
-        sub.on('--width VAL') { |v| @params[:width] = v.to_i }
-        sub.on('--height VAL') { |v| @params[:height] = v.to_i }
       end
 
       subparsers[@ptype].parse!(argv) unless argv.empty?
@@ -49,13 +48,13 @@ module Uplot
           lines(input_lines)
         end.render($stderr)
 
-        print input if @params[:p]
+        print input if @print
       end
     end
 
     def histogram(input_lines)
       series = input_lines.map(&:to_f)
-      UnicodePlot.histogram(series, nbins: @params[:nbins])
+      UnicodePlot.histogram(series, **@params.compact)
     end
 
     def line(input_lines)
@@ -64,8 +63,7 @@ module Uplot
       input_lines.each_with_index do |l, i|
         x[i], y[i] = l.split("\t")[0..1].map(&:to_f)
       end
-
-      UnicodePlot.lineplot(x, y, width: @params[:width], height: @params[:height])
+      UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
     def lines(input_lines)
@@ -76,9 +74,7 @@ module Uplot
           cols[j][i] = v.to_f
         end
       end
-      require 'numo/narray'
-      pp Numo::DFloat.cast(cols)
-      plot = UnicodePlot.lineplot(cols[0], cols[1], width: @params[:width], height: @params[:height])
+      plot = UnicodePlot.lineplot(cols[0], cols[1], **@params.compact)
       2.upto(n_cols - 1) do |i|
         UnicodePlot.lineplot!(plot, cols[0], cols[i])
       end
