@@ -6,50 +6,44 @@ module Uplot
       parse_options(argv)
     end
 
-    def parse_options(argv)
-      parser = OptionParser.new do |opt|
-        add_common_opts(opt)
+    def opt_new
+      OptionParser.new do |opt|
+        opt.on('-o', '--output', TrueClass) { |v| @print = v }
+        opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
+        opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
+        opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
+        opt.on('-b', '--border VAL', Numeric) { |v| @params[:border] = v }
+        opt.on('-m', '--margin VAL', Numeric) { |v| @params[:margin] = v }
+        opt.on('-p', '--padding VAL', Numeric) { |v| @params[:padding] = v }
+        opt.on('-l', '--labels', TrueClass) { |v| @params[:labels] = v }
       end
+    end
 
-      subparsers = Hash.new do |_h, k|
-        warn "no such subcommand: #{k}"
+    def parse_options(argv)
+      main_parser          = opt_new
+      parsers              = {}
+      parsers['hist']      = opt_new.on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
+      parsers['histogram'] = parsers['hist']
+      parsers['line']      = opt_new
+      parsers['lineplot']  = parsers['line']
+      parsers['lines']     = opt_new
+
+      main_parser.banner = <<~MSG
+        Usage:\tuplot <command> [options]
+        Command:\t#{parsers.keys.join(' ')}
+      MSG
+      main_parser.order!(argv)
+      @ptype = argv.shift
+
+      unless parsers.has_key?(@ptype)
+        warn "unrecognized command '#{@ptype}'"
         exit 1
       end
-
-      subparsers['hist'] = OptionParser.new do |sub|
-        sub.on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
-        add_common_opts(sub)
-      end
-      subparsers['histogram'] = subparsers['hist']
-
-      subparsers['line'] = OptionParser.new do |sub|
-        add_common_opts(sub)
-      end
-      subparsers['lineplot'] = subparsers['line']
-
-      subparsers['lines'] = OptionParser.new do |sub|
-        add_common_opts(sub)
-      end
-
-      parser.banner = <<~MSG
-        Usage:\tuplot <command> [options]
-        Command:\t#{subparsers.keys.join(' ')}
-      MSG
-      parser.order!(argv)
-      @ptype = argv.shift
-      subparsers[@ptype].parse!(argv) unless argv.empty?
+      parser = parsers[@ptype]
+      parser.parse!(argv) unless argv.empty?
     end
 
-    def add_common_opts(opt)
-      opt.on('-o', '--output', TrueClass) { |v| @print = v }
-      opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
-      opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
-      opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
-      opt.on('-b', '--border VAL', Numeric) { |v| @params[:border] = v }
-      opt.on('-m', '--margin VAL', Numeric) { |v| @params[:margin] = v }
-      opt.on('-p', '--padding VAL', Numeric) { |v| @params[:padding] = v }
-      opt.on('-l', '--labels', TrueClass) { |v| @params[:labels] = v }
-    end
+    def set_common_opts(opt); end
 
     def run
       # Sometimes the input file does not end with a newline code.
