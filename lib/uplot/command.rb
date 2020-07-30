@@ -12,33 +12,32 @@ module Uplot
       parse_options(argv)
     end
 
-    def opt_new
-      opt = OptionParser.new do |opt|
-        opt.on('-o', '--output', TrueClass) { |v| @output = v }
+    def create_parser
+      OptionParser.new do |opt|
+        opt.on('-o', '--output', TrueClass)     { |v| @output = v }
         opt.on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
-        opt.on('-H', '--headers', TrueClass) { |v| @headers = v }
-        opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
-        opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
-        opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
-        opt.on('-b', '--border VAL', Numeric) { |v| @params[:border] = v }
-        opt.on('-m', '--margin VAL', Numeric) { |v| @params[:margin] = v }
-        opt.on('-p', '--padding VAL', Numeric) { |v| @params[:padding] = v }
-        opt.on('-l', '--labels', TrueClass) { |v| @params[:labels] = v }
+        opt.on('-H', '--headers', TrueClass)    { |v| @headers = v }
+        opt.on('-t', '--title VAL', String)     { |v| @params[:title] = v }
+        opt.on('-w', '--width VAL', Numeric)    { |v| @params[:width] = v }
+        opt.on('-h', '--height VAL', Numeric)   { |v| @params[:height] = v }
+        opt.on('-b', '--border VAL', Numeric)   { |v| @params[:border] = v }
+        opt.on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
+        opt.on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
+        opt.on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
       end
     end
 
     def parse_options(argv)
-      main_parser            = opt_new
-      parsers                = {}
-      parsers['hist']        = opt_new.on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
+      main_parser            = create_parser
+      parsers                = Hash.new { |h, k| h[k] = create_parser }
+      parsers['hist']        .on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
       parsers['histogram']   = parsers['hist']
-      parsers['line']        = opt_new
       parsers['lineplot']    = parsers['line']
-      parsers['lines']       = opt_new
-      parsers['scatter']     = opt_new
+      parsers['lineplots']   = parsers['lines']
       parsers['scatterplot'] = parsers['scatter']
-      parsers['bar']         = opt_new
-      parsers['barplot']         = parsers['bar']
+      parsers['barplot']     = parsers['bar']
+      parsers['boxplot']     = parsers['box']
+      parsers.default        = nil
 
       main_parser.banner = <<~MSG
         Usage:\tuplot <command> [options]
@@ -71,6 +70,8 @@ module Uplot
           scatter(data, headers)
         when 'bar', 'barplot'
           barplot(data, headers)
+        when 'box', 'boxplot'
+          boxplot(data, headers)
         end.render($stderr)
 
         print input if @output
@@ -131,6 +132,16 @@ module Uplot
       plot = UnicodePlot.scatterplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.scatterplot!(plot, data[0], data[i], name: headers[i])
+      end
+      plot
+    end
+
+    def boxplot(data, headers)
+      headers ||= (1..data.size).to_a
+      data.map! { |series| series.map(&:to_f) }
+      plot = UnicodePlot.boxplot(headers[0], data[0], **@params.compact)
+      1.upto(data.size - 1) do |i|
+        UnicodePlot.boxplot!(plot, headers[i], data[i])
       end
       plot
     end
