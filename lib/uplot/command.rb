@@ -6,13 +6,17 @@ module Uplot
     def initialize(argv)
       @params = {}
       @ptype = nil
+      @headers = nil
+      @delimiter = "\t"
+      @output = false
       parse_options(argv)
     end
 
     def opt_new
-      OptionParser.new do |opt|
+      opt = OptionParser.new do |opt|
         opt.on('-o', '--output', TrueClass) { |v| @output = v }
-        opt.on('-d', '--delimiter', String) { |v| @delimiter = v }
+        opt.on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
+        opt.on('-H', '--headers', TrueClass) { |v| @headers = v }
         opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
         opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
         opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
@@ -51,33 +55,45 @@ module Uplot
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
         input.freeze
-        @delimiter ||= "\t"
-        @headers   ||= false
-        data = CSV.parse(input, headers: @headers, col_sep: @delimiter)
+        data, headers = preprocess(input)
         case @ptype
         when 'hist', 'histogram'
-          histogram(data)
+          histogram(data, headers)
         when 'line', 'lineplot'
-          line(data)
+          line(data, headers)
         when 'lines'
-          lines(data)
+          lines(data, headers)
         end.render($stderr)
 
         print input if @output
       end
     end
 
-    def histogram(data)
-      series = data.map { |r| r[0].to_f }
+    def preprocess(input)
+      data = CSV.parse(input, col_sep: @delimiter)
+      if @headers
+        headers = data.shift
+        data = data.transpose
+        [data, headers]
+      else
+        data = data.transpose
+        [data, nil]
+      end
+    end
+
+    def histogram(data, headers)
+      @params[:title] ||= headers[0] if headers # labels?
+      series = data[0].map(&:to_f)
       UnicodePlot.histogram(series, **@params.compact)
     end
 
-    def line(data)
-      data = data.transpose
+    def line(data, headers)
       if data.size == 1
+        @params[:name] ||= headers[0] if headers
         y = data[0]
         x = (1..y.size).to_a
       else
+        @params[:name] ||= headers[1] if headers
         x = data[0]
         y = data[1]
       end
@@ -86,12 +102,12 @@ module Uplot
       UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
-    def lines(_input_lines)
-      data = data.transpose
+    def lines(data, headers)
       data.map { |series| series.map(&:to_f) }
+      @params[:name] ||= headers[1] if headers
       plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
-        UnicodePlot.lineplot!(plot, data[0], data[i])
+        UnicodePlot.lineplot!(plot, data[0], data[i], name: headers[i])
       end
       plot
     end
