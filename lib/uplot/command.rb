@@ -37,17 +37,20 @@ module Uplot
     end
 
     def run
-      input_lines = readlines.map(&:chomp)
-      case @ptype
-      when 'hist', 'histogram'
-        histogram(input_lines).render
-      when 'line', 'lineplot'
-        line(input_lines).render
-      when 'lines'
-        lines(input_lines).render
-      end
+      # Sometimes the input file does not end with a newline code.
+      while input = Kernel.gets(nil)
+        input_lines = input.split(/\R/)
+        case @ptype
+        when 'hist', 'histogram'
+          histogram(input_lines)
+        when 'line', 'lineplot'
+          line(input_lines)
+        when 'lines'
+          lines(input_lines)
+        end.render($stderr)
 
-      puts input_lines if @params[:p]
+        print input if @params[:p]
+      end
     end
 
     def histogram(input_lines)
@@ -67,7 +70,7 @@ module Uplot
 
     def lines(input_lines)
       n_cols = input_lines[0].split("\t").size
-      cols = Array.new(n_cols){ [] }
+      cols = Array.new(n_cols) { [] }
       input_lines.each_with_index do |row, i|
         row.split("\t").each_with_index do |v, j|
           cols[j][i] = v.to_f
