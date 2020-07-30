@@ -28,13 +28,17 @@ module Uplot
     end
 
     def parse_options(argv)
-      main_parser          = opt_new
-      parsers              = {}
-      parsers['hist']      = opt_new.on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
-      parsers['histogram'] = parsers['hist']
-      parsers['line']      = opt_new
-      parsers['lineplot']  = parsers['line']
-      parsers['lines']     = opt_new
+      main_parser            = opt_new
+      parsers                = {}
+      parsers['hist']        = opt_new.on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
+      parsers['histogram']   = parsers['hist']
+      parsers['line']        = opt_new
+      parsers['lineplot']    = parsers['line']
+      parsers['lines']       = opt_new
+      parsers['scatter']     = opt_new
+      parsers['scatterplot'] = parsers['scatter']
+      parsers['bar']         = opt_new
+      parsers['barplot']         = parsers['bar']
 
       main_parser.banner = <<~MSG
         Usage:\tuplot <command> [options]
@@ -63,6 +67,10 @@ module Uplot
           line(data, headers)
         when 'lines'
           lines(data, headers)
+        when 'scatter', 'scatterplot'
+          scatter(data, headers)
+        when 'bar', 'barplot'
+          barplot(data, headers)
         end.render($stderr)
 
         print input if @output
@@ -79,6 +87,11 @@ module Uplot
         data = data.transpose
         [data, nil]
       end
+    end
+
+    def barplot(data, headers)
+      @params[:title] ||= headers[1] if headers
+      UnicodePlot.barplot(data[0], data[1].map(&:to_f), **@params)
     end
 
     def histogram(data, headers)
@@ -103,11 +116,21 @@ module Uplot
     end
 
     def lines(data, headers)
-      data.map { |series| series.map(&:to_f) }
+      data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
       plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.lineplot!(plot, data[0], data[i], name: headers[i])
+      end
+      plot
+    end
+
+    def scatter(data, headers)
+      data.map! { |series| series.map(&:to_f) }
+      @params[:name] ||= headers[1] if headers
+      plot = UnicodePlot.scatterplot(data[0], data[1], **@params.compact)
+      2.upto(data.size - 1) do |i|
+        UnicodePlot.scatterplot!(plot, data[0], data[i], name: headers[i])
       end
       plot
     end
