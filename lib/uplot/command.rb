@@ -8,7 +8,7 @@ module Uplot
 
     def opt_new
       OptionParser.new do |opt|
-        opt.on('-o', '--output', TrueClass) { |v| @print = v }
+        opt.on('-o', '--output', TrueClass) { |v| @output = v }
         opt.on('-t', '--title VAL', String) { |v| @params[:title] = v }
         opt.on('-w', '--width VAL', Numeric) { |v| @params[:width] = v }
         opt.on('-h', '--height VAL', Numeric) { |v| @params[:height] = v }
@@ -43,8 +43,6 @@ module Uplot
       parser.parse!(argv) unless argv.empty?
     end
 
-    def set_common_opts(opt); end
-
     def run
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
@@ -58,7 +56,7 @@ module Uplot
           lines(input_lines)
         end.render($stderr)
 
-        print input if @print
+        print input if @output
       end
     end
 
