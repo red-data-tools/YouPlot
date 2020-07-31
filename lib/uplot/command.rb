@@ -32,7 +32,8 @@ module Uplot
       main_parser            = create_parser
       parsers                = Hash.new { |h, k| h[k] = create_parser }
       parsers['hist']        .on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
-      parsers['histogram']   = parsers['hist']
+      parsers['histogram'] = parsers['hist']
+      parsers['line']        .on('-x', '--xlim VAL', String) { |v| @params[:xlim] = get_lim(v) }
       parsers['lineplot']    = parsers['line']
       parsers['lineplots']   = parsers['lines']
       parsers['scatterplot'] = parsers['scatter']
@@ -106,6 +107,10 @@ module Uplot
       @params[:title] ||= headers[0] if headers # labels?
       series = data[0].map(&:to_f)
       UnicodePlot.histogram(series, **@params.compact)
+    end
+
+    def get_lim(str)
+      str.split(/-|:|\.\./)[0..1].map(&:to_f)
     end
 
     def line(data, headers)
