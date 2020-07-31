@@ -39,6 +39,7 @@ module Uplot
       parsers['bar']         .on('-c', '--count', TrueClass) { |v| @count = v }
       parsers['barplot']     = parsers['bar']
       parsers['boxplot']     = parsers['box']
+      parsers['count']       = parsers['c'] # barplot -c
       parsers.default        = nil
 
       main_parser.banner = <<~MSG
@@ -74,6 +75,9 @@ module Uplot
           barplot(data, headers)
         when 'box', 'boxplot'
           boxplot(data, headers)
+        when 'count', 'c'
+          @count = true
+          barplot(data, headers)
         end.render($stderr)
 
         print input if @output
