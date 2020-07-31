@@ -8,6 +8,7 @@ module Uplot
       @ptype = nil
       @headers = nil
       @delimiter = "\t"
+      @transpose = false
       @output = false
       @count = false
       parse_options(argv)
@@ -18,6 +19,7 @@ module Uplot
         opt.on('-o', '--output', TrueClass)     { |v| @output = v }
         opt.on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
         opt.on('-H', '--headers', TrueClass)    { |v| @headers = v }
+        opt.on('-T', '--transpose', TrueClass)  { |v| @transpose = v}
         opt.on('-t', '--title VAL', String)     { |v| @params[:title] = v }
         opt.on('-w', '--width VAL', Numeric)    { |v| @params[:width] = v }
         opt.on('-h', '--height VAL', Numeric)   { |v| @params[:height] = v }
@@ -95,10 +97,10 @@ module Uplot
       data = CSV.parse(input, col_sep: @delimiter)
       if @headers
         headers = data.shift
-        data = data.transpose
+        data = data.transpose unless @transpose
         [data, headers]
       else
-        data = data.transpose
+        data = data.transpose unless @transpose
         [data, nil]
       end
     end
