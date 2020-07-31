@@ -9,6 +9,7 @@ module Uplot
       @headers = nil
       @delimiter = "\t"
       @output = false
+      @count = false
       parse_options(argv)
     end
 
@@ -35,6 +36,7 @@ module Uplot
       parsers['lineplot']    = parsers['line']
       parsers['lineplots']   = parsers['lines']
       parsers['scatterplot'] = parsers['scatter']
+      parsers['bar']         .on('-c', '--count', TrueClass) { |v| @count = v }
       parsers['barplot']     = parsers['bar']
       parsers['boxplot']     = parsers['box']
       parsers.default        = nil
@@ -91,6 +93,7 @@ module Uplot
     end
 
     def barplot(data, headers)
+      data = data[0].tally.sort { |a, b| a[1] <=> b[1] }.reverse.transpose if @count
       @params[:title] ||= headers[1] if headers
       UnicodePlot.barplot(data[0], data[1].map(&:to_f), **@params)
     end
