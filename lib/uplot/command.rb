@@ -44,13 +44,19 @@ module Uplot
       parsers.default        = nil
 
       main_parser.banner = <<~MSG
-        Usage:\tuplot <command> [options]
-        Command:\t#{parsers.keys.join(' ')}
+        Program: Uplot (Tools for plotting on the terminal)
+        Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
+
+        Usage:   uplot <command> [options]
+
+        Command: #{parsers.keys.join(' ')}
+
       MSG
       main_parser.order!(argv)
       @ptype = argv.shift
 
       unless parsers.has_key?(@ptype)
+        puts main_parser.help
         warn "unrecognized command '#{@ptype}'"
         exit 1
       end
