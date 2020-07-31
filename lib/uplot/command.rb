@@ -19,7 +19,7 @@ module Uplot
         opt.on('-o', '--output', TrueClass)     { |v| @output = v }
         opt.on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
         opt.on('-H', '--headers', TrueClass)    { |v| @headers = v }
-        opt.on('-T', '--transpose', TrueClass)  { |v| @transpose = v}
+        opt.on('-T', '--transpose', TrueClass)  { |v| @transpose = v }
         opt.on('-t', '--title VAL', String)     { |v| @params[:title] = v }
         opt.on('-w', '--width VAL', Numeric)    { |v| @params[:width] = v }
         opt.on('-h', '--height VAL', Numeric)   { |v| @params[:height] = v }
@@ -93,16 +93,25 @@ module Uplot
       end
     end
 
+    # Note: How can I transpose different sized ruby arrays?
+    # https://stackoverflow.com/questions/26016632/how-can-i-transpose-different-sized-ruby-arrays
+    def transpose2(arr) # Should be renamed
+      arr[0].zip(*arr[1..-1])
+    end
+
     def preprocess(input)
       data = CSV.parse(input, col_sep: @delimiter)
-      if @headers
-        headers = data.shift
-        data = data.transpose unless @transpose
-        [data, headers]
+      headers = nil
+      if @transpose
+        if @headers
+          headers = []
+          data.each { |series| headers << series.shift } # each but destructive like map
+        end
       else
-        data = data.transpose unless @transpose
-        [data, nil]
+        headers = data.shift if @headers
+        data = transpose2(data)
       end
+      [data, headers]
     end
 
     def barplot(data, headers)
