@@ -96,7 +96,7 @@ module Uplot
     # Note: How can I transpose different sized ruby arrays?
     # https://stackoverflow.com/questions/26016632/how-can-i-transpose-different-sized-ruby-arrays
     def transpose2(arr) # Should be renamed
-      arr[0].zip(*arr[1..-1])
+      Array.new(arr.map(&:length).max) { |i| arr.map { |e| e[i] } }
     end
 
     def preprocess(input)
