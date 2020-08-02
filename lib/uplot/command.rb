@@ -43,6 +43,7 @@ module Uplot
       parsers['barplot']     = parsers['bar']
       parsers['boxplot']     = parsers['box']
       parsers['count']       = parsers['c'] # barplot -c
+      parsers['densityplot'] = parsers['density']
       parsers.default        = nil
 
       main_parser.banner = <<~MSG
@@ -87,6 +88,8 @@ module Uplot
         when 'count', 'c'
           @count = true
           barplot(data, headers)
+        when 'density'
+          density(data, headers)
         end.render($stderr)
 
         print input if @output
@@ -132,11 +135,12 @@ module Uplot
 
     def line(data, headers)
       if data.size == 1
-        @params[:name] ||= headers[0] if headers
+        @params[:ylabel] ||= headers[0] if headers
         y = data[0]
         x = (1..y.size).to_a
       else
-        @params[:name] ||= headers[1] if headers
+        @params[:xlabel] ||= headers[0] if headers
+        @params[:ylabel] ||= headers[1] if headers
         x = data[0]
         y = data[1]
       end
@@ -148,6 +152,7 @@ module Uplot
     def lines(data, headers)
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
+      @params[:xlabel] ||=headers[0] if headers
       plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.lineplot!(plot, data[0], data[i], name: headers[i])
@@ -158,9 +163,21 @@ module Uplot
     def scatter(data, headers)
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
+      @params[:xlabel] ||=headers[0] if headers
       plot = UnicodePlot.scatterplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.scatterplot!(plot, data[0], data[i], name: headers[i])
+      end
+      plot
+    end
+
+    def density(data, headers)
+      data.map! { |series| series.map(&:to_f) }
+      @params[:name] ||= headers[1] if headers
+      @params[:xlabel] ||=headers[0] if headers
+      plot = UnicodePlot.densityplot(data[0], data[1], **@params.compact)
+      2.upto(data.size - 1) do |i|
+        UnicodePlot.densityplot!(plot, data[0], data[i], name: headers[i])
       end
       plot
     end
