@@ -27,8 +27,9 @@ module Uplot
         opt.on('-b', '--border VAL', Numeric)   { |v| @params[:border] = v }
         opt.on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
         opt.on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
+        opt.on('-c', '--color VAL', String)     { |v| @params[:color] = v }
         opt.on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
-        opt.on('--debug', TrueClass){ |v| @debug = v }
+        opt.on('--debug', TrueClass) { |v| @debug = v }
       end
     end
 
@@ -41,7 +42,7 @@ module Uplot
       parsers['lineplot']    = parsers['line']
       parsers['lineplots']   = parsers['lines']
       parsers['scatterplot'] = parsers['scatter']
-      parsers['bar']         .on('-c', '--count', TrueClass) { |v| @count = v }
+      parsers['bar']         .on('--count', TrueClass) { |v| @count = v }
       parsers['barplot']     = parsers['bar']
       parsers['boxplot']     = parsers['box']
       parsers['count']       = parsers['c'] # barplot -c
@@ -74,7 +75,7 @@ module Uplot
       while input = Kernel.gets(nil)
         input.freeze
         data, headers = preprocess(input)
-        pp data: data, headers: headers if @debug
+        pp input: input, data: data, headers: headers if @debug
         case @ptype
         when 'hist', 'histogram'
           histogram(data, headers)
@@ -107,6 +108,7 @@ module Uplot
 
     def preprocess(input)
       data = CSV.parse(input, col_sep: @delimiter)
+      data.delete([])
       headers = nil
       if @transpose
         if @headers
@@ -159,7 +161,7 @@ module Uplot
     def lines(data, headers)
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
-      @params[:xlabel] ||=headers[0] if headers
+      @params[:xlabel] ||= headers[0] if headers
       @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
@@ -171,7 +173,7 @@ module Uplot
     def scatter(data, headers)
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
-      @params[:xlabel] ||=headers[0] if headers
+      @params[:xlabel] ||= headers[0] if headers
       @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.scatterplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
@@ -183,7 +185,7 @@ module Uplot
     def density(data, headers)
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
-      @params[:xlabel] ||=headers[0] if headers
+      @params[:xlabel] ||= headers[0] if headers
       @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.densityplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
