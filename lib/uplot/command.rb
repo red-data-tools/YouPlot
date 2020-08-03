@@ -189,7 +189,7 @@ module Uplot
       x1, y1 = data.shift
       plot = UnicodePlot.public_send(call1, x1, y1, **@params.compact)
       data.each_with_index do |(xi, yi), i|
-        UnicodePlot.public_send(call2, plot, xi, yi, name: headers[i * 2])
+        UnicodePlot.public_send(call2, plot, xi, yi, name: headers[(i + 1) * 2])
       end
       plot
     end
