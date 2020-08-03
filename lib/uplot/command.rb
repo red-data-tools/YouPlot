@@ -108,7 +108,7 @@ module Uplot
 
     def preprocess(input)
       data = CSV.parse(input, col_sep: @delimiter)
-      data.delete([])
+      data.delete([]) # Remove blank lines.
       headers = nil
       if @transpose
         if @headers
