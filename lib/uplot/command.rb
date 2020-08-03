@@ -36,17 +36,17 @@ module Uplot
     def parse_options(argv)
       main_parser            = create_parser
       parsers                = Hash.new { |h, k| h[k] = create_parser }
+      parsers['bar']         .on('--count', TrueClass) { |v| @count = v }
+      parsers['barplot']     = parsers['bar']
+      parsers['count']       = parsers['c'] # barplot -c
       parsers['hist']        .on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
       parsers['histogram'] = parsers['hist']
       parsers['line']        .on('-x', '--xlim VAL', String) { |v| @params[:xlim] = get_lim(v) }
       parsers['lineplot']    = parsers['line']
       parsers['lineplots']   = parsers['lines']
       parsers['scatterplot'] = parsers['scatter']
-      parsers['bar']         .on('--count', TrueClass) { |v| @count = v }
-      parsers['barplot']     = parsers['bar']
-      parsers['boxplot']     = parsers['box']
-      parsers['count']       = parsers['c'] # barplot -c
       parsers['densityplot'] = parsers['density']
+      parsers['boxplot']     = parsers['box']
       parsers.default        = nil
 
       main_parser.banner = <<~MSG
@@ -77,23 +77,23 @@ module Uplot
         data, headers = preprocess(input)
         pp input: input, data: data, headers: headers if @debug
         case @ptype
+        when 'bar', 'barplot'
+          barplot(data, headers)
+        when 'count', 'c'
+          @count = true
+          barplot(data, headers)
         when 'hist', 'histogram'
           histogram(data, headers)
         when 'line', 'lineplot'
           line(data, headers)
-        when 'lines'
+        when 'lines', 'lineplots'
           lines(data, headers)
         when 'scatter', 'scatterplot'
           scatter(data, headers)
-        when 'bar', 'barplot'
-          barplot(data, headers)
-        when 'box', 'boxplot'
-          boxplot(data, headers)
-        when 'count', 'c'
-          @count = true
-          barplot(data, headers)
         when 'density'
           density(data, headers)
+        when 'box', 'boxplot'
+          boxplot(data, headers)
         end.render($stderr)
 
         print input if @output
