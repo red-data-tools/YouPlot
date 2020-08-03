@@ -120,8 +120,12 @@ module Uplot
       [data, headers]
     end
 
+    def preprocess_count(data)
+      data[0].tally.sort { |a, b| a[1] <=> b[1] }.reverse.transpose
+    end
+
     def barplot(data, headers)
-      data = data[0].tally.sort { |a, b| a[1] <=> b[1] }.reverse.transpose if @count
+      data = preprocess_count(data) if @count
       @params[:title] ||= headers[1] if headers
       UnicodePlot.barplot(data[0], data[1].map(&:to_f), **@params)
     end
@@ -159,7 +163,6 @@ module Uplot
       @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
-        p data[i]
         UnicodePlot.lineplot!(plot, data[0], data[i], name: headers[i])
       end
       plot
