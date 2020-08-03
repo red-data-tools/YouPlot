@@ -31,8 +31,8 @@ module Uplot
         opt.on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
         opt.on('-c', '--color VAL', String)     { |v| @params[:color] = v.to_sym }
         opt.on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
-        opt.on('--fmt VAL', String) { |v| @fmt = v }
-        opt.on('--debug', TrueClass) { |v| @debug = v }
+        opt.on('--fmt VAL', String)             { |v| @fmt = v }
+        opt.on('--debug', TrueClass)            { |v| @debug = v }
       end
     end
 
@@ -103,8 +103,7 @@ module Uplot
       end
     end
 
-    # Note: How can I transpose different sized ruby arrays?
-    # https://stackoverflow.com/questions/26016632/how-can-i-transpose-different-sized-ruby-arrays
+    # https://stackoverflow.com/q/26016632
     def transpose2(arr) # Should be renamed
       Array.new(arr.map(&:length).max) { |i| arr.map { |e| e[i] } }
     end
@@ -118,7 +117,8 @@ module Uplot
       if @transpose
         if @headers
           headers = []
-          data.each { |series| headers << series.shift } # each but destructive like map
+          # each but destructive like map
+          data.each { |series| headers << series.shift }
         end
       else
         headers = data.shift if @headers
@@ -128,7 +128,12 @@ module Uplot
     end
 
     def preprocess_count(data)
-      data[0].tally.sort { |a, b| a[1] <=> b[1] }.reverse.transpose
+      if Enumerable.method_defined? :tally
+        data[0].tally
+      else # https://github.com/marcandre/backports tally
+        data[0].each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }
+               .tap { |h| h.default = nil }
+      end.sort { |a, b| a[1] <=> b[1] }.reverse.transpose
     end
 
     def barplot(data, headers)
@@ -224,17 +229,6 @@ module Uplot
         UnicodePlot.boxplot!(plot, headers[i], data[i])
       end
       plot
-    end
-  end
-end
-
-# backports
-# https://github.com/marcandre/backports/blob/master/lib/backports/2.7.0/enumerable/tally.rb
-unless Enumerable.method_defined? :tally
-  module Enumerable
-    def tally
-      # NB: By spec, tally should return default-less hash
-      each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }.tap { |h| h.default = nil }
     end
   end
 end
