@@ -11,6 +11,7 @@ module Uplot
       @transpose = false
       @output = false
       @count = false
+      @debug = false
       parse_options(argv)
     end
 
@@ -27,6 +28,7 @@ module Uplot
         opt.on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
         opt.on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
         opt.on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
+        opt.on('--debug', TrueClass){ |v| @debug = v }
       end
     end
 
@@ -72,6 +74,7 @@ module Uplot
       while input = Kernel.gets(nil)
         input.freeze
         data, headers = preprocess(input)
+        pp data: data, headers: headers if @debug
         case @ptype
         when 'hist', 'histogram'
           histogram(data, headers)
