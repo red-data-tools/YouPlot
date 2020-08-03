@@ -11,6 +11,7 @@ module Uplot
       @transpose = false
       @output = false
       @count = false
+      @fmt = 'xyy'
       @debug = false
       parse_options(argv)
     end
@@ -29,6 +30,7 @@ module Uplot
         opt.on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
         opt.on('-c', '--color VAL', String)     { |v| @params[:color] = v.to_sym }
         opt.on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
+        opt.on('--fmt VAL', String) { |v| @fmt = v }
         opt.on('--debug', TrueClass) { |v| @debug = v }
       end
     end
@@ -109,6 +111,8 @@ module Uplot
     def preprocess(input)
       data = CSV.parse(input, col_sep: @delimiter)
       data.delete([]) # Remove blank lines.
+      data.delete_if { |i| i.all? nil } # Room for improvement.
+      p parsed_csv: data if @debug
       headers = nil
       if @transpose
         if @headers
@@ -158,11 +162,11 @@ module Uplot
       UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
-    def x1_y1_y2_style(data, headers, call1, call2) # Fix method name
+    def xyy_plot(data, headers, call1, call2) # improve method name
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
       @params[:xlabel] ||= headers[0] if headers
-      @params[:ylim] ||= data[1..-1].flatten.minmax
+      @params[:ylim] ||= data[1..-1].flatten.minmax # need?
       plot = UnicodePlot.public_send(call1, data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.public_send(call2, plot, data[0], data[i], name: headers[i])
@@ -170,21 +174,44 @@ module Uplot
       plot
     end
 
+    def xyxy_plot(data, headers, call1, call2) # improve method name
+      data.map! { |series| series.map(&:to_f) }
+      data = data.each_slice(2).to_a
+      @params[:name] ||= headers[0] if headers
+      @params[:xlim] = data.map(&:first).flatten.minmax
+      @params[:ylim] = data.map(&:last).flatten.minmax
+      x1, y1 = data.shift
+      plot = UnicodePlot.public_send(call1, x1, y1, **@params.compact)
+      data.each_with_index do |(xi, yi), i|
+        UnicodePlot.public_send(call2, plot, xi, yi, name: headers[i * 2])
+      end
+      plot
+    end
+
     def lines(data, headers)
-      if true # x1_y1_y2_style
-        x1_y1_y2_style(data, headers, :lineplot, :lineplot!)
+      case @fmt
+      when 'xyy'
+        xyy_plot(data, headers, :lineplot, :lineplot!)
+      when 'xyxy'
+        xyxy_plot(data, headers, :lineplot, :lineplot!)
       end
     end
 
     def scatter(data, headers)
-      if true # x1_y1_y2_style
-        x1_y1_y2_style(data, headers, :scatterplot, :scatterplot!)
+      case @fmt
+      when 'xyy'
+        xyy_plot(data, headers, :scatterplot, :scatterplot!)
+      when 'xyxy'
+        xyxy_plot(data, headers, :scatterplot, :scatterplot!)
       end
     end
 
     def density(data, headers)
-      if true # x1_y1_y2_style
-        x1_y1_y2_style(data, headers, :densityplot, :densityplot!)
+      case @fmt
+      when 'xyy'
+        xyy_plot(data, headers, :densityplot, :densityplot!)
+      when 'xyxy'
+        xyxy_plot(data, headers, :densityplot, :densityplot!)
       end
     end
 
