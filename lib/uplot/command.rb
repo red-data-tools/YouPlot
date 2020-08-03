@@ -156,8 +156,10 @@ module Uplot
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
       @params[:xlabel] ||=headers[0] if headers
+      @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.lineplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
+        p data[i]
         UnicodePlot.lineplot!(plot, data[0], data[i], name: headers[i])
       end
       plot
@@ -167,6 +169,7 @@ module Uplot
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
       @params[:xlabel] ||=headers[0] if headers
+      @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.scatterplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.scatterplot!(plot, data[0], data[i], name: headers[i])
@@ -178,6 +181,7 @@ module Uplot
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
       @params[:xlabel] ||=headers[0] if headers
+      @params[:ylim] ||= data[1..-1].flatten.minmax
       plot = UnicodePlot.densityplot(data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
         UnicodePlot.densityplot!(plot, data[0], data[i], name: headers[i])
