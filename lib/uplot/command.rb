@@ -1,18 +1,19 @@
 require 'optparse'
 require 'csv'
+require 'unicode_plot'
 
 module Uplot
   class Command
     def initialize(argv)
-      @params = {}
-      @ptype = nil
-      @headers = nil
+      @params    = {}
+      @ptype     = nil
+      @headers   = nil
       @delimiter = "\t"
       @transpose = false
-      @output = false
-      @count = false
-      @fmt = 'xyy'
-      @debug = false
+      @output    = false
+      @count     = false
+      @fmt       = 'xyy'
+      @debug     = false
       parse_options(argv)
     end
 
@@ -36,20 +37,20 @@ module Uplot
     end
 
     def parse_options(argv)
-      main_parser            = create_parser
-      parsers                = Hash.new { |h, k| h[k] = create_parser }
-      parsers['bar']         .on('--count', TrueClass) { |v| @count = v }
-      parsers['barplot']     = parsers['bar']
-      parsers['count']       = parsers['c'] # barplot -c
-      parsers['hist']        .on('--nbins VAL', Numeric) { |v| @params[:nbins] = v }
+      main_parser          = create_parser
+      parsers              = Hash.new { |h, k| h[k] = create_parser }
+      parsers['barplot']   = parsers['bar']
+                             .on('--count', TrueClass) { |v| @count = v }
+      parsers['count']     = parsers['c'] # barplot -c
       parsers['histogram'] = parsers['hist']
-      parsers['line']        .on('-x', '--xlim VAL', String) { |v| @params[:xlim] = get_lim(v) }
-      parsers['lineplot']    = parsers['line']
-      parsers['lineplots']   = parsers['lines']
-      parsers['scatterplot'] = parsers['scatter']
-      parsers['densityplot'] = parsers['density']
-      parsers['boxplot']     = parsers['box']
-      parsers.default        = nil
+                             .on('-n', '--nbins VAL', Numeric) { |v| @params[:nbins] = v }
+      parsers['lineplot']  = parsers['line']
+                             .on('-x', '--xlim VAL', String) { |v| @params[:xlim] = get_lim(v) }
+      parsers['lineplots'] = parsers['lines']
+      parsers['scatter']
+      parsers['density']
+      parsers['boxplot']   = parsers['box']
+      parsers.default      = nil
 
       main_parser.banner = <<~MSG
         Program: Uplot (Tools for plotting on the terminal)
