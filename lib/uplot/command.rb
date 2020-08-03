@@ -27,7 +27,7 @@ module Uplot
         opt.on('-b', '--border VAL', Numeric)   { |v| @params[:border] = v }
         opt.on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
         opt.on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
-        opt.on('-c', '--color VAL', String)     { |v| @params[:color] = v }
+        opt.on('-c', '--color VAL', String)     { |v| @params[:color] = v.to_sym }
         opt.on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
         opt.on('--debug', TrueClass) { |v| @debug = v }
       end
