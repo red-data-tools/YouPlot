@@ -7,7 +7,7 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 
 :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
 
-:construction: Under development
+:construction: Under development! :construction:
 
 ## Installation
 
