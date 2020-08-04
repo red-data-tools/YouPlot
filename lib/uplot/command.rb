@@ -168,28 +168,34 @@ module Uplot
       UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
-    def xyy_plot(data, headers, call1, call2) # improve method name
+    def get_method2(_method1)
+      (method_name.to_s + '!').to_sym
+    end
+
+    def xyy_plot(data, headers, method1) # improve method name
+      method2 = get_method2(method1)
       data.map! { |series| series.map(&:to_f) }
       @params[:name] ||= headers[1] if headers
       @params[:xlabel] ||= headers[0] if headers
       @params[:ylim] ||= data[1..-1].flatten.minmax # need?
-      plot = UnicodePlot.public_send(call1, data[0], data[1], **@params.compact)
+      plot = UnicodePlot.public_send(method1, data[0], data[1], **@params.compact)
       2.upto(data.size - 1) do |i|
-        UnicodePlot.public_send(call2, plot, data[0], data[i], name: headers[i])
+        UnicodePlot.public_send(method2, plot, data[0], data[i], name: headers[i])
       end
       plot
     end
 
-    def xyxy_plot(data, headers, call1, call2) # improve method name
+    def xyxy_plot(data, headers, method1) # improve method name
+      method2 = get_method2(method1)
       data.map! { |series| series.map(&:to_f) }
       data = data.each_slice(2).to_a
       @params[:name] ||= headers[0] if headers
       @params[:xlim] = data.map(&:first).flatten.minmax
       @params[:ylim] = data.map(&:last).flatten.minmax
       x1, y1 = data.shift
-      plot = UnicodePlot.public_send(call1, x1, y1, **@params.compact)
+      plot = UnicodePlot.public_send(method1, x1, y1, **@params.compact)
       data.each_with_index do |(xi, yi), i|
-        UnicodePlot.public_send(call2, plot, xi, yi, name: headers[(i + 1) * 2])
+        UnicodePlot.public_send(method2, plot, xi, yi, name: headers[(i + 1) * 2])
       end
       plot
     end
@@ -197,27 +203,27 @@ module Uplot
     def lines(data, headers)
       case @fmt
       when 'xyy'
-        xyy_plot(data, headers, :lineplot, :lineplot!)
+        xyy_plot(data, headers, :lineplot)
       when 'xyxy'
-        xyxy_plot(data, headers, :lineplot, :lineplot!)
+        xyxy_plot(data, headers, :lineplot)
       end
     end
 
     def scatter(data, headers)
       case @fmt
       when 'xyy'
-        xyy_plot(data, headers, :scatterplot, :scatterplot!)
+        xyy_plot(data, headers, :scatterplot)
       when 'xyxy'
-        xyxy_plot(data, headers, :scatterplot, :scatterplot!)
+        xyxy_plot(data, headers, :scatterplot)
       end
     end
 
     def density(data, headers)
       case @fmt
       when 'xyy'
-        xyy_plot(data, headers, :densityplot, :densityplot!)
+        xyy_plot(data, headers, :densityplot)
       when 'xyxy'
-        xyxy_plot(data, headers, :densityplot, :densityplot!)
+        xyxy_plot(data, headers, :densityplot)
       end
     end
 
