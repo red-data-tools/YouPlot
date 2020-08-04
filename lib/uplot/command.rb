@@ -168,8 +168,8 @@ module Uplot
       UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
-    def get_method2(_method1)
-      (method_name.to_s + '!').to_sym
+    def get_method2(method1)
+      (method1.to_s + '!').to_sym
     end
 
     def xyy_plot(data, headers, method1) # improve method name
