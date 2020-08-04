@@ -228,13 +228,9 @@ module Uplot
     end
 
     def boxplot(data, headers)
-      headers ||= (1..data.size).to_a
+      headers ||= (1..data.size).map(&:to_s)
       data.map! { |series| series.map(&:to_f) }
-      plot = UnicodePlot.boxplot(headers[0], data[0], **@params.compact)
-      1.upto(data.size - 1) do |i|
-        UnicodePlot.boxplot!(plot, headers[i], data[i])
-      end
-      plot
+      UnicodePlot.boxplot(headers, data, **@params.compact)
     end
   end
 end
