@@ -173,17 +173,15 @@ module Uplot
     def line(data, headers)
       if data.size == 1
         @params[:ylabel] ||= headers[0] if headers
-        y = data[0]
-        x = (1..y.size).to_a
+        y = data[0].map(&:to_f)
+        UnicodePlot.lineplot(y, **@params.compact)
       else
         @params[:xlabel] ||= headers[0] if headers
         @params[:ylabel] ||= headers[1] if headers
-        x = data[0]
-        y = data[1]
+        x = data[0].map(&:to_f)
+        y = data[1].map(&:to_f)
+        UnicodePlot.lineplot(x, y, **@params.compact)
       end
-      x = x.map(&:to_f)
-      y = y.map(&:to_f)
-      UnicodePlot.lineplot(x, y, **@params.compact)
     end
 
     def get_method2(method1)
