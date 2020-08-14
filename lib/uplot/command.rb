@@ -18,23 +18,26 @@ module Uplot
     end
 
     def create_parser
-      OptionParser.new
-                  .on('-o', '--output', TrueClass)     { |v| @output = v }
-                  .on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
-                  .on('-H', '--headers', TrueClass)    { |v| @headers = v }
-                  .on('-T', '--transpose', TrueClass)  { |v| @transpose = v }
-                  .on('-t', '--title VAL', String)     { |v| @params[:title] = v }
-                  .on('-w', '--width VAL', Numeric)    { |v| @params[:width] = v }
-                  .on('-h', '--height VAL', Numeric)   { |v| @params[:height] = v }
-                  .on('-b', '--border VAL', Numeric)   { |v| @params[:border] = v }
-                  .on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
-                  .on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
-                  .on('-c', '--color VAL', String)     { |v| @params[:color] = v.to_sym }
-                  .on('-x', '--xlabel VAL', String)    { |v| @params[:xlabel] = v }
-                  .on('-y', '--ylabel VAL', String)    { |v| @params[:ylabel] = v }
-                  .on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
-                  .on('--fmt VAL', String)             { |v| @fmt = v }
-                  .on('--debug', TrueClass)            { |v| @debug = v }
+      OptionParser.new do |opt|
+        opt.program_name = 'uplot'
+        opt.version = Uplot::VERSION
+        opt.on('-o', '--output', TrueClass)     { |v| @output = v }
+           .on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
+           .on('-H', '--headers', TrueClass)    { |v| @headers = v }
+           .on('-T', '--transpose', TrueClass)  { |v| @transpose = v }
+           .on('-t', '--title VAL', String)     { |v| @params[:title] = v }
+           .on('-w', '--width VAL', Numeric)    { |v| @params[:width] = v }
+           .on('-h', '--height VAL', Numeric)   { |v| @params[:height] = v }
+           .on('-b', '--border VAL', Numeric)   { |v| @params[:border] = v }
+           .on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
+           .on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
+           .on('-c', '--color VAL', String)     { |v| @params[:color] = v.to_sym }
+           .on('-x', '--xlabel VAL', String)    { |v| @params[:xlabel] = v }
+           .on('-y', '--ylabel VAL', String)    { |v| @params[:ylabel] = v }
+           .on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
+           .on('--fmt VAL', String)             { |v| @fmt = v }
+           .on('--debug', TrueClass)            { |v| @debug = v }
+      end
     end
 
     def parse_options(argv)
