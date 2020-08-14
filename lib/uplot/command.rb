@@ -71,24 +71,41 @@ module Uplot
       parsers.default      = nil
 
       main_parser.banner = <<~MSG
-        Program: Uplot (Tools for plotting on the terminal)
+        Program: uplot (Tools for plotting on the terminal)
         Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
 
         Usage:   uplot <command> [options]
 
         Command: #{parsers.keys.join(' ')}
 
+        Options:
       MSG
-      main_parser.order!(argv)
+
+      begin
+        main_parser.order!(argv)
+      rescue OptionParser::ParseError => e
+        warn "uplot: #{e.message}"
+        exit 1
+      end
+
       @ptype = argv.shift
 
       unless parsers.has_key?(@ptype)
-        puts main_parser.help
-        warn "unrecognized command '#{@ptype}'"
+        if @ptype.nil?
+          warn main_parser.help
+        else
+          warn "uplot: unrecognized command '#{@ptype}'"
+        end
         exit 1
       end
       parser = parsers[@ptype]
-      parser.parse!(argv) unless argv.empty?
+
+      begin
+        parser.parse!(argv) unless argv.empty?
+      rescue OptionParser::ParseError => e
+        warn "uplot: #{e.message}"
+        exit 1
+      end
     end
 
     def run
