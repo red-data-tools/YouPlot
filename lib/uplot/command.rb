@@ -184,12 +184,17 @@ module Uplot
     end
 
     def preprocess_count(data)
+      # tally was added in Ruby 2.7
       if Enumerable.method_defined? :tally
         data[0].tally
-      else # https://github.com/marcandre/backports tally
+      else
+        # https://github.com/marcandre/backports
         data[0].each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }
                .tap { |h| h.default = nil }
-      end.sort { |a, b| a[1] <=> b[1] }.reverse.transpose
+      end
+        .sort { |a, b| a[1] <=> b[1] }
+        .reverse
+        .transpose
     end
 
     def barplot(data, headers)
