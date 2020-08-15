@@ -141,8 +141,9 @@ module Uplot
       end
     end
 
+    # Transpose different sized ruby arrays
     # https://stackoverflow.com/q/26016632
-    def transpose2(arr) # Should be renamed
+    def transpose2(arr)
       Array.new(arr.map(&:length).max) { |i| arr.map { |e| e[i] } }
     end
 
@@ -151,18 +152,35 @@ module Uplot
       data.delete([]) # Remove blank lines.
       data.delete_if { |i| i.all? nil } # Room for improvement.
       p parsed_csv: data if @debug
-      headers = nil
+      headers = get_headers(data)
+      data = get_data(data)
+      [data, headers]
+    end
+
+    def get_headers(data)
+      if @headers
+        if @transpose
+          data.map(&:first)
+        else
+          data[0]
+        end
+      end
+    end
+
+    def get_data(data)
       if @transpose
         if @headers
-          headers = []
-          # each but destructive like map
-          data.each { |series| headers << series.shift }
+          data.map { |row| row[1..-1] }
+        else
+          data
         end
       else
-        headers = data.shift if @headers
-        data = transpose2(data)
+        if @headers
+          transpose2(data[1..-1])
+        else
+          tanrspose2(data)
+        end
       end
-      [data, headers]
     end
 
     def preprocess_count(data)
