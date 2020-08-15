@@ -71,6 +71,7 @@ module Uplot
 
   class Command
     Params = Struct.new(
+      # Sort me!
       :title,
       :width,
       :height,
@@ -88,7 +89,8 @@ module Uplot
       :canvas,
       :xlim,
       :ylim,
-      :grid
+      :grid,
+      :name
     ) do
       def to_hc
         to_h.compact
