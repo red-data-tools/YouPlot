@@ -303,31 +303,34 @@ module Uplot
       end
     end
 
+    def get_lim(str)
+      str.split(/-|:|\.\./)[0..1].map(&:to_f)
+    end
+
     def run
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
         input.freeze
         @raw_inputs << input
-        data, headers = preprocess(input)
-        pp input: input, data: data, headers: headers if @debug
+        @data = Preprocess.input(input, @delimiter, @headers, @transpose)
         case plot_type
         when :bar, :barplot
-          barplot(data, headers)
+          barplot(@data)
         when :count, :c
           @count = true
-          barplot(data, headers)
+          barplot(@data)
         when :hist, :histogram
-          histogram(data, headers)
+          histogram(@data)
         when :line, :lineplot
-          line(data, headers)
+          line(@data)
         when :lines, :lineplots
-          lines(data, headers)
+          lines(@data)
         when :scatter, :scatterplot
-          scatter(data, headers)
+          scatter(@data)
         when :density
-          density(data, headers)
+          density(@data)
         when :box, :boxplot
-          boxplot(data, headers)
+          boxplot(@data)
         else
           raise "unrecognized plot_type: #{plot_type}"
         end.render($stderr)
@@ -336,90 +339,44 @@ module Uplot
       end
     end
 
-    # Transpose different sized ruby arrays
-    # https://stackoverflow.com/q/26016632
-    def transpose2(arr)
-      Array.new(arr.map(&:length).max) { |i| arr.map { |e| e[i] } }
-    end
-
-    def preprocess(input)
-      arr = CSV.parse(input, col_sep: @delimiter)
-      # Remove blank lines.
-      arr.delete([])
-      # Remove rows where all elements are nil
-      arr.delete_if { |i| i.all? nil }
-      p parsed_csv: arr if @debug
-      headers = get_headers(arr)
-      data = get_data(arr)
-      [data, headers]
-    end
-
-    def get_headers(data)
-      if @headers
-        if @transpose
-          data.map(&:first)
-        else
-          data[0]
-        end
+    def barplot(data)
+      headers = data.headers
+      series = data.series
+      if @count
+        series = Preprocess.count(series[0])
+        params.title = headers[0] if headers
       end
-    end
-
-    def get_data(data)
-      if @transpose
-        if @headers
-          data.map { |row| row[1..-1] }
-        else
-          data
-        end
-      else
-        if @headers
-          transpose2(data[1..-1])
-        else
-          transpose2(data)
-        end
-      end
-    end
-
-    def preprocess_count(data)
-      # tally was added in Ruby 2.7
-      if Enumerable.method_defined? :tally
-        data[0].tally
-      else
-        # https://github.com/marcandre/backports
-        data[0].each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }
-               .tap { |h| h.default = nil }
-      end
-        .sort { |a, b| a[1] <=> b[1] }
-        .reverse
-        .transpose
-    end
-
-    def barplot(data, headers)
-      data = preprocess_count(data) if @count
       params.title ||= headers[1] if headers
-      UnicodePlot.barplot(data[0], data[1].map(&:to_f), **params.to_hc)
+      labels = series[0]
+      values = series[1].map(&:to_f)
+      UnicodePlot.barplot(labels, values, **params.to_hc)
     end
 
-    def histogram(data, headers)
-      params.title ||= headers[0] if headers # labels?
-      series = data[0].map(&:to_f)
-      UnicodePlot.histogram(series, **params.to_hc)
+    def histogram(data)
+      headers = data.headers
+      series = data.series
+      params.title ||= data.headers[0] if headers
+      values = series[0].map(&:to_f)
+      UnicodePlot.histogram(values, **params.to_hc)
     end
 
-    def get_lim(str)
-      str.split(/-|:|\.\./)[0..1].map(&:to_f)
-    end
-
-    def line(data, headers)
-      if data.size == 1
+    def line(data)
+      headers = data.headers
+      series = data.series
+      if series.size == 1
+        # If there is only one series, it is assumed to be sequential data.
         params.ylabel ||= headers[0] if headers
-        y = data[0].map(&:to_f)
+        y = series[0].map(&:to_f)
         UnicodePlot.lineplot(y, **params.to_hc)
       else
-        params.xlabel ||= headers[0] if headers
-        params.ylabel ||= headers[1] if headers
-        x = data[0].map(&:to_f)
-        y = data[1].map(&:to_f)
+        # If there are 2 or more series,
+        # assume that the first 2 series are the x and y series respectively.
+        if headers
+          params.xlabel ||= headers[0]
+          params.ylabel ||= headers[1]
+        end
+        x = series[0].map(&:to_f)
+        y = series[1].map(&:to_f)
         UnicodePlot.lineplot(x, y, **params.to_hc)
       end
     end
@@ -428,65 +385,73 @@ module Uplot
       (method1.to_s + '!').to_sym
     end
 
-    def xyy_plot(data, headers, method1) # improve method name
+    def xyy_plot(data, method1)
+      headers = data.headers
+      series = data.series
       method2 = get_method2(method1)
-      data.map! { |series| series.map(&:to_f) }
-      params.name ||= headers[1] if headers
-      params.xlabel ||= headers[0] if headers
-      params.ylim ||= data[1..-1].flatten.minmax # need?
-      plot = UnicodePlot.public_send(method1, data[0], data[1], **params.to_hc)
-      2.upto(data.size - 1) do |i|
-        UnicodePlot.public_send(method2, plot, data[0], data[i], name: headers[i])
+      series.map! { |s| s.map(&:to_f) }
+      if headers
+        params.name   ||= headers[1]
+        params.xlabel ||= headers[0]
+      end
+      params.ylim ||= series[1..-1].flatten.minmax # why need?
+      plot = UnicodePlot.public_send(method1, series[0], series[1], **params.to_hc)
+      2.upto(series.size - 1) do |i|
+        UnicodePlot.public_send(method2, plot, series[0], series[i], name: headers&.[](i))
       end
       plot
     end
 
-    def xyxy_plot(data, headers, method1) # improve method name
+    def xyxy_plot(data, method1)
+      headers = data.headers
+      series = data.series
       method2 = get_method2(method1)
-      data.map! { |series| series.map(&:to_f) }
-      data = data.each_slice(2).to_a
+      series.map! { |s| s.map(&:to_f) }
+      series = series.each_slice(2).to_a
       params.name ||= headers[0] if headers
-      params.xlim = data.map(&:first).flatten.minmax
-      params.ylim = data.map(&:last).flatten.minmax
-      x1, y1 = data.shift
+      params.xlim = series.map(&:first).flatten.minmax # why need?
+      params.ylim = series.map(&:last).flatten.minmax  # why need?
+      x1, y1 = series.shift
       plot = UnicodePlot.public_send(method1, x1, y1, **params.to_hc)
-      data.each_with_index do |(xi, yi), i|
-        UnicodePlot.public_send(method2, plot, xi, yi, name: headers[(i + 1) * 2])
+      series.each_with_index do |(xi, yi), i|
+        UnicodePlot.public_send(method2, plot, xi, yi, name: headers&.[]((i + 1) * 2))
       end
       plot
     end
 
-    def lines(data, headers)
+    def lines(data)
       case @fmt
       when 'xyy'
-        xyy_plot(data, headers, :lineplot)
+        xyy_plot(data, :lineplot)
       when 'xyxy'
-        xyxy_plot(data, headers, :lineplot)
+        xyxy_plot(data, :lineplot)
       end
     end
 
-    def scatter(data, headers)
+    def scatter(data)
       case @fmt
       when 'xyy'
-        xyy_plot(data, headers, :scatterplot)
+        xyy_plot(data, :scatterplot)
       when 'xyxy'
-        xyxy_plot(data, headers, :scatterplot)
+        xyxy_plot(data, :scatterplot)
       end
     end
 
-    def density(data, headers)
+    def density(data)
       case @fmt
       when 'xyy'
-        xyy_plot(data, headers, :densityplot)
+        xyy_plot(data, :densityplot)
       when 'xyxy'
-        xyxy_plot(data, headers, :densityplot)
+        xyxy_plot(data, :densityplot)
       end
     end
 
-    def boxplot(data, headers)
-      headers ||= (1..data.size).map(&:to_s)
-      data.map! { |series| series.map(&:to_f) }
-      UnicodePlot.boxplot(headers, data, params.to_hc)
+    def boxplot(data)
+      headers = data.headers
+      series = data.series
+      headers ||= (1..series.size).map(&:to_s)
+      series.map! { |s| s.map(&:to_f) }
+      UnicodePlot.boxplot(headers, series, params.to_hc)
     end
   end
 end
