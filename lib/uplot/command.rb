@@ -4,8 +4,36 @@ require 'unicode_plot'
 
 module Uplot
   class Command
+    attr_accessor :params
+
+    Params = Struct.new(
+      :title,
+      :width,
+      :height,
+      :border,
+      :margin,
+      :padding,
+      :color,
+      :xlabel,
+      :ylabel,
+      :labels,
+      :symbol,
+      :xscale,
+      :nbins,
+      :closed,
+      :canvas,
+      :xlim,
+      :ylim,
+      :grid
+    ) do
+      def to_hc
+        to_h.compact
+      end
+    end
+    
     def initialize(argv)
-      @params    = {}
+      @params = Params.new
+
       @ptype     = nil
       @headers   = nil
       @delimiter = "\t"
@@ -25,16 +53,16 @@ module Uplot
            .on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
            .on('-H', '--headers', TrueClass)    { |v| @headers = v }
            .on('-T', '--transpose', TrueClass)  { |v| @transpose = v }
-           .on('-t', '--title VAL', String)     { |v| @params[:title] = v }
-           .on('-w', '--width VAL', Numeric)    { |v| @params[:width] = v }
-           .on('-h', '--height VAL', Numeric)   { |v| @params[:height] = v }
-           .on('-b', '--border VAL', Numeric)   { |v| @params[:border] = v }
-           .on('-m', '--margin VAL', Numeric)   { |v| @params[:margin] = v }
-           .on('-p', '--padding VAL', Numeric)  { |v| @params[:padding] = v }
-           .on('-c', '--color VAL', String)     { |v| @params[:color] = v.to_sym }
-           .on('-x', '--xlabel VAL', String)    { |v| @params[:xlabel] = v }
-           .on('-y', '--ylabel VAL', String)    { |v| @params[:ylabel] = v }
-           .on('-l', '--labels', TrueClass)     { |v| @params[:labels] = v }
+           .on('-t', '--title VAL', String)     { |v| params.title = v }
+           .on('-w', '--width VAL', Numeric)    { |v| params.width = v }
+           .on('-h', '--height VAL', Numeric)   { |v| params.height = v }
+           .on('-b', '--border VAL', Numeric)   { |v| params.border = v }
+           .on('-m', '--margin VAL', Numeric)   { |v| params.margin = v }
+           .on('-p', '--padding VAL', Numeric)  { |v| params.padding = v }
+           .on('-c', '--color VAL', String)     { |v| params.color = v.to_sym }
+           .on('-x', '--xlabel VAL', String)    { |v| params.xlabel = v }
+           .on('-y', '--ylabel VAL', String)    { |v| params.ylabel = v }
+           .on('-l', '--labels', TrueClass)     { |v| params.labels = v }
            .on('--fmt VAL', String)             { |v| @fmt = v }
            .on('--debug', TrueClass)            { |v| @debug = v }
       end
@@ -44,33 +72,33 @@ module Uplot
       main_parser          = create_parser
       parsers              = Hash.new { |h, k| h[k] = create_parser }
       parsers['barplot']   = parsers['bar']
-                             .on('--symbol VAL', String) { |v| @params[:symbol] = v }
-                             .on('--xscale VAL', String) { |v| @params[:xscale] = v }
+                             .on('--symbol VAL', String) { |v| params.symbol = v }
+                             .on('--xscale VAL', String) { |v| params.xscale = v }
                              .on('--count', TrueClass)   { |v| @count = v }
       parsers['count']     = parsers['c'] # barplot -c
-                             .on('--symbol VAL', String) { |v| @params[:symbol] = v }
+                             .on('--symbol VAL', String) { |v| params.symbol = v }
       parsers['histogram'] = parsers['hist']
-                             .on('-n', '--nbins VAL', Numeric) { |v| @params[:nbins] = v }
-                             .on('--closed VAL', String) { |v| @params[:closed] = v }
-                             .on('--symbol VAL', String) { |v| @params[:symbol] = v }
+                             .on('-n', '--nbins VAL', Numeric) { |v| params.nbins = v }
+                             .on('--closed VAL', String) { |v| params.closed = v }
+                             .on('--symbol VAL', String) { |v| params.symbol = v }
       parsers['lineplot']  = parsers['line']
-                             .on('--canvas VAL', String) { |v| @params[:canvas] = v }
-                             .on('--xlim VAL', String)   { |v| @params[:xlim] = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| @params[:ylim] = get_lim(v) }
+                             .on('--canvas VAL', String) { |v| params.canvas = v }
+                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
       parsers['lineplots'] = parsers['lines']
-                             .on('--canvas VAL', String) { |v| @params[:canvas] = v }
-                             .on('--xlim VAL', String)   { |v| @params[:xlim] = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| @params[:ylim] = get_lim(v) }
+                             .on('--canvas VAL', String) { |v| params.canvas = v }
+                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
       parsers['scatter']   = parsers['s']
-                             .on('--canvas VAL', String) { |v| @params[:canvas] = v }
-                             .on('--xlim VAL', String)   { |v| @params[:xlim] = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| @params[:ylim] = get_lim(v) }
+                             .on('--canvas VAL', String) { |v| params.canvas = v }
+                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
       parsers['density']   = parsers['d']
-                             .on('--grid', TrueClass)    { |v| @params[:grid] = v }
-                             .on('--xlim VAL', String)   { |v| @params[:xlim] = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| @params[:ylim] = get_lim(v) }
+                             .on('--grid', TrueClass)    { |v| params.grid = v }
+                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
       parsers['boxplot']   = parsers['box']
-                             .on('--xlim VAL', String)   { |v| @params[:xlim] = get_lim(v) }
+                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
       parsers.default      = nil
 
       main_parser.banner = <<~MSG
@@ -199,14 +227,14 @@ module Uplot
 
     def barplot(data, headers)
       data = preprocess_count(data) if @count
-      @params[:title] ||= headers[1] if headers
-      UnicodePlot.barplot(data[0], data[1].map(&:to_f), **@params)
+      params.title ||= headers[1] if headers
+      UnicodePlot.barplot(data[0], data[1].map(&:to_f), **params.to_hc)
     end
 
     def histogram(data, headers)
-      @params[:title] ||= headers[0] if headers # labels?
+      params.title ||= headers[0] if headers # labels?
       series = data[0].map(&:to_f)
-      UnicodePlot.histogram(series, **@params.compact)
+      UnicodePlot.histogram(series, **params.to_hc)
     end
 
     def get_lim(str)
@@ -215,15 +243,15 @@ module Uplot
 
     def line(data, headers)
       if data.size == 1
-        @params[:ylabel] ||= headers[0] if headers
+        params.ylabel ||= headers[0] if headers
         y = data[0].map(&:to_f)
-        UnicodePlot.lineplot(y, **@params.compact)
+        UnicodePlot.lineplot(y, **params.to_hc)
       else
-        @params[:xlabel] ||= headers[0] if headers
-        @params[:ylabel] ||= headers[1] if headers
+        params.xlabel ||= headers[0] if headers
+        params.ylabel ||= headers[1] if headers
         x = data[0].map(&:to_f)
         y = data[1].map(&:to_f)
-        UnicodePlot.lineplot(x, y, **@params.compact)
+        UnicodePlot.lineplot(x, y, **params.to_hc)
       end
     end
 
@@ -234,10 +262,10 @@ module Uplot
     def xyy_plot(data, headers, method1) # improve method name
       method2 = get_method2(method1)
       data.map! { |series| series.map(&:to_f) }
-      @params[:name] ||= headers[1] if headers
-      @params[:xlabel] ||= headers[0] if headers
-      @params[:ylim] ||= data[1..-1].flatten.minmax # need?
-      plot = UnicodePlot.public_send(method1, data[0], data[1], **@params.compact)
+      params.name ||= headers[1] if headers
+      params.xlabel ||= headers[0] if headers
+      params.ylim ||= data[1..-1].flatten.minmax # need?
+      plot = UnicodePlot.public_send(method1, data[0], data[1], **params.to_hc)
       2.upto(data.size - 1) do |i|
         UnicodePlot.public_send(method2, plot, data[0], data[i], name: headers[i])
       end
@@ -248,11 +276,11 @@ module Uplot
       method2 = get_method2(method1)
       data.map! { |series| series.map(&:to_f) }
       data = data.each_slice(2).to_a
-      @params[:name] ||= headers[0] if headers
-      @params[:xlim] = data.map(&:first).flatten.minmax
-      @params[:ylim] = data.map(&:last).flatten.minmax
+      params.name ||= headers[0] if headers
+      params.xlim = data.map(&:first).flatten.minmax
+      params.ylim = data.map(&:last).flatten.minmax
       x1, y1 = data.shift
-      plot = UnicodePlot.public_send(method1, x1, y1, **@params.compact)
+      plot = UnicodePlot.public_send(method1, x1, y1, **params.to_hc)
       data.each_with_index do |(xi, yi), i|
         UnicodePlot.public_send(method2, plot, xi, yi, name: headers[(i + 1) * 2])
       end
@@ -289,7 +317,7 @@ module Uplot
     def boxplot(data, headers)
       headers ||= (1..data.size).map(&:to_s)
       data.map! { |series| series.map(&:to_f) }
-      UnicodePlot.boxplot(headers, data, **@params.compact)
+      UnicodePlot.boxplot(headers, data, params.to_hc)
     end
   end
 end
