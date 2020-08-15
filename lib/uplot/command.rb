@@ -1,6 +1,6 @@
 require 'optparse'
-require 'csv'
 require 'unicode_plot'
+require_relative 'preprocessing'
 
 module Uplot
   Data = Struct.new(:headers, :series)

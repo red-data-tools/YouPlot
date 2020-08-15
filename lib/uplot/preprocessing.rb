@@ -1,3 +1,5 @@
+require 'csv'
+
 module Uplot
   module Preprocessing
     module_function
