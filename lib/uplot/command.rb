@@ -275,12 +275,14 @@ module Uplot
     end
 
     def preprocess(input)
-      data = CSV.parse(input, col_sep: @delimiter)
-      data.delete([]) # Remove blank lines.
-      data.delete_if { |i| i.all? nil } # Room for improvement.
-      p parsed_csv: data if @debug
-      headers = get_headers(data)
-      data = get_data(data)
+      arr = CSV.parse(input, col_sep: @delimiter)
+      # Remove blank lines.
+      arr.delete([])
+      # Remove rows where all elements are nil
+      arr.delete_if { |i| i.all? nil }
+      p parsed_csv: arr if @debug
+      headers = get_headers(arr)
+      data = get_data(arr)
       [data, headers]
     end
 
