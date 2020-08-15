@@ -49,112 +49,160 @@ module Uplot
       OptionParser.new do |opt|
         opt.program_name = 'uplot'
         opt.version = Uplot::VERSION
-        opt.on('-o', '--output', TrueClass)    
-           { |v| @output = v }
-           .on('-d', '--delimiter VAL', String)
-           { |v| @delimiter = v }
-           .on('-H', '--headers', TrueClass)
-           { |v| @headers = v }
-           .on('-T', '--transpose', TrueClass)
-           { |v| @transpose = v }
-           .on('-t', '--title VAL', String)
-           { |v| params.title = v }
-           .on('-w', '--width VAL', Numeric)
-           { |v| params.width = v }
-           .on('-h', '--height VAL', Numeric)
-           { |v| params.height = v }
-           .on('-b', '--border VAL', Numeric)
-           { |v| params.border = v }
-           .on('-m', '--margin VAL', Numeric)
-           { |v| params.margin = v }
-           .on('-p', '--padding VAL', Numeric)
-           { |v| params.padding = v }
-           .on('-c', '--color VAL', String)
-           { |v| params.color = v.to_sym }
-           .on('-x', '--xlabel VAL', String)
-           { |v| params.xlabel = v }
-           .on('-y', '--ylabel VAL', String)
-           { |v| params.ylabel = v }
-           .on('-l', '--labels', TrueClass)
-           { |v| params.labels = v }
-           .on('--fmt VAL', String)
-           { |v| @fmt = v }
-           .on('--debug', TrueClass)
-           { |v| @debug = v }
+        opt.on('-o', '--output', TrueClass) do |v|
+          @output = v
+        end
+           .on('-d', '--delimiter VAL', String) do |v|
+          @delimiter = v
+        end
+           .on('-H', '--headers', TrueClass) do |v|
+          @headers = v
+        end
+           .on('-T', '--transpose', TrueClass) do |v|
+          @transpose = v
+        end
+           .on('-t', '--title VAL', String) do |v|
+          params.title = v
+        end
+           .on('-w', '--width VAL', Numeric) do |v|
+          params.width = v
+        end
+           .on('-h', '--height VAL', Numeric) do |v|
+          params.height = v
+        end
+           .on('-b', '--border VAL', Numeric) do |v|
+          params.border = v
+        end
+           .on('-m', '--margin VAL', Numeric) do |v|
+          params.margin = v
+        end
+           .on('-p', '--padding VAL', Numeric) do |v|
+          params.padding = v
+        end
+           .on('-c', '--color VAL', String) do |v|
+          params.color = v.to_sym
+        end
+           .on('-x', '--xlabel VAL', String) do |v|
+          params.xlabel = v
+        end
+           .on('-y', '--ylabel VAL', String) do |v|
+          params.ylabel = v
+        end
+           .on('-l', '--labels', TrueClass) do |v|
+          params.labels = v
+        end
+           .on('--fmt VAL', String) do |v|
+          @fmt = v
+        end
+           .on('--debug', TrueClass) do |v|
+          @debug = v
+        end
       end
     end
 
     def parse_options(argv)
-      main_parser         = create_parser
-      parsers             = Hash.new { |h, k| h[k] = create_parser }
+      main_parser = create_parser
+      parsers = Hash.new { |h, k| h[k] = create_parser }
 
-      parsers[:barplot]   = parsers[:bar]
-                            .on('--symbol VAL', String)
-                            { |v| params.symbol = v }
-                            .on('--xscale VAL', String)
-                            { |v| params.xscale = v }
-                            .on('--count', TrueClass)
-                            { |v| @count = v }
+      parsers[:barplot] = \
+        parsers[:bar]
+        .on('--symbol VAL', String) do |v|
+          params.symbol = v
+        end
+        .on('--xscale VAL', String) do |v|
+          params.xscale = v
+        end
+        .on('--count', TrueClass) do |v|
+          @count = v
+        end
 
-      parsers[:count]     = parsers[:c] # barplot -c
-                            .on('--symbol VAL', String)
-                            { |v| params.symbol = v }
+      parsers[:count] = \
+        parsers[:c] # barplot -c
+        .on('--symbol VAL', String) do |v|
+          params.symbol = v
+        end
 
-      parsers[:histogram] = parsers[:hist]
-                            .on('-n', '--nbins VAL', Numeric)
-                            { |v| params.nbins = v }
-                            .on('--closed VAL', String)
-                            { |v| params.closed = v }
-                            .on('--symbol VAL', String)
-                            { |v| params.symbol = v }
+      parsers[:histogram] = \
+        parsers[:hist]
+        .on('-n', '--nbins VAL', Numeric) do |v|
+          params.nbins = v
+        end
+        .on('--closed VAL', String) do |v|
+          params.closed = v
+        end
+        .on('--symbol VAL', String) do |v|
+          params.symbol = v
+        end
 
-      parsers[:lineplot]  = parsers[:line]
-                            .on('--canvas VAL', String)
-                            { |v| params.canvas = v }
-                            .on('--xlim VAL', String)
-                            { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)
-                            { |v| params.ylim = get_lim(v) }
+      parsers[:lineplot] = \
+        parsers[:line]
+        .on('--canvas VAL', String) do |v|
+          params.canvas = v
+        end
+        .on('--xlim VAL', String) do |v|
+          params.xlim = get_lim(v)
+        end
+        .on('--ylim VAL', String) do |v|
+          params.ylim = get_lim(v)
+        end
 
-      parsers[:lineplots] = parsers[:lines]
-                            .on('--canvas VAL', String)
-                            { |v| params.canvas = v }
-                            .on('--xlim VAL', String)
-                            { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)
-                            { |v| params.ylim = get_lim(v) }
+      parsers[:lineplots] = \
+        parsers[:lines]
+        .on('--canvas VAL', String) do |v|
+          params.canvas = v
+        end
+        .on('--xlim VAL', String) do |v|
+          params.xlim = get_lim(v)
+        end
+        .on('--ylim VAL', String) do |v|
+          params.ylim = get_lim(v)
+        end
 
-      parsers[:scatter]   = parsers[:s]
-                            .on('--canvas VAL', String)
-                            { |v| params.canvas = v }
-                            .on('--xlim VAL', String)
-                            { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)
-                            { |v| params.ylim = get_lim(v) }
+      parsers[:scatter] = \
+        parsers[:s]
+        .on('--canvas VAL', String) do |v|
+          params.canvas = v
+        end
+        .on('--xlim VAL', String) do |v|
+          params.xlim = get_lim(v)
+        end
+        .on('--ylim VAL', String) do |v|
+          params.ylim = get_lim(v)
+        end
 
-      parsers[:density]   = parsers[:d]
-                            .on('--grid', TrueClass)
-                            { |v| params.grid = v }
-                            .on('--xlim VAL', String)
-                            { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)
-                            { |v| params.ylim = get_lim(v) }
+      parsers[:density] = \
+        parsers[:d]
+        .on('--grid', TrueClass) do |v|
+          params.grid = v
+        end
+        .on('--xlim VAL', String) do |v|
+          params.xlim = get_lim(v)
+        end
+        .on('--ylim VAL', String) do |v|
+          params.ylim = get_lim(v)
+        end
 
-      parsers[:boxplot]   = parsers[:box]
-                            .on('--xlim VAL', String)
-                            { |v| params.xlim = get_lim(v) }
-      parsers.default     = nil
+      parsers[:boxplot] = \
+        parsers[:box]
+        .on('--xlim VAL', String) do |v|
+          params.xlim = get_lim(v)
+        end
 
-      main_parser.banner = <<~MSG
-        Program: uplot (Tools for plotting on the terminal)
-        Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
+      # Preventing the generation of new sub-commands
+      parsers.default = nil
 
-        Usage:   uplot <command> [options]
+      # Usage and help messages
+      main_parser.banner = \
+        <<~MSG
+          Program: uplot (Tools for plotting on the terminal)
+          Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
 
-        Command: #{parsers.keys.join(' ')}
+          Usage:   uplot <command> [options]
 
-        Options:
-      MSG
+          Command: #{parsers.keys.join(' ')}
+
+          Options:
+        MSG
 
       begin
         main_parser.order!(argv)
