@@ -4,8 +4,6 @@ require 'unicode_plot'
 
 module Uplot
   class Command
-    attr_accessor :params
-
     Params = Struct.new(
       :title,
       :width,
@@ -30,11 +28,13 @@ module Uplot
         to_h.compact
       end
     end
-    
+
+    attr_accessor :params, :plot_type
+
     def initialize(argv)
       @params = Params.new
 
-      @ptype     = nil
+      @plot_type = nil
       @headers   = nil
       @delimiter = "\t"
       @transpose = false
@@ -69,37 +69,37 @@ module Uplot
     end
 
     def parse_options(argv)
-      main_parser          = create_parser
-      parsers              = Hash.new { |h, k| h[k] = create_parser }
-      parsers['barplot']   = parsers['bar']
-                             .on('--symbol VAL', String) { |v| params.symbol = v }
-                             .on('--xscale VAL', String) { |v| params.xscale = v }
-                             .on('--count', TrueClass)   { |v| @count = v }
-      parsers['count']     = parsers['c'] # barplot -c
-                             .on('--symbol VAL', String) { |v| params.symbol = v }
-      parsers['histogram'] = parsers['hist']
-                             .on('-n', '--nbins VAL', Numeric) { |v| params.nbins = v }
-                             .on('--closed VAL', String) { |v| params.closed = v }
-                             .on('--symbol VAL', String) { |v| params.symbol = v }
-      parsers['lineplot']  = parsers['line']
-                             .on('--canvas VAL', String) { |v| params.canvas = v }
-                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
-      parsers['lineplots'] = parsers['lines']
-                             .on('--canvas VAL', String) { |v| params.canvas = v }
-                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
-      parsers['scatter']   = parsers['s']
-                             .on('--canvas VAL', String) { |v| params.canvas = v }
-                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
-      parsers['density']   = parsers['d']
-                             .on('--grid', TrueClass)    { |v| params.grid = v }
-                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                             .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
-      parsers['boxplot']   = parsers['box']
-                             .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-      parsers.default      = nil
+      main_parser         = create_parser
+      parsers             = Hash.new { |h, k| h[k] = create_parser }
+      parsers[:barplot]   = parsers[:bar]
+                            .on('--symbol VAL', String) { |v| params.symbol = v }
+                            .on('--xscale VAL', String) { |v| params.xscale = v }
+                            .on('--count', TrueClass)   { |v| @count = v }
+      parsers[:count]     = parsers[:c] # barplot -c
+                            .on('--symbol VAL', String) { |v| params.symbol = v }
+      parsers[:histogram] = parsers[:hist]
+                            .on('-n', '--nbins VAL', Numeric) { |v| params.nbins = v }
+                            .on('--closed VAL', String) { |v| params.closed = v }
+                            .on('--symbol VAL', String) { |v| params.symbol = v }
+      parsers[:lineplot]  = parsers[:line]
+                            .on('--canvas VAL', String) { |v| params.canvas = v }
+                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+      parsers[:lineplots] = parsers[:lines]
+                            .on('--canvas VAL', String) { |v| params.canvas = v }
+                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+      parsers[:scatter]   = parsers[:s]
+                            .on('--canvas VAL', String) { |v| params.canvas = v }
+                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+      parsers[:density]   = parsers[:d]
+                            .on('--grid', TrueClass)    { |v| params.grid = v }
+                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+      parsers[:boxplot]   = parsers[:box]
+                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+      parsers.default     = nil
 
       main_parser.banner = <<~MSG
         Program: uplot (Tools for plotting on the terminal)
@@ -119,17 +119,17 @@ module Uplot
         exit 1
       end
 
-      @ptype = argv.shift
+      @plot_type = argv.shift&.to_sym
 
-      unless parsers.has_key?(@ptype)
-        if @ptype.nil?
+      unless parsers.has_key?(plot_type)
+        if plot_type.nil?
           warn main_parser.help
         else
-          warn "uplot: unrecognized command '#{@ptype}'"
+          warn "uplot: unrecognized command '#{plot_type}'"
         end
         exit 1
       end
-      parser = parsers[@ptype]
+      parser = parsers[plot_type]
 
       begin
         parser.parse!(argv) unless argv.empty?
@@ -145,24 +145,26 @@ module Uplot
         input.freeze
         data, headers = preprocess(input)
         pp input: input, data: data, headers: headers if @debug
-        case @ptype
-        when 'bar', 'barplot'
+        case plot_type
+        when :bar, :barplot
           barplot(data, headers)
-        when 'count', 'c'
+        when :count, :c
           @count = true
           barplot(data, headers)
-        when 'hist', 'histogram'
+        when :hist, :histogram
           histogram(data, headers)
-        when 'line', 'lineplot'
+        when :line, :lineplot
           line(data, headers)
-        when 'lines', 'lineplots'
+        when :lines, :lineplots
           lines(data, headers)
-        when 'scatter', 'scatterplot'
+        when :scatter, :scatterplot
           scatter(data, headers)
-        when 'density'
+        when :density
           density(data, headers)
-        when 'box', 'boxplot'
+        when :box, :boxplot
           boxplot(data, headers)
+        else
+          raise "unrecognized plot_type: #{plot_type}"
         end.render($stderr)
 
         print input if @output
