@@ -100,7 +100,7 @@ module Uplot
     attr_accessor :params, :plot_type
     attr_reader :raw_inputs
 
-    def initialize(argv)
+    def initialize
       @params = Params.new
 
       @plot_type = nil
@@ -113,8 +113,6 @@ module Uplot
 
       @raw_inputs = []
       @debug      = false
-
-      parse_options(argv)
     end
 
     def create_parser
@@ -172,7 +170,7 @@ module Uplot
       end
     end
 
-    def parse_options(argv)
+    def parse_options(argv = ARGV)
       main_parser = create_parser
       parsers = Hash.new { |h, k| h[k] = create_parser }
 
@@ -308,6 +306,7 @@ module Uplot
     end
 
     def run
+      parse_options
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
         input.freeze

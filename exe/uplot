@@ -2,4 +2,4 @@
 
 require 'uplot'
 
-Uplot::Command.new(ARGV).run
+Uplot::Command.new.run
