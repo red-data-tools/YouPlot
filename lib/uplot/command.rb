@@ -30,6 +30,7 @@ module Uplot
     end
 
     attr_accessor :params, :plot_type
+    attr_reader :raw_inputs
 
     def initialize(argv)
       @params = Params.new
@@ -41,7 +42,10 @@ module Uplot
       @output    = false
       @count     = false
       @fmt       = 'xyy'
-      @debug     = false
+
+      @raw_inputs = []
+      @debug      = false
+
       parse_options(argv)
     end
 
@@ -235,6 +239,7 @@ module Uplot
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
         input.freeze
+        @raw_inputs << input
         data, headers = preprocess(input)
         pp input: input, data: data, headers: headers if @debug
         case plot_type
