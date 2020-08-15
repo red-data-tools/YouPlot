@@ -178,7 +178,7 @@ module Uplot
         if @headers
           transpose2(data[1..-1])
         else
-          tanrspose2(data)
+          transpose2(data)
         end
       end
     end
