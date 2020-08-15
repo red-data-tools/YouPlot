@@ -49,56 +49,100 @@ module Uplot
       OptionParser.new do |opt|
         opt.program_name = 'uplot'
         opt.version = Uplot::VERSION
-        opt.on('-o', '--output', TrueClass)     { |v| @output = v }
-           .on('-d', '--delimiter VAL', String) { |v| @delimiter = v }
-           .on('-H', '--headers', TrueClass)    { |v| @headers = v }
-           .on('-T', '--transpose', TrueClass)  { |v| @transpose = v }
-           .on('-t', '--title VAL', String)     { |v| params.title = v }
-           .on('-w', '--width VAL', Numeric)    { |v| params.width = v }
-           .on('-h', '--height VAL', Numeric)   { |v| params.height = v }
-           .on('-b', '--border VAL', Numeric)   { |v| params.border = v }
-           .on('-m', '--margin VAL', Numeric)   { |v| params.margin = v }
-           .on('-p', '--padding VAL', Numeric)  { |v| params.padding = v }
-           .on('-c', '--color VAL', String)     { |v| params.color = v.to_sym }
-           .on('-x', '--xlabel VAL', String)    { |v| params.xlabel = v }
-           .on('-y', '--ylabel VAL', String)    { |v| params.ylabel = v }
-           .on('-l', '--labels', TrueClass)     { |v| params.labels = v }
-           .on('--fmt VAL', String)             { |v| @fmt = v }
-           .on('--debug', TrueClass)            { |v| @debug = v }
+        opt.on('-o', '--output', TrueClass)    
+           { |v| @output = v }
+           .on('-d', '--delimiter VAL', String)
+           { |v| @delimiter = v }
+           .on('-H', '--headers', TrueClass)
+           { |v| @headers = v }
+           .on('-T', '--transpose', TrueClass)
+           { |v| @transpose = v }
+           .on('-t', '--title VAL', String)
+           { |v| params.title = v }
+           .on('-w', '--width VAL', Numeric)
+           { |v| params.width = v }
+           .on('-h', '--height VAL', Numeric)
+           { |v| params.height = v }
+           .on('-b', '--border VAL', Numeric)
+           { |v| params.border = v }
+           .on('-m', '--margin VAL', Numeric)
+           { |v| params.margin = v }
+           .on('-p', '--padding VAL', Numeric)
+           { |v| params.padding = v }
+           .on('-c', '--color VAL', String)
+           { |v| params.color = v.to_sym }
+           .on('-x', '--xlabel VAL', String)
+           { |v| params.xlabel = v }
+           .on('-y', '--ylabel VAL', String)
+           { |v| params.ylabel = v }
+           .on('-l', '--labels', TrueClass)
+           { |v| params.labels = v }
+           .on('--fmt VAL', String)
+           { |v| @fmt = v }
+           .on('--debug', TrueClass)
+           { |v| @debug = v }
       end
     end
 
     def parse_options(argv)
       main_parser         = create_parser
       parsers             = Hash.new { |h, k| h[k] = create_parser }
+
       parsers[:barplot]   = parsers[:bar]
-                            .on('--symbol VAL', String) { |v| params.symbol = v }
-                            .on('--xscale VAL', String) { |v| params.xscale = v }
-                            .on('--count', TrueClass)   { |v| @count = v }
+                            .on('--symbol VAL', String)
+                            { |v| params.symbol = v }
+                            .on('--xscale VAL', String)
+                            { |v| params.xscale = v }
+                            .on('--count', TrueClass)
+                            { |v| @count = v }
+
       parsers[:count]     = parsers[:c] # barplot -c
-                            .on('--symbol VAL', String) { |v| params.symbol = v }
+                            .on('--symbol VAL', String)
+                            { |v| params.symbol = v }
+
       parsers[:histogram] = parsers[:hist]
-                            .on('-n', '--nbins VAL', Numeric) { |v| params.nbins = v }
-                            .on('--closed VAL', String) { |v| params.closed = v }
-                            .on('--symbol VAL', String) { |v| params.symbol = v }
+                            .on('-n', '--nbins VAL', Numeric)
+                            { |v| params.nbins = v }
+                            .on('--closed VAL', String)
+                            { |v| params.closed = v }
+                            .on('--symbol VAL', String)
+                            { |v| params.symbol = v }
+
       parsers[:lineplot]  = parsers[:line]
-                            .on('--canvas VAL', String) { |v| params.canvas = v }
-                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+                            .on('--canvas VAL', String)
+                            { |v| params.canvas = v }
+                            .on('--xlim VAL', String)
+                            { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)
+                            { |v| params.ylim = get_lim(v) }
+
       parsers[:lineplots] = parsers[:lines]
-                            .on('--canvas VAL', String) { |v| params.canvas = v }
-                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+                            .on('--canvas VAL', String)
+                            { |v| params.canvas = v }
+                            .on('--xlim VAL', String)
+                            { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)
+                            { |v| params.ylim = get_lim(v) }
+
       parsers[:scatter]   = parsers[:s]
-                            .on('--canvas VAL', String) { |v| params.canvas = v }
-                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+                            .on('--canvas VAL', String)
+                            { |v| params.canvas = v }
+                            .on('--xlim VAL', String)
+                            { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)
+                            { |v| params.ylim = get_lim(v) }
+
       parsers[:density]   = parsers[:d]
-                            .on('--grid', TrueClass)    { |v| params.grid = v }
-                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
-                            .on('--ylim VAL', String)   { |v| params.ylim = get_lim(v) }
+                            .on('--grid', TrueClass)
+                            { |v| params.grid = v }
+                            .on('--xlim VAL', String)
+                            { |v| params.xlim = get_lim(v) }
+                            .on('--ylim VAL', String)
+                            { |v| params.ylim = get_lim(v) }
+
       parsers[:boxplot]   = parsers[:box]
-                            .on('--xlim VAL', String)   { |v| params.xlim = get_lim(v) }
+                            .on('--xlim VAL', String)
+                            { |v| params.xlim = get_lim(v) }
       parsers.default     = nil
 
       main_parser.banner = <<~MSG
