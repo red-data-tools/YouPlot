@@ -1,4 +1,4 @@
-# Uplot
+# uplot
 
 [![Build Status](https://travis-ci.com/kojix2/uplot.svg?branch=master)](https://travis-ci.com/kojix2/uplot)
 [![Gem Version](https://badge.fury.io/rb/u-plot.svg)](https://badge.fury.io/rb/u-plot)
@@ -49,6 +49,8 @@ ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
 ## Development
 
 ## Contributing
+
+Bug reports and pull requests are welcome on GitHub at [https://github.com/kojix2/uplot](https://github.com/kojix2/uplot).
 
 ## License
 
