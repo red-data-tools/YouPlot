@@ -1,6 +1,6 @@
 require 'unicode_plot'
 require 'uplot/version'
-require 'uplot/preprocess'
+require 'uplot/Preprocessing'
 require 'uplot/command.rb'
 
 module Uplot

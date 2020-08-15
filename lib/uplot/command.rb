@@ -247,7 +247,7 @@ module Uplot
       while input = Kernel.gets(nil)
         input.freeze
         @raw_inputs << input
-        @data = Preprocess.input(input, @delimiter, @headers, @transpose)
+        @data = Preprocessing.input(input, @delimiter, @headers, @transpose)
         case plot_type
         when :bar, :barplot
           barplot(@data)
@@ -278,7 +278,7 @@ module Uplot
       headers = data.headers
       series = data.series
       if @count
-        series = Preprocess.count(series[0])
+        series = Preprocessing.count(series[0])
         params.title = headers[0] if headers
       end
       params.title ||= headers[1] if headers

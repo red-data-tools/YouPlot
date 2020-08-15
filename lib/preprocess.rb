@@ -1,5 +1,5 @@
 module Uplot
-  module Preprocess
+  module Preprocessing
     module_function
 
     def input(input, delimiter, headers, transpose)
