@@ -1,5 +1,4 @@
 require 'optparse'
-require 'unicode_plot'
 require_relative 'preprocessing'
 
 module Uplot
@@ -34,7 +33,7 @@ module Uplot
     end
 
     attr_accessor :params, :plot_type
-    attr_reader :raw_inputs
+    attr_reader :raw_inputs, :data, :fmt
 
     def initialize
       @params = Params.new
@@ -250,143 +249,27 @@ module Uplot
         @data = Preprocessing.input(input, @delimiter, @headers, @transpose)
         case plot_type
         when :bar, :barplot
-          barplot(@data)
+          Plot.barplot(data, params, @count)
         when :count, :c
-          @count = true
-          barplot(@data)
+          Plot.barplot(data, params, count = true)
         when :hist, :histogram
-          histogram(@data)
+          Plot.histogram(data, params)
         when :line, :lineplot
-          line(@data)
+          Plot.line(data, params)
         when :lines, :lineplots
-          lines(@data)
+          Plot.lines(data, params, fmt)
         when :scatter, :scatterplot
-          scatter(@data)
+          Plot.scatter(data, params, fmt)
         when :density
-          density(@data)
+          Plot.density(data, params, fmt)
         when :box, :boxplot
-          boxplot(@data)
+          Plot.boxplot(data, params)
         else
           raise "unrecognized plot_type: #{plot_type}"
         end.render($stderr)
 
         print input if @output
       end
-    end
-
-    def barplot(data)
-      headers = data.headers
-      series = data.series
-      if @count
-        series = Preprocessing.count(series[0])
-        params.title = headers[0] if headers
-      end
-      params.title ||= headers[1] if headers
-      labels = series[0]
-      values = series[1].map(&:to_f)
-      UnicodePlot.barplot(labels, values, **params.to_hc)
-    end
-
-    def histogram(data)
-      headers = data.headers
-      series = data.series
-      params.title ||= data.headers[0] if headers
-      values = series[0].map(&:to_f)
-      UnicodePlot.histogram(values, **params.to_hc)
-    end
-
-    def line(data)
-      headers = data.headers
-      series = data.series
-      if series.size == 1
-        # If there is only one series, it is assumed to be sequential data.
-        params.ylabel ||= headers[0] if headers
-        y = series[0].map(&:to_f)
-        UnicodePlot.lineplot(y, **params.to_hc)
-      else
-        # If there are 2 or more series,
-        # assume that the first 2 series are the x and y series respectively.
-        if headers
-          params.xlabel ||= headers[0]
-          params.ylabel ||= headers[1]
-        end
-        x = series[0].map(&:to_f)
-        y = series[1].map(&:to_f)
-        UnicodePlot.lineplot(x, y, **params.to_hc)
-      end
-    end
-
-    def get_method2(method1)
-      (method1.to_s + '!').to_sym
-    end
-
-    def xyy_plot(data, method1)
-      headers = data.headers
-      series = data.series
-      method2 = get_method2(method1)
-      series.map! { |s| s.map(&:to_f) }
-      if headers
-        params.name   ||= headers[1]
-        params.xlabel ||= headers[0]
-      end
-      params.ylim ||= series[1..-1].flatten.minmax # why need?
-      plot = UnicodePlot.public_send(method1, series[0], series[1], **params.to_hc)
-      2.upto(series.size - 1) do |i|
-        UnicodePlot.public_send(method2, plot, series[0], series[i], name: headers&.[](i))
-      end
-      plot
-    end
-
-    def xyxy_plot(data, method1)
-      headers = data.headers
-      series = data.series
-      method2 = get_method2(method1)
-      series.map! { |s| s.map(&:to_f) }
-      series = series.each_slice(2).to_a
-      params.name ||= headers[0] if headers
-      params.xlim = series.map(&:first).flatten.minmax # why need?
-      params.ylim = series.map(&:last).flatten.minmax  # why need?
-      x1, y1 = series.shift
-      plot = UnicodePlot.public_send(method1, x1, y1, **params.to_hc)
-      series.each_with_index do |(xi, yi), i|
-        UnicodePlot.public_send(method2, plot, xi, yi, name: headers&.[]((i + 1) * 2))
-      end
-      plot
-    end
-
-    def lines(data)
-      case @fmt
-      when 'xyy'
-        xyy_plot(data, :lineplot)
-      when 'xyxy'
-        xyxy_plot(data, :lineplot)
-      end
-    end
-
-    def scatter(data)
-      case @fmt
-      when 'xyy'
-        xyy_plot(data, :scatterplot)
-      when 'xyxy'
-        xyxy_plot(data, :scatterplot)
-      end
-    end
-
-    def density(data)
-      case @fmt
-      when 'xyy'
-        xyy_plot(data, :densityplot)
-      when 'xyxy'
-        xyxy_plot(data, :densityplot)
-      end
-    end
-
-    def boxplot(data)
-      headers = data.headers
-      series = data.series
-      headers ||= (1..series.size).map(&:to_s)
-      series.map! { |s| s.map(&:to_f) }
-      UnicodePlot.boxplot(headers, series, params.to_hc)
     end
   end
 end
