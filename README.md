@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/kojix2/uplot.svg?branch=master)](https://travis-ci.com/kojix2/uplot)
 [![Gem Version](https://badge.fury.io/rb/u-plot.svg)](https://badge.fury.io/rb/u-plot)
+[![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](https://rubydoc.info/gems/u-plot)
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 
 Create ASCII charts on the terminal with data from standard streams in the pipeline. 
 
@@ -17,7 +19,7 @@ gem install u-plot
 
 ## Usage
 
-### histogram
+**histogram**
 
 ```sh
 ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
@@ -44,6 +46,14 @@ ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
    [ 3.0,  3.5) ┤ 2                                        
                 └                                        ┘ 
                                 Frequency
+```
+
+**scatter**
+
+```sh
+wget https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv -qO - \
+ | cut -f1-4 -d, \
+ | uplot scatter -H -d, -t IRIS -m 10
 ```
 
 ## Development
