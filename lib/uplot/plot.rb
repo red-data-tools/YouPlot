@@ -86,6 +86,7 @@ module Uplot
     end
 
     def lines(data, params, fmt = 'xyy')
+      check_series_size(data, fmt)
       case fmt
       when 'xyy'
         xyy_plot(data, :lineplot, params)
@@ -95,6 +96,7 @@ module Uplot
     end
 
     def scatter(data, params, fmt = 'xyy')
+      check_series_size(data, fmt)
       case fmt
       when 'xyy'
         xyy_plot(data, :scatterplot, params)
@@ -104,6 +106,7 @@ module Uplot
     end
 
     def density(data, params, fmt = 'xyy')
+      check_series_size(data, fmt)
       case fmt
       when 'xyy'
         xyy_plot(data, :densityplot, params)
@@ -118,6 +121,17 @@ module Uplot
       headers ||= (1..series.size).map(&:to_s)
       series.map! { |s| s.map(&:to_f) }
       UnicodePlot.boxplot(headers, series, **params.to_hc)
+    end
+
+    def check_series_size(data, fmt)
+      series = data.series
+      if series.size == 1
+        warn "uplot: There is only one series of input data. Please check the delimiter."
+        warn ""
+        warn "  The first item is: \e[35m\"#{series[0][0]}\"\e[0m"
+        warn "  The last item is : \e[35m\"#{series[0][-1]}\"\e[0m"
+        exit 1
+      end
     end
   end
 end

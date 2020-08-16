@@ -247,6 +247,7 @@ module Uplot
         input.freeze
         @raw_inputs << input
         @data = Preprocessing.input(input, @delimiter, @headers, @transpose)
+        pp @data if @debug
         case plot_type
         when :bar, :barplot
           Plot.barplot(data, params, @count)
