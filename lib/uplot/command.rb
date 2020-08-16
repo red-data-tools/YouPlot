@@ -259,9 +259,9 @@ module Uplot
           Plot.line(data, params)
         when :lines, :lineplots
           Plot.lines(data, params, fmt)
-        when :scatter, :scatterplot
+        when :scatter, :s
           Plot.scatter(data, params, fmt)
-        when :density
+        when :density, :d
           Plot.density(data, params, fmt)
         when :box, :boxplot
           Plot.boxplot(data, params)
