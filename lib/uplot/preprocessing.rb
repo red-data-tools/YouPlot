@@ -13,7 +13,7 @@ module Uplot
       else
         if headers.include?(nil)
           warn "\e[35mHeaders contains nil in it.\e[0m"
-        elsif headers.include? ""
+        elsif headers.include? ''
           warn "\e[35mHeaders contains \"\" in it.\e[0m"
         end
         h_size = headers.size

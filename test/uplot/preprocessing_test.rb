@@ -61,6 +61,7 @@ class UplotPreprocessingTest < Test::Unit::TestCase
 
   test :get_series do
     n = nil
+    
     assert_equal([[2, 3], [5, 6], [8, 9]], @m.get_series([[1, 2, 3],
                                                           [4, 5, 6],
                                                           [7, 8, 9]], true, true))
@@ -109,11 +110,11 @@ class UplotPreprocessingTest < Test::Unit::TestCase
                                              [4, 5, 6],
                                              [7, 8, 9]], false, false))
 
-        assert_equal([[1, 2, 3],
+    assert_equal([[1, 2, 3],
                   [4, 5, n],
                   [6, n, n]], @m.get_series([[1, 4, 6],
-                                       [2, 5],
-                                       [3]], false, false))
+                                             [2, 5],
+                                             [3]], false, false))
 
     assert_equal([[1, 2, 3],
                   [n, 4, 5],
