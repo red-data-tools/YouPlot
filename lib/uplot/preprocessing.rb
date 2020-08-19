@@ -5,13 +5,13 @@ module Uplot
     module_function
 
     def input(input, delimiter, headers, transpose)
-      arr = read_csv(input, delimiter)
+      arr = parse_as_csv(input, delimiter)
       headers = get_headers(arr, headers, transpose)
       series = get_series(arr, headers, transpose)
       Data.new(headers, series)
     end
 
-    def read_csv(input, delimiter)
+    def parse_as_csv(input, delimiter)
       CSV.parse(input, col_sep: delimiter)
          .delete_if do |i|
            i == [] or i.all? nil
