@@ -193,6 +193,11 @@ module Uplot
           params.xlim = get_lim(v)
         end
 
+      parsers[:colors]
+        .on('-n', '--names', TrueClass) do |v|
+          @color_names = v
+        end
+
       # Preventing the generation of new sub-commands
       parsers.default = nil
 
@@ -242,6 +247,12 @@ module Uplot
 
     def run
       parse_options
+      
+      if command == :colors
+        Plot.colors
+        exit
+      end
+
       # Sometimes the input file does not end with a newline code.
       while input = Kernel.gets(nil)
         input.freeze
