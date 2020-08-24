@@ -32,19 +32,19 @@ module Uplot
       end
     end
 
-    attr_accessor :params, :plot_type
+    attr_accessor :params, :command
     attr_reader :raw_inputs, :data, :fmt
 
     def initialize
       @params = Params.new
 
-      @plot_type = nil
-      @headers   = nil
-      @delimiter = "\t"
-      @transpose = false
-      @output    = false
-      @count     = false
-      @fmt       = 'xyy'
+      @command    = nil
+      @headers    = nil
+      @delimiter  = "\t"
+      @transpose  = false
+      @output     = false
+      @count      = false
+      @fmt        = 'xyy'
 
       @raw_inputs = []
       @debug      = false
@@ -216,17 +216,17 @@ module Uplot
         exit 1
       end
 
-      @plot_type = argv.shift&.to_sym
+      @command = argv.shift&.to_sym
 
-      unless parsers.has_key?(plot_type)
-        if plot_type.nil?
+      unless parsers.has_key?(command)
+        if command.nil?
           warn main_parser.help
         else
-          warn "uplot: unrecognized command '#{plot_type}'"
+          warn "uplot: unrecognized command '#{command}'"
         end
         exit 1
       end
-      parser = parsers[plot_type]
+      parser = parsers[command]
 
       begin
         parser.parse!(argv) unless argv.empty?
@@ -248,7 +248,7 @@ module Uplot
         @raw_inputs << input
         @data = Preprocessing.input(input, @delimiter, @headers, @transpose)
         pp @data if @debug
-        case plot_type
+        case command
         when :bar, :barplot
           Plot.barplot(data, params, @count)
         when :count, :c
@@ -266,7 +266,7 @@ module Uplot
         when :box, :boxplot
           Plot.boxplot(data, params)
         else
-          raise "unrecognized plot_type: #{plot_type}"
+          raise "unrecognized plot_type: #{command}"
         end.render($stderr)
 
         print input if @output
