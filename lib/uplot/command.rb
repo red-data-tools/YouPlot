@@ -85,7 +85,7 @@ module Uplot
           params.padding = v
         end
            .on('-c', '--color VAL', String) do |v|
-          params.color = v.to_sym
+          params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
         end
            .on('-x', '--xlabel VAL', String) do |v|
           params.xlabel = v
