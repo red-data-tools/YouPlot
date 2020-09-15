@@ -7,7 +7,7 @@ module Uplot
 
   class Command
     attr_accessor :params, :command
-    attr_reader :raw_inputs, :data, :fmt
+    attr_reader :main_parser, :sub_parsers, :raw_inputs, :data, :fmt
 
     def initialize
       @params = Params.new
@@ -76,6 +76,7 @@ module Uplot
            .on('--debug', TrueClass) do |v|
           @debug = v
         end
+        yield opt if block_given?
       end
     end
 
@@ -176,22 +177,26 @@ module Uplot
       parsers
     end
 
+    def create_main_parser
+      create_default_parser do |main_parser|
+        # Usage and help messages
+        main_parser.banner = \
+          <<~MSG
+            Program: uplot (Tools for plotting on the terminal)
+            Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
+
+            Usage:   uplot <command> [options]
+
+            Command: #{sub_parsers.keys.join(' ')}
+
+            Options:
+          MSG
+      end
+    end
+
     def parse_options(argv = ARGV)
-      main_parser = create_default_parser
-      sub_parsers = create_sub_parsers
-
-      # Usage and help messages
-      main_parser.banner = \
-        <<~MSG
-          Program: uplot (Tools for plotting on the terminal)
-          Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
-
-          Usage:   uplot <command> [options]
-
-          Command: #{sub_parsers.keys.join(' ')}
-
-          Options:
-        MSG
+      @sub_parsers = create_sub_parsers
+      @main_parser = create_main_parser
 
       begin
         main_parser.order!(argv)
