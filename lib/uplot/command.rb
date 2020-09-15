@@ -5,33 +5,6 @@ module Uplot
   Data = Struct.new(:headers, :series)
 
   class Command
-    Params = Struct.new(
-      # Sort me!
-      :title,
-      :width,
-      :height,
-      :border,
-      :margin,
-      :padding,
-      :color,
-      :xlabel,
-      :ylabel,
-      :labels,
-      :symbol,
-      :xscale,
-      :nbins,
-      :closed,
-      :canvas,
-      :xlim,
-      :ylim,
-      :grid,
-      :name
-    ) do
-      def to_hc
-        to_h.compact
-      end
-    end
-
     attr_accessor :params, :command
     attr_reader :raw_inputs, :data, :fmt
 
