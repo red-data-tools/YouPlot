@@ -124,15 +124,15 @@ module Uplot
     end
 
     def colors
-        UnicodePlot::StyledPrinter::TEXT_COLORS.each do |k,v|
-          print v
-          print k
-          print "\t"
-          print "  ●"
-          print "\033[0m"
-          print "\t"
-        end
-        puts
+      UnicodePlot::StyledPrinter::TEXT_COLORS.each do |k, v|
+        print v
+        print k
+        print "\t"
+        print '  ●'
+        print "\033[0m"
+        print "\t"
+      end
+      puts
     end
 
     def check_series_size(data, fmt)

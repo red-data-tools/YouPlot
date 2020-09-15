@@ -1,5 +1,6 @@
 require 'optparse'
 require_relative 'preprocessing'
+require_relative 'command/params'
 
 module Uplot
   Data = Struct.new(:headers, :series)
@@ -225,7 +226,7 @@ module Uplot
 
     def run
       parse_options
-      
+
       if command == :colors
         Plot.colors
         exit
