@@ -50,7 +50,7 @@ module Uplot
       @debug      = false
     end
 
-    def create_parser
+    def create_default_parser
       OptionParser.new do |opt|
         opt.program_name = 'uplot'
         opt.version = Uplot::VERSION
@@ -106,8 +106,8 @@ module Uplot
     end
 
     def parse_options(argv = ARGV)
-      main_parser = create_parser
-      parsers = Hash.new { |h, k| h[k] = create_parser }
+      main_parser = create_default_parser
+      parsers = Hash.new { |h, k| h[k] = create_default_parser }
 
       parsers[:barplot] = \
         parsers[:bar]
