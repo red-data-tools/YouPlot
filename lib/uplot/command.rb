@@ -79,7 +79,7 @@ module Uplot
       end
     end
 
-    def create_sub_parser
+    def create_sub_parsers
       parsers = Hash.new { |h, k| h[k] = create_default_parser }
 
       parsers[:barplot] = \
@@ -178,7 +178,7 @@ module Uplot
 
     def parse_options(argv = ARGV)
       main_parser = create_default_parser
-      sub_parsers = create_sub_parser
+      sub_parsers = create_sub_parsers
 
       # Usage and help messages
       main_parser.banner = \
