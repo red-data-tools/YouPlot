@@ -105,8 +105,7 @@ module Uplot
       end
     end
 
-    def parse_options(argv = ARGV)
-      main_parser = create_default_parser
+    def create_sub_parser
       parsers = Hash.new { |h, k| h[k] = create_default_parser }
 
       parsers[:barplot] = \
@@ -200,6 +199,12 @@ module Uplot
 
       # Preventing the generation of new sub-commands
       parsers.default = nil
+      parsers
+    end
+
+    def parse_options(argv = ARGV)
+      main_parser = create_default_parser
+      sub_parsers = create_sub_parser
 
       # Usage and help messages
       main_parser.banner = \
@@ -209,7 +214,7 @@ module Uplot
 
           Usage:   uplot <command> [options]
 
-          Command: #{parsers.keys.join(' ')}
+          Command: #{sub_parsers.keys.join(' ')}
 
           Options:
         MSG
@@ -223,7 +228,7 @@ module Uplot
 
       @command = argv.shift&.to_sym
 
-      unless parsers.has_key?(command)
+      unless sub_parsers.has_key?(command)
         if command.nil?
           warn main_parser.help
         else
@@ -231,7 +236,7 @@ module Uplot
         end
         exit 1
       end
-      parser = parsers[command]
+      parser = sub_parsers[command]
 
       begin
         parser.parse!(argv) unless argv.empty?
