@@ -31,43 +31,43 @@ module Uplot
         opt.on('-O', '--output', TrueClass) do |v|
           @output = v
         end
-           .on('-d', '--delimiter VAL', 'Use DELIM instead of TAB for field delimiter.', String) do |v|
+           .on('-d', '--delimiter VAL', 'use DELIM instead of TAB for field delimiter', String) do |v|
           @delimiter = v
         end
-           .on('-H', '--headers', 'Specify that the input has header row.', TrueClass) do |v|
+           .on('-H', '--headers', 'specify that the input has header row', TrueClass) do |v|
           @headers = v
         end
            .on('-T', '--transpose', TrueClass) do |v|
           @transpose = v
         end
-           .on('-t', '--title VAL', 'Title for the plot', String) do |v|
+           .on('-t', '--title VAL', 'print string on the top of plot', String) do |v|
           params.title = v
         end
-           .on('-x', '--xlabel VAL', 'The string to display on the bottom of the plot', String) do |v|
+           .on('-x', '--xlabel VAL', 'print string on the bottom of the plot', String) do |v|
           params.xlabel = v
         end
-           .on('-y', '--ylabel VAL', 'The string to display on the far left of the plot.', String) do |v|
+           .on('-y', '--ylabel VAL', 'print string on the far left of the plot', String) do |v|
           params.ylabel = v
         end
-           .on('-w', '--width VAL', 'Number of characters per row.', Integer) do |v|
+           .on('-w', '--width VAL', 'number of characters per row', Integer) do |v|
           params.width = v
         end
-           .on('-h', '--height VAL', 'Number of rows.', Numeric) do |v|
+           .on('-h', '--height VAL', 'number of rows', Numeric) do |v|
           params.height = v
         end
-           .on('-b', '--border VAL', 'The style of the bounding box of the plot.', String) do |v|
+           .on('-b', '--border VAL', 'specify the style of the bounding box', String) do |v|
           params.border = v.to_sym
         end
-           .on('-m', '--margin VAL', 'Number of empty characters to the left of the plot.', Numeric) do |v|
+           .on('-m', '--margin VAL', 'number of spaces to the left of the plot', Numeric) do |v|
           params.margin = v
         end
-           .on('-p', '--padding VAL', 'Space of the left and right of the plot.', Numeric) do |v|
+           .on('-p', '--padding VAL', 'space of the left and right of the plot', Numeric) do |v|
           params.padding = v
         end
-           .on('-c', '--color VAL', 'Color of the drawing.', String) do |v|
+           .on('-c', '--color VAL', 'color of the drawing', String) do |v|
           params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
         end
-           .on('--[no-]labels', 'Hide the labels', TrueClass) do |v|
+           .on('--[no-]labels', 'hide the labels', TrueClass) do |v|
           params.labels = v
         end
            .on('--fmt VAL', 'xyy, xyxy', String) do |v|
