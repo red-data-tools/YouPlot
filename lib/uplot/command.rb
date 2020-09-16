@@ -28,49 +28,49 @@ module Uplot
       OptionParser.new do |opt|
         opt.program_name = 'uplot'
         opt.version = Uplot::VERSION
-        opt.on('-o', '--output', TrueClass) do |v|
+        opt.on('-O', '--output', TrueClass) do |v|
           @output = v
         end
-           .on('-d', '--delimiter VAL', String) do |v|
+           .on('-d', '--delimiter VAL', 'Use DELIM instead of TAB for field delimiter.', String) do |v|
           @delimiter = v
         end
-           .on('-H', '--headers', TrueClass) do |v|
+           .on('-H', '--headers', 'Specify that the input has header row.', TrueClass) do |v|
           @headers = v
         end
            .on('-T', '--transpose', TrueClass) do |v|
           @transpose = v
         end
-           .on('-t', '--title VAL', String) do |v|
+           .on('-t', '--title VAL', 'Title for the plot', String) do |v|
           params.title = v
         end
-           .on('-w', '--width VAL', Numeric) do |v|
-          params.width = v
-        end
-           .on('-h', '--height VAL', Numeric) do |v|
-          params.height = v
-        end
-           .on('-b', '--border VAL', Numeric) do |v|
-          params.border = v
-        end
-           .on('-m', '--margin VAL', Numeric) do |v|
-          params.margin = v
-        end
-           .on('-p', '--padding VAL', Numeric) do |v|
-          params.padding = v
-        end
-           .on('-c', '--color VAL', String) do |v|
-          params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
-        end
-           .on('-x', '--xlabel VAL', String) do |v|
+           .on('-x', '--xlabel VAL', 'The string to display on the bottom of the plot', String) do |v|
           params.xlabel = v
         end
-           .on('-y', '--ylabel VAL', String) do |v|
+           .on('-y', '--ylabel VAL', 'The string to display on the far left of the plot.', String) do |v|
           params.ylabel = v
         end
-           .on('-l', '--labels', TrueClass) do |v|
+           .on('-w', '--width VAL', 'Number of characters per row.', Integer) do |v|
+          params.width = v
+        end
+           .on('-h', '--height VAL', 'Number of rows.', Numeric) do |v|
+          params.height = v
+        end
+           .on('-b', '--border VAL', 'The style of the bounding box of the plot.', String) do |v|
+          params.border = v.to_sym
+        end
+           .on('-m', '--margin VAL', 'Number of empty characters to the left of the plot.', Numeric) do |v|
+          params.margin = v
+        end
+           .on('-p', '--padding VAL', 'Space of the left and right of the plot.', Numeric) do |v|
+          params.padding = v
+        end
+           .on('-c', '--color VAL', 'Color of the drawing.', String) do |v|
+          params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
+        end
+           .on('--[no-]labels', 'Hide the labels', TrueClass) do |v|
           params.labels = v
         end
-           .on('--fmt VAL', String) do |v|
+           .on('--fmt VAL', 'xyy, xyxy', String) do |v|
           @fmt = v
         end
            .on('--debug', TrueClass) do |v|
