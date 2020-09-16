@@ -81,7 +81,15 @@ module Uplot
     end
 
     def create_sub_parsers
-      parsers = Hash.new { |h, k| h[k] = create_default_parser }
+      parsers = Hash.new do |h, k|
+        h[k] = create_default_parser do |parser|
+          parser.banner = <<~MSG
+            Usage: uplot #{k} [options]
+
+            Options:
+          MSG
+        end
+      end
 
       parsers[:barplot] = \
         parsers[:bar]
@@ -187,7 +195,8 @@ module Uplot
 
             Usage:   uplot <command> [options]
 
-            Command: #{sub_parsers.keys.join(' ')}
+            Command:
+                #{sub_parsers.keys.join("\n    ")}
 
             Options:
           MSG
