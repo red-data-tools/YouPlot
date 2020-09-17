@@ -60,7 +60,7 @@ module Uplot
             params.padding = v
           end
           opt.on('-c', '--color VAL', 'color of the drawing', String) do |v|
-            params.color = v =~ /\<[0-9]+\>/ ? v.to_i : v.to_sym
+            params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
           end
           opt.on('--[no-]labels', 'hide the labels', TrueClass) do |v|
             params.labels = v
