@@ -1,7 +1,8 @@
 module Uplot
   class Command
     class Parser
-      attr_reader :command, :params, :main_parser, :sub_parsers, :delimiter, :transpose, :headers
+      attr_reader :command, :params, :main_parser, :sub_parsers,
+                  :delimiter, :transpose, :headers, :output, :count, :fmt, :debug
 
       def initialize
         @sub_parsers = create_sub_parsers
@@ -12,6 +13,10 @@ module Uplot
         @delimiter  = "\t"
         @transpose  = false
         @headers    = nil
+        @output     = false
+        @count      = false
+        @fmt        = 'xyy'
+        @debug      = false
     end
 
       def create_default_parser

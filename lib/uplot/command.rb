@@ -13,13 +13,7 @@ module Uplot
     def initialize
       @params = Params.new
 
-      @command    = nil
-      @output     = false
-      @count      = false
-      @fmt        = 'xyy'
-
       @raw_inputs = []
-      @debug      = false
 
       @parser = Parser.new
     end
@@ -27,11 +21,15 @@ module Uplot
 
     def run
       parser.parse_options
-      command = parser.command
-      params = parser.params
+      command   = parser.command
+      params    = parser.params
       delimiter = parser.delimiter
       transpose = parser.transpose
-      headers = parser.headers
+      headers   = parser.headers
+      output    = parser.output
+      count     = parser.count
+      fmt       = parser.fmt
+      debug     = parser.debug
 
       if command == :colors
         Plot.colors
@@ -65,7 +63,7 @@ module Uplot
           raise "unrecognized plot_type: #{command}"
         end.render($stderr)
 
-        print input if @output
+        print input if output
       end
     end
   end
