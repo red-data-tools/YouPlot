@@ -17,7 +17,7 @@ module Uplot
         @count      = false
         @fmt        = 'xyy'
         @debug      = false
-    end
+      end
 
       def create_default_parser
         OptionParser.new do |opt|

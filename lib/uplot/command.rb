@@ -18,7 +18,6 @@ module Uplot
       @parser = Parser.new
     end
 
-
     def run
       parser.parse_options
       command   = parser.command
