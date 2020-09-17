@@ -1,3 +1,6 @@
+require 'optparse'
+require_relative 'params'
+
 module Uplot
   class Command
     class Parser

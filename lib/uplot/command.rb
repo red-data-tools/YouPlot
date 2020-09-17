@@ -1,6 +1,4 @@
-require 'optparse'
 require_relative 'preprocessing'
-require_relative 'command/params'
 require_relative 'command/parser'
 
 module Uplot
