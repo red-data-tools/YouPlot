@@ -14,9 +14,6 @@ module Uplot
       @params = Params.new
 
       @command    = nil
-      @headers    = nil
-      @delimiter  = "\t"
-      @transpose  = false
       @output     = false
       @count      = false
       @fmt        = 'xyy'
@@ -32,6 +29,9 @@ module Uplot
       parser.parse_options
       command = parser.command
       params = parser.params
+      delimiter = parser.delimiter
+      transpose = parser.transpose
+      headers = parser.headers
 
       if command == :colors
         Plot.colors
@@ -42,7 +42,7 @@ module Uplot
       while input = Kernel.gets(nil)
         input.freeze
         @raw_inputs << input
-        @data = Preprocessing.input(input, @delimiter, @headers, @transpose)
+        @data = Preprocessing.input(input, delimiter, headers, transpose)
         pp @data if @debug
         case command
         when :bar, :barplot
