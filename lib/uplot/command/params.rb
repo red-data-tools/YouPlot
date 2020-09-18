@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Uplot
   class Command
     Params = Struct.new(

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'unicode_plot'
 
 module Uplot

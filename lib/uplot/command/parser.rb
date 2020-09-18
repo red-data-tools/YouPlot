@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'optparse'
 require_relative 'params'
 
@@ -211,7 +213,7 @@ module Uplot
 
         @command = argv.shift&.to_sym
 
-        unless sub_parsers.has_key?(command)
+        unless sub_parsers.key?(command)
           if command.nil?
             warn main_parser.help
           else
@@ -228,7 +230,6 @@ module Uplot
           exit 1
         end
       end
-
     end
   end
 end
