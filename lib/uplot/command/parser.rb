@@ -124,11 +124,11 @@ module Uplot
           .on('--canvas VAL', String) do |v|
             params.canvas = v
           end
-          .on('--xlim VAL', String) do |v|
-            params.xlim = get_lim(v)
+          .on('--xlim VAL', Array) do |v|
+            params.xlim = v.take(2)
           end
-          .on('--ylim VAL', String) do |v|
-            params.ylim = get_lim(v)
+          .on('--ylim VAL', Array) do |v|
+            params.ylim = v.take(2)
           end
 
         parsers[:lineplots] = \
@@ -136,11 +136,11 @@ module Uplot
           .on('--canvas VAL', String) do |v|
             params.canvas = v
           end
-          .on('--xlim VAL', String) do |v|
-            params.xlim = get_lim(v)
+          .on('--xlim VAL', Array) do |v|
+            params.xlim = v.take(2)
           end
-          .on('--ylim VAL', String) do |v|
-            params.ylim = get_lim(v)
+          .on('--ylim VAL', Array) do |v|
+            params.ylim = v.take(2)
           end
 
         parsers[:scatter] = \
@@ -148,11 +148,11 @@ module Uplot
           .on('--canvas VAL', String) do |v|
             params.canvas = v
           end
-          .on('--xlim VAL', String) do |v|
-            params.xlim = get_lim(v)
+          .on('--xlim VAL', Array) do |v|
+            params.xlim = v.take(2)
           end
-          .on('--ylim VAL', String) do |v|
-            params.ylim = get_lim(v)
+          .on('--ylim VAL', Array) do |v|
+            params.ylim = v.take(2)
           end
 
         parsers[:density] = \
@@ -160,17 +160,17 @@ module Uplot
           .on('--grid', TrueClass) do |v|
             params.grid = v
           end
-          .on('--xlim VAL', String) do |v|
-            params.xlim = get_lim(v)
+          .on('--xlim VAL', Array) do |v|
+            params.xlim = v.take(2)
           end
-          .on('--ylim VAL', String) do |v|
-            params.ylim = get_lim(v)
+          .on('--ylim VAL', Array) do |v|
+            params.ylim = v.take(2)
           end
 
         parsers[:boxplot] = \
           parsers[:box]
-          .on('--xlim VAL', String) do |v|
-            params.xlim = get_lim(v)
+          .on('--xlim VAL', Array) do |v|
+            params.xlim = v.take(2)
           end
 
         parsers[:colors]
@@ -229,9 +229,6 @@ module Uplot
         end
       end
 
-      def get_lim(str)
-        str.split(/-|:|\.\./)[0..1].map(&:to_f)
-      end
     end
   end
 end
