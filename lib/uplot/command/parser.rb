@@ -88,8 +88,13 @@ module Uplot
 
               Usage:   uplot <command> [options]
 
-              Command:
-                  a
+              Command: barplot    bar
+                       histogram  hist
+                       lineplot   line
+                       scatter    s
+                       density    d
+                       boxplot    box
+                       colors
 
               Options:
             MSG
