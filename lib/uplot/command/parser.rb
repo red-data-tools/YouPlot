@@ -26,7 +26,7 @@ module Uplot
         OptionParser.new do |opt|
           opt.program_name = 'uplot'
           opt.version = Uplot::VERSION
-          opt.on('-O', '--output', TrueClass) do |v|
+          opt.on('-O', 'outputs the standard input data to the standard output', TrueClass) do |v|
             @output = v
           end
           opt.on('-d', '--delimiter VAL', 'use DELIM instead of TAB for field delimiter', String) do |v|
