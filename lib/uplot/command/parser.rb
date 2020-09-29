@@ -7,7 +7,7 @@ module Uplot
   class Command
     class Parser
       attr_reader :command, :params,
-                  :delimiter, :transpose, :headers, :output, :count, :fmt, :debug
+                  :delimiter, :transpose, :headers, :pass, :output, :count, :fmt, :debug
 
       def initialize
         @command = nil
@@ -16,7 +16,8 @@ module Uplot
         @delimiter  = "\t"
         @transpose  = false
         @headers    = nil
-        @output     = false
+        @pass       = false
+        @output     = $stderr
         @count      = false
         @fmt        = 'xyy'
         @debug      = false
@@ -26,7 +27,10 @@ module Uplot
         OptionParser.new do |opt|
           opt.program_name = 'uplot'
           opt.version = Uplot::VERSION
-          opt.on('-O', 'outputs the standard input data to the standard output', TrueClass) do |v|
+          opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]') do |v|
+            @pass = v || $stdout
+          end
+          opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
             @output = v
           end
           opt.on('-d', '--delimiter VAL', 'use DELIM instead of TAB for field delimiter', String) do |v|

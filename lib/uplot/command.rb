@@ -25,6 +25,7 @@ module Uplot
       delimiter = parser.delimiter
       transpose = parser.transpose
       headers   = parser.headers
+      pass      = parser.pass
       output    = parser.output
       count     = parser.count
       fmt       = parser.fmt
@@ -41,28 +42,42 @@ module Uplot
         @raw_inputs << input
         @data = Preprocessing.input(input, delimiter, headers, transpose)
         pp @data if @debug
-        case command
-        when :bar, :barplot
-          Plot.barplot(data, params, @count)
-        when :count, :c
-          Plot.barplot(data, params, count = true)
-        when :hist, :histogram
-          Plot.histogram(data, params)
-        when :line, :lineplot
-          Plot.line(data, params)
-        when :lines, :lineplots
-          Plot.lines(data, params, fmt)
-        when :scatter, :s
-          Plot.scatter(data, params, fmt)
-        when :density, :d
-          Plot.density(data, params, fmt)
-        when :box, :boxplot
-          Plot.boxplot(data, params)
-        else
-          raise "unrecognized plot_type: #{command}"
-        end.render($stderr)
+        plot = case command
+               when :bar, :barplot
+                 Plot.barplot(data, params, @count)
+               when :count, :c
+                 Plot.barplot(data, params, count = true)
+               when :hist, :histogram
+                 Plot.histogram(data, params)
+               when :line, :lineplot
+                 Plot.line(data, params)
+               when :lines, :lineplots
+                 Plot.lines(data, params, fmt)
+               when :scatter, :s
+                 Plot.scatter(data, params, fmt)
+               when :density, :d
+                 Plot.density(data, params, fmt)
+               when :box, :boxplot
+                 Plot.boxplot(data, params)
+               else
+                 raise "unrecognized plot_type: #{command}"
+               end
 
-        print input if output
+        if output.is_a?(IO)
+          plot.render(output)
+        else
+          File.open(output, 'w') do |f|
+            plot.render(f)
+          end
+        end
+
+        if pass.is_a?(IO)
+          print input
+        elsif pass
+          File.open(pass, 'w') do |f|
+            f.print(input)
+          end
+        end
       end
     end
   end
