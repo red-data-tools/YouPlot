@@ -26,7 +26,8 @@ module Uplot
         OptionParser.new do |opt|
           opt.program_name = 'uplot'
           opt.version = Uplot::VERSION
-          opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]') do |v|
+          opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
+                 'For inserting uplot in the middle of a Unix pipeline operation') do |v|
             @pass = v || $stdout
           end
           opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
