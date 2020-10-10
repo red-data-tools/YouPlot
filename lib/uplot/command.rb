@@ -28,7 +28,7 @@ module Uplot
       pass      = parser.pass
       output    = parser.output
       fmt       = parser.fmt
-      @debug     = parser.debug
+      @debug    = parser.debug
 
       if command == :colors
         Plot.colors
