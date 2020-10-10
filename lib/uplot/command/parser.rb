@@ -32,46 +32,46 @@ module Uplot
           opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
             @output = v
           end
-          opt.on('-d', '--delimiter VAL', 'use DELIM instead of TAB for field delimiter', String) do |v|
+          opt.on('-d', '--delimiter VAL', String, 'use DELIM instead of TAB for field delimiter') do |v|
             @delimiter = v
           end
-          opt.on('-H', '--headers', 'specify that the input has header row', TrueClass) do |v|
+          opt.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
             @headers = v
           end
           opt.on('-T', '--transpose', TrueClass) do |v|
             @transpose = v
           end
-          opt.on('-t', '--title VAL', 'print string on the top of plot', String) do |v|
+          opt.on('-t', '--title VAL', String, 'print string on the top of plot') do |v|
             params.title = v
           end
-          opt.on('-x', '--xlabel VAL', 'print string on the bottom of the plot', String) do |v|
+          opt.on('-x', '--xlabel VAL', String, 'print string on the bottom of the plot') do |v|
             params.xlabel = v
           end
-          opt.on('-y', '--ylabel VAL', 'print string on the far left of the plot', String) do |v|
+          opt.on('-y', '--ylabel VAL', String, 'print string on the far left of the plot') do |v|
             params.ylabel = v
           end
-          opt.on('-w', '--width VAL', 'number of characters per row', Integer) do |v|
+          opt.on('-w', '--width VAL', Integer, 'number of characters per row') do |v|
             params.width = v
           end
-          opt.on('-h', '--height VAL', 'number of rows', Numeric) do |v|
+          opt.on('-h', '--height VAL', Numeric, 'number of rows') do |v|
             params.height = v
           end
-          opt.on('-b', '--border VAL', 'specify the style of the bounding box', String) do |v|
+          opt.on('-b', '--border VAL', String, 'specify the style of the bounding box') do |v|
             params.border = v.to_sym
           end
-          opt.on('-m', '--margin VAL', 'number of spaces to the left of the plot', Numeric) do |v|
+          opt.on('-m', '--margin VAL', Numeric, 'number of spaces to the left of the plot') do |v|
             params.margin = v
           end
-          opt.on('-p', '--padding VAL', 'space of the left and right of the plot', Numeric) do |v|
+          opt.on('-p', '--padding VAL', Numeric, 'space of the left and right of the plot') do |v|
             params.padding = v
           end
-          opt.on('-c', '--color VAL', 'color of the drawing', String) do |v|
+          opt.on('-c', '--color VAL', String, 'color of the drawing') do |v|
             params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
           end
-          opt.on('--[no-]labels', 'hide the labels', TrueClass) do |v|
+          opt.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
             params.labels = v
           end
-          opt.on('--fmt VAL', 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...', String) do |v|
+          opt.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
             @fmt = v
           end
           opt.on('--debug', TrueClass) do |v|
