@@ -2,6 +2,11 @@
 
 module Uplot
   class Command
+    # UnicodePlot parameters.
+    # * Normally in a Ruby program, you might use hash for the parameter object.
+    # * Here, I use Struct for 2 safety reason.
+    # * The keys are static in Struct. 
+    # * Struct does not conflict with keyword arguments. Hash dose.
     Params = Struct.new(
       # Sort me!
       :title,
