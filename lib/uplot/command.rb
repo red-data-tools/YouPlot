@@ -28,7 +28,7 @@ module Uplot
       pass      = parser.pass
       output    = parser.output
       fmt       = parser.fmt
-      debug     = parser.debug
+      @debug     = parser.debug
 
       if command == :colors
         Plot.colors
@@ -36,7 +36,7 @@ module Uplot
       end
 
       # Sometimes the input file does not end with a newline code.
-      while input = Kernel.gets(nil)
+      while (input = Kernel.gets(nil))
         input.freeze
         @raw_inputs << input
         @data = Preprocessing.input(input, delimiter, headers, transpose)
