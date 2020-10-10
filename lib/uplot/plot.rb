@@ -53,7 +53,7 @@ module Uplot
       (method1.to_s + '!').to_sym
     end
 
-    def xyy_plot(data, method1, params)
+    def plot_xyy(data, method1, params)
       headers = data.headers
       series = data.series
       method2 = get_method2(method1)
@@ -70,7 +70,7 @@ module Uplot
       plot
     end
 
-    def xyxy_plot(data, method1, params)
+    def plot_xyxy(data, method1, params)
       headers = data.headers
       series = data.series
       method2 = get_method2(method1)
@@ -87,34 +87,30 @@ module Uplot
       plot
     end
 
-    def lines(data, params, fmt = 'xyy')
-      check_series_size(data, fmt)
+    def plot_fmt(data, fmt, method1, params)
       case fmt
       when 'xyy'
-        xyy_plot(data, :lineplot, params)
+        plot_xyy(data, method1, params)
       when 'xyxy'
-        xyxy_plot(data, :lineplot, params)
+        plot_xyxy(data, method1, params)
+      else
+        raise "Unknown format: #{fmt}"
       end
+    end
+
+    def lines(data, params, fmt = 'xyy')
+      check_series_size(data, fmt)
+      plot_fmt(data, fmt, :lineplot, params)
     end
 
     def scatter(data, params, fmt = 'xyy')
       check_series_size(data, fmt)
-      case fmt
-      when 'xyy'
-        xyy_plot(data, :scatterplot, params)
-      when 'xyxy'
-        xyxy_plot(data, :scatterplot, params)
-      end
+      plot_fmt(data, fmt, :scatterplot, params)
     end
 
     def density(data, params, fmt = 'xyy')
       check_series_size(data, fmt)
-      case fmt
-      when 'xyy'
-        xyy_plot(data, :densityplot, params)
-      when 'xyxy'
-        xyxy_plot(data, :densityplot, params)
-      end
+      plot_fmt(data, fmt, :densityplot, params)
     end
 
     def boxplot(data, params)
