@@ -71,7 +71,7 @@ module Uplot
           opt.on('--[no-]labels', 'hide the labels', TrueClass) do |v|
             params.labels = v
           end
-          opt.on('--fmt VAL', 'xyy, xyxy', String) do |v|
+          opt.on('--fmt VAL', 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...', String) do |v|
             @fmt = v
           end
           opt.on('--debug', TrueClass) do |v|
