@@ -7,7 +7,7 @@ module Uplot
   module Plot
     module_function
 
-    def barplot(data, params, count = false)
+    def barplot(data, params, count: false)
       headers = data.headers
       series = data.series
       if count

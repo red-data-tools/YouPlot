@@ -45,7 +45,7 @@ module Uplot
                when :bar, :barplot
                  Plot.barplot(data, params)
                when :count, :c
-                 Plot.barplot(data, params, count = true)
+                 Plot.barplot(data, params, count: true)
                when :hist, :histogram
                  Plot.histogram(data, params)
                when :line, :lineplot
