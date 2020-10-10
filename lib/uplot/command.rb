@@ -27,7 +27,6 @@ module Uplot
       headers   = parser.headers
       pass      = parser.pass
       output    = parser.output
-      count     = parser.count
       fmt       = parser.fmt
       debug     = parser.debug
 
@@ -44,7 +43,7 @@ module Uplot
         pp @data if @debug
         plot = case command
                when :bar, :barplot
-                 Plot.barplot(data, params, @count)
+                 Plot.barplot(data, params)
                when :count, :c
                  Plot.barplot(data, params, count = true)
                when :hist, :histogram

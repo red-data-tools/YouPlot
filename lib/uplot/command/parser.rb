@@ -7,7 +7,7 @@ module Uplot
   class Command
     class Parser
       attr_reader :command, :params,
-                  :delimiter, :transpose, :headers, :pass, :output, :count, :fmt, :debug
+                  :delimiter, :transpose, :headers, :pass, :output, :fmt, :debug
 
       def initialize
         @command = nil
@@ -18,7 +18,6 @@ module Uplot
         @headers    = nil
         @pass       = false
         @output     = $stderr
-        @count      = false
         @fmt        = 'xyy'
         @debug      = false
       end
@@ -124,9 +123,6 @@ module Uplot
             end
             parser.on('--xscale VAL', String) do |v|
               params.xscale = v
-            end
-            parser.on('--count', TrueClass) do |v|
-              @count = v
             end
 
           when :count, :c
