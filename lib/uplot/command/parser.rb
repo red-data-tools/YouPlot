@@ -27,7 +27,7 @@ module Uplot
           opt.program_name = 'uplot'
           opt.version = Uplot::VERSION
           opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
-                 'For inserting uplot in the middle of a Unix pipeline operation') do |v|
+                 'for inserting uplot in the middle of Unix pipes') do |v|
             @pass = v || $stdout
           end
           opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
@@ -88,7 +88,9 @@ module Uplot
           main_parser.banner = \
             <<~MSG
               Program: uplot (Tools for plotting on the terminal)
-              Version: #{Uplot::VERSION} (using unicode_plot #{UnicodePlot::VERSION})
+              Version: #{Uplot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
+              Author:  kojix2 <2xijok@gmail.com>
+              Source:  https://github.com/kojix2/uplot
 
               Usage:   uplot <command> [options]
 
@@ -119,37 +121,37 @@ module Uplot
             exit 1
 
           when :barplot, :bar
-            parser.on('--symbol VAL', String) do |v|
+            parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
-            parser.on('--xscale VAL', String) do |v|
+            parser.on('--xscale VAL', String,  'axis scaling') do |v|
               params.xscale = v
             end
 
           when :count, :c
-            parser.on('--symbol VAL', String) do |v|
+            parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
 
           when :histogram, :hist
-            parser.on('-n', '--nbins VAL', Numeric) do |v|
+            parser.on('-n', '--nbins VAL', Numeric, 'approximate number of bins') do |v|
               params.nbins = v
             end
             parser.on('--closed VAL', String) do |v|
               params.closed = v
             end
-            parser.on('--symbol VAL', String) do |v|
+            parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
 
           when :lineplot, :line
-            parser.on('--canvas VAL', String) do |v|
+            parser.on('--canvas VAL', String, 'type of canvas') do |v|
               params.canvas = v
             end
-            parser.on('--xlim VAL', Array) do |v|
+            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array) do |v|
+            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
@@ -157,10 +159,10 @@ module Uplot
             parser.on('--canvas VAL', String) do |v|
               params.canvas = v
             end
-            parser.on('--xlim VAL', Array) do |v|
+            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array) do |v|
+            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
@@ -168,10 +170,10 @@ module Uplot
             parser.on('--canvas VAL', String) do |v|
               params.canvas = v
             end
-            parser.on('--xlim VAL', Array) do |v|
+            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array) do |v|
+            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
@@ -179,15 +181,15 @@ module Uplot
             parser.on('--grid', TrueClass) do |v|
               params.grid = v
             end
-            parser.on('--xlim VAL', Array) do |v|
+            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array) do |v|
+            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
           when :boxplot, :box
-            parser.on('--xlim VAL', Array) do |v|
+            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
 
