@@ -26,24 +26,52 @@ ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
   | uplot hist --nbins 15
 ```
 
-<img src="https://i.imgur.com/wpsoGJq.png" width="75%" height="75%"></img>
+<img src="https://i.imgur.com/wpsoGJq.png" width="75%" height="75%">
 
-<img src="https://i.imgur.com/97R2MQx.png" width="75%" height="75%"></img>
+```sh
+echo "from numpy import random;" \
+     "n = random.randn(10000);"  \
+     "print('\n'.join(str(i) for i in n))" \
+| python \
+| uplot hist --nbins 20
+```
+
+<img src="https://i.imgur.com/97R2MQx.png" width="75%" height="75%">
 
 **scatter**
 
-<img src="https://i.imgur.com/STX7bFT.png" width="75%" height="75%"></img>
+```sh
+curl -s https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv \
+| cut -f1-4 -d, \
+| uplot scatter -H -d, -t IRIS
+```
+
+<img src="https://i.imgur.com/STX7bFT.png" width="75%" height="75%">
 
 **line**
 
-<img src="https://i.imgur.com/PVl5dsa.png" width="75%" height="75%"></img>
+```sh
+curl -s https://www.mhlw.go.jp/content/pcr_positive_daily.csv \
+| cut -f2 -d, \
+| uplot line -w 50 -h 15 -t 'PCR positive tests' --xlabel Date --ylabel number
+```
+
+<img src="https://i.imgur.com/PVl5dsa.png" width="75%" height="75%">
 
 **box**
 
-<img src="https://i.imgur.com/sNI4SmN.png" width="75%" height="75%"></img>
+```sh
+curl -s https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv \
+| cut -f1-4 -d, \
+| uplot box -H -d, -t IRIS
+```
+
+<img src="https://i.imgur.com/sNI4SmN.png" width="75%" height="75%">
 
 
 ## Development
+
+Let's keep it simple.
 
 ## Contributing
 
