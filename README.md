@@ -28,13 +28,20 @@ ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
 
 <img src="https://i.imgur.com/wpsoGJq.png" width="75%" height="75%"></img>
 
+<img src="https://i.imgur.com/97R2MQx.png" width="75%" height="75%"></img>
+
 **scatter**
 
-```sh
-wget https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv -qO - \
- | cut -f1-4 -d, \
- | uplot scatter -H -d, -t IRIS -m 10
-```
+<img src="https://i.imgur.com/STX7bFT.png" width="75%" height="75%"></img>
+
+**line**
+
+<img src="https://i.imgur.com/PVl5dsa.png" width="75%" height="75%"></img>
+
+**box**
+
+<img src="https://i.imgur.com/sNI4SmN.png" width="75%" height="75%"></img>
+
 
 ## Development
 
