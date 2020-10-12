@@ -87,6 +87,7 @@ module Uplot
           # Usage and help messages
           main_parser.banner = \
             <<~MSG
+              
               Program: uplot (Tools for plotting on the terminal)
               Version: #{Uplot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
               Author:  kojix2 <2xijok@gmail.com>
@@ -97,6 +98,7 @@ module Uplot
               Command: barplot    bar
                        histogram  hist
                        lineplot   line
+                       lineplots  lines
                        scatter    s
                        density    d
                        boxplot    box
