@@ -35,14 +35,8 @@ module Uplot
         exit
       end
 
-      watchman = Thread.new do
-        sleep(1)
-        warn 'No input file or piped data provided. Waiting for standard input:'
-      end
-
       # Sometimes the input file does not end with a newline code.
       while (input = Kernel.gets(nil))
-        watchman.kill
         input.freeze
         @raw_inputs << input
         @data = Preprocessing.input(input, delimiter, headers, transpose)
