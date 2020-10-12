@@ -28,6 +28,8 @@ module Uplot
           opt.version       = Uplot::VERSION
           opt.summary_width = 24
           opt.on_tail('') # Add a blank line at the end
+          opt.separator('')
+          opt.on('Options:')
           opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
                  'for inserting uplot in the middle of Unix pipes') do |v|
             @pass = v || $stdout
@@ -105,8 +107,6 @@ module Uplot
                   density    d
                   boxplot    box
                   colors
-
-              Options:
             MSG
         end
       end
@@ -117,7 +117,7 @@ module Uplot
 
             Usage: uplot #{command} [options]
 
-            Options:
+            Options for #{command}:
           MSG
 
           case command
@@ -126,80 +126,80 @@ module Uplot
             exit 1
 
           when :barplot, :bar
-            parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
+            parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
-            parser.on('--xscale VAL', String, 'axis scaling') do |v|
+            parser.on_head('--xscale VAL', String, 'axis scaling') do |v|
               params.xscale = v
             end
 
           when :count, :c
-            parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
+            parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
 
           when :histogram, :hist
-            parser.on('-n', '--nbins VAL', Numeric, 'approximate number of bins') do |v|
+            parser.on_head('-n', '--nbins VAL', Numeric, 'approximate number of bins') do |v|
               params.nbins = v
             end
-            parser.on('--closed VAL', String) do |v|
+            parser.on_head('--closed VAL', String) do |v|
               params.closed = v
             end
-            parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
+            parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
 
           when :lineplot, :line
-            parser.on('--canvas VAL', String, 'type of canvas') do |v|
+            parser.on_head('--canvas VAL', String, 'type of canvas') do |v|
               params.canvas = v
             end
-            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
           when :lineplots, :lines
-            parser.on('--canvas VAL', String) do |v|
+            parser.on_head('--canvas VAL', String) do |v|
               params.canvas = v
             end
-            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
           when :scatter, :s
-            parser.on('--canvas VAL', String) do |v|
+            parser.on_head('--canvas VAL', String) do |v|
               params.canvas = v
             end
-            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
           when :density, :d
-            parser.on('--grid', TrueClass) do |v|
+            parser.on_head('--grid', TrueClass) do |v|
               params.grid = v
             end
-            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
 
           when :boxplot, :box
-            parser.on('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
 
           when :colors
-            parser.on('-n', '--names', TrueClass) do |v|
+            parser.on_head('-n', '--names', TrueClass) do |v|
               @color_names = v
             end
 
