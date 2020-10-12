@@ -9,8 +9,6 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 
 :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
 
-:construction: Under development! :construction:
-
 ## Installation
 
 ```
@@ -79,4 +77,4 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/kojix
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+[MIT License](https://opensource.org/licenses/MIT).
