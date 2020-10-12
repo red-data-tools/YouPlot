@@ -10,22 +10,24 @@ module Uplot
                   :delimiter, :transpose, :headers, :pass, :output, :fmt, :debug
 
       def initialize
-        @command = nil
-        @params = Params.new
+        @command   = nil
+        @params    = Params.new
 
-        @delimiter  = "\t"
-        @transpose  = false
-        @headers    = nil
-        @pass       = false
-        @output     = $stderr
-        @fmt        = 'xyy'
-        @debug      = false
+        @delimiter = "\t"
+        @transpose = false
+        @headers   = nil
+        @pass      = false
+        @output    = $stderr
+        @fmt       = 'xyy'
+        @debug     = false
       end
 
       def create_default_parser
         OptionParser.new do |opt|
-          opt.program_name = 'uplot'
-          opt.version = Uplot::VERSION
+          opt.program_name  = 'uplot'
+          opt.version       = Uplot::VERSION
+          opt.summary_width = 24
+          opt.on_tail('') # Add a blank line at the end
           opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
                  'for inserting uplot in the middle of Unix pipes') do |v|
             @pass = v || $stdout
@@ -90,19 +92,19 @@ module Uplot
               
               Program: uplot (Tools for plotting on the terminal)
               Version: #{Uplot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
-              Author:  kojix2 <2xijok@gmail.com>
               Source:  https://github.com/kojix2/uplot
 
               Usage:   uplot <command> [options]
 
-              Command: barplot    bar
-                       histogram  hist
-                       lineplot   line
-                       lineplots  lines
-                       scatter    s
-                       density    d
-                       boxplot    box
-                       colors
+              Commands:
+                  barplot    bar
+                  histogram  hist
+                  lineplot   line
+                  lineplots  lines
+                  scatter    s
+                  density    d
+                  boxplot    box
+                  colors
 
               Options:
             MSG
@@ -112,6 +114,7 @@ module Uplot
       def sub_parser
         @sub_parser ||= create_default_parser do |parser|
           parser.banner = <<~MSG
+
             Usage: uplot #{command} [options]
 
             Options:
@@ -126,7 +129,7 @@ module Uplot
             parser.on('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
-            parser.on('--xscale VAL', String,  'axis scaling') do |v|
+            parser.on('--xscale VAL', String, 'axis scaling') do |v|
               params.xscale = v
             end
 
