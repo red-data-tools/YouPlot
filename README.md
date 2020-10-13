@@ -15,7 +15,7 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 gem install u-plot
 ```
 
-## Usage
+## Screenshots
 
 **histogram**
 
@@ -66,6 +66,49 @@ curl -s https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.
 
 <img src="https://i.imgur.com/sNI4SmN.png" width="75%" height="75%">
 
+## Usage
+
+`uplot --help`
+
+```
+Program: uplot (Tools for plotting on the terminal)
+Version: 0.2.7 (using UnicodePlot 0.0.4)
+Source:  https://github.com/kojix2/uplot
+
+Usage:   uplot <command> [options]
+
+Commands:
+    barplot    bar
+    histogram  hist
+    lineplot   line
+    lineplots  lines
+    scatter    s
+    density    d
+    boxplot    box
+    colors
+
+Options:
+    -O, --pass [VAL]         file to output standard input data to [stdout]
+                             for inserting uplot in the middle of Unix pipes
+    -o, --output VAL         file to output results to [stderr]
+    -d, --delimiter VAL      use DELIM instead of TAB for field delimiter
+    -H, --headers            specify that the input has header row
+    -T, --transpose
+    -t, --title VAL          print string on the top of plot
+    -x, --xlabel VAL         print string on the bottom of the plot
+    -y, --ylabel VAL         print string on the far left of the plot
+    -w, --width VAL          number of characters per row
+    -h, --height VAL         number of rows
+    -b, --border VAL         specify the style of the bounding box
+    -m, --margin VAL         number of spaces to the left of the plot
+    -p, --padding VAL        space of the left and right of the plot
+    -c, --color VAL          color of the drawing
+        --[no-]labels        hide the labels
+        --fmt VAL            xyxy : header is like x1, y1, x2, y2, x3, y3...
+                             xyy  : header is like x, y1, y2, y2, y3...
+        --debug
+
+```
 
 ## Development
 
