@@ -15,6 +15,8 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 gem install u-plot
 ```
 
+Note the hyphen between u and the plot.
+
 ## Screenshots
 
 **histogram**
@@ -65,6 +67,14 @@ curl -s https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.
 ```
 
 <img src="https://i.imgur.com/sNI4SmN.png" width="75%" height="75%">
+
+**colors**
+
+```sh
+uplot colors
+```
+
+<img src="https://i.imgur.com/LxyHQsz.png">
 
 ## Usage
 
