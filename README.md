@@ -31,7 +31,7 @@ ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
 ```sh
 echo "from numpy import random;" \
      "n = random.randn(10000);"  \
-     "print('\n'.join(str(i) for i in n))" \
+     "print('\\\n'.join(str(i) for i in n))" \
 | python \
 | uplot hist --nbins 20
 ```
