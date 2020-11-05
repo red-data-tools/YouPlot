@@ -96,7 +96,7 @@ module Uplot
               Version: #{Uplot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
               Source:  https://github.com/kojix2/uplot
 
-              Usage:   uplot <command> [options]
+              Usage:   uplot <command> [options] <in.tsv>
 
               Commands:
                   barplot    bar
@@ -115,7 +115,7 @@ module Uplot
         @sub_parser ||= create_default_parser do |parser|
           parser.banner = <<~MSG
 
-            Usage: uplot #{command} [options]
+            Usage: uplot #{command} [options] <in.tsv>
 
             Options for #{command}:
           MSG
