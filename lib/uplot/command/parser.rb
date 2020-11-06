@@ -43,7 +43,7 @@ module Uplot
           opt.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
             @headers = v
           end
-          opt.on('-T', '--transpose', TrueClass) do |v|
+          opt.on('-T', '--transpose', TrueClass, 'transpose the axes of the input data') do |v|
             @transpose = v
           end
           opt.on('-t', '--title VAL', String, 'print string on the top of plot') do |v|
@@ -106,7 +106,10 @@ module Uplot
                   scatter    s
                   density    d
                   boxplot    box
-                  colors
+                  colors                   show the list of available colors
+
+                  count      c             baplot based on the number of occurrences
+                                           (slower than `sort | uniq -c | sort -n -k1`)
             MSG
         end
       end
