@@ -7,19 +7,21 @@ module Uplot
   class Command
     class Parser
       attr_reader :command, :params,
-                  :delimiter, :transpose, :headers, :pass, :output, :fmt, :debug
+                  :delimiter, :transpose, :headers, :pass, :output, :fmt,
+                  :color_names, :debug
 
       def initialize
-        @command   = nil
-        @params    = Params.new
+        @command     = nil
+        @params      = Params.new
 
-        @delimiter = "\t"
-        @transpose = false
-        @headers   = nil
-        @pass      = false
-        @output    = $stderr
-        @fmt       = 'xyy'
-        @debug     = false
+        @delimiter   = "\t"
+        @transpose   = false
+        @headers     = nil
+        @pass        = false
+        @output      = $stderr
+        @fmt         = 'xyy'
+        @debug       = false
+        @color_names = false
       end
 
       def create_default_parser
@@ -202,7 +204,7 @@ module Uplot
             end
 
           when :colors
-            parser.on_head('-n', '--names', TrueClass) do |v|
+            parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
               @color_names = v
             end
 

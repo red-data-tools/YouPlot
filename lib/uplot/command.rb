@@ -31,7 +31,7 @@ module Uplot
       @debug    = parser.debug
 
       if command == :colors
-        Plot.colors
+        Plot.colors(parser.color_names)
         exit
       end
 

@@ -50,7 +50,7 @@ module Uplot
     end
 
     def get_method2(method1)
-      (method1.to_s + '!').to_sym
+      "#{method1}!".to_sym
     end
 
     def plot_xyy(data, method1, params)
@@ -121,12 +121,14 @@ module Uplot
       UnicodePlot.boxplot(headers, series, **params.to_hc)
     end
 
-    def colors
+    def colors(color_names = false)
       UnicodePlot::StyledPrinter::TEXT_COLORS.each do |k, v|
         print v
         print k
-        print "\t"
-        print '  ●'
+        unless color_names
+          print "\t"
+          print '  ●'
+        end
         print "\033[0m"
         print "\t"
       end
