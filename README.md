@@ -119,8 +119,22 @@ Options:
         --[no-]labels        hide the labels
         --fmt VAL            xyxy : header is like x1, y1, x2, y2, x3, y3...
                              xyy  : header is like x, y1, y2, y2, y3...
+```
 
+Use `--help` to print the subcommand-specific options.
 
+`uplot hist --help`
+
+```
+Usage: uplot histogram [options] <in.tsv>
+
+Options for histogram:
+        --symbol VAL         character to be used to plot the bars
+        --closed VAL
+    -n, --nbins VAL          approximate number of bins
+
+Options:
+...
 ```
 
 ## Development
