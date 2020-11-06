@@ -121,7 +121,7 @@ Options:
                              xyy  : header is like x, y1, y2, y2, y3...
 ```
 
-Use `--help` to print the subcommand-specific options.
+Use `--help` to print command-specific options.
 
 `uplot hist --help`
 
