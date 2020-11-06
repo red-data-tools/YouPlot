@@ -85,7 +85,7 @@ Program: uplot (Tools for plotting on the terminal)
 Version: 0.2.7 (using UnicodePlot 0.0.4)
 Source:  https://github.com/kojix2/uplot
 
-Usage:   uplot <command> [options]
+Usage:   uplot <command> [options] <in.tsv>
 
 Commands:
     barplot    bar
@@ -95,7 +95,10 @@ Commands:
     scatter    s
     density    d
     boxplot    box
-    colors
+    colors                   show the list of available colors
+
+    count      c             baplot based on the number of occurrences
+                             (slower than `sort | uniq -c | sort -n -k1`)
 
 Options:
     -O, --pass [VAL]         file to output standard input data to [stdout]
@@ -103,7 +106,7 @@ Options:
     -o, --output VAL         file to output results to [stderr]
     -d, --delimiter VAL      use DELIM instead of TAB for field delimiter
     -H, --headers            specify that the input has header row
-    -T, --transpose
+    -T, --transpose          transpose the axes of the input data
     -t, --title VAL          print string on the top of plot
     -x, --xlabel VAL         print string on the bottom of the plot
     -y, --ylabel VAL         print string on the far left of the plot
@@ -116,7 +119,7 @@ Options:
         --[no-]labels        hide the labels
         --fmt VAL            xyxy : header is like x1, y1, x2, y2, x3, y3...
                              xyy  : header is like x, y1, y2, y2, y3...
-        --debug
+
 
 ```
 
