@@ -11,7 +11,7 @@ module Uplot
       headers = data.headers
       series = data.series
       if count
-        series = Preprocessing.count(series[0])
+        series = Preprocessing.count_values(series[0])
         params.title = headers[0] if headers
       end
       params.title ||= headers[1] if headers

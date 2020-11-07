@@ -71,7 +71,7 @@ module Uplot
       end
     end
 
-    def count(arr)
+    def count_values(arr)
       # tally was added in Ruby 2.7
       if Enumerable.method_defined? :tally
         arr.tally
