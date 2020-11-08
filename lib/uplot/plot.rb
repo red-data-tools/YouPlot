@@ -15,7 +15,7 @@ module Uplot
         params.title = headers[0] if headers
       end
       params.title ||= headers[1] if headers
-      labels = series[0]
+      labels = series[0].map(&:to_s)
       values = series[1].map(&:to_f)
       UnicodePlot.barplot(labels, values, **params.to_hc)
     end
