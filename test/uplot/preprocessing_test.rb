@@ -125,8 +125,8 @@ class UplotPreprocessingTest < Test::Unit::TestCase
                                              [3, 5, 6]], false, false))
   end
 
-  test :count do
-    assert_equal([%i[a b c], [3, 2, 1]], @m.count(%i[a a a b b c]))
-    assert_equal([%i[c b a], [3, 2, 1]], @m.count(%i[a b b c c c]))
+  test :count_values do
+    assert_equal([%i[a b c], [3, 2, 1]], @m.count_values(%i[a a a b b c]))
+    assert_equal([%i[c b a], [3, 2, 1]], @m.count_values(%i[a b b c c c]))
   end
 end
