@@ -8,13 +8,10 @@ module Uplot
 
   class Command
     attr_accessor :params
-    attr_reader :raw_inputs, :data, :fmt, :parser
+    attr_reader :data, :fmt, :parser
 
     def initialize
       @params = Params.new
-
-      @raw_inputs = []
-
       @parser = Parser.new
     end
 
@@ -38,7 +35,6 @@ module Uplot
       # Sometimes the input file does not end with a newline code.
       while (input = Kernel.gets(nil))
         input.freeze
-        @raw_inputs << input
         @data = Preprocessing.input(input, delimiter, headers, transpose)
         pp @data if @debug
         plot = case command
