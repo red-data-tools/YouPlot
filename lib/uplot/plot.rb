@@ -10,13 +10,21 @@ module Uplot
     def barplot(data, params, count: false)
       headers = data.headers
       series = data.series
+      # `uplot count`
       if count
         series = Preprocessing.count_values(series[0])
         params.title = headers[0] if headers
       end
-      params.title ||= headers[1] if headers
-      labels = series[0].map(&:to_s)
-      values = series[1].map(&:to_f)
+      if series.size == 1
+        # If there is only one series, use the line number for label.
+        params.title ||= headers[0] if headers
+        labels = Array.new(series[0].size){|i| (i+1).to_s}
+        values = series[0].map(&:to_f)
+      else
+        params.title ||= headers[1] if headers
+        labels = series[0]
+        values = series[1].map(&:to_f)
+      end
       UnicodePlot.barplot(labels, values, **params.to_hc)
     end
 
