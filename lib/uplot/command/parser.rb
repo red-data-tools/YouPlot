@@ -31,7 +31,7 @@ module Uplot
           opt.summary_width = 24
           opt.on_tail('') # Add a blank line at the end
           opt.separator('')
-          opt.on('Options:')
+          opt.on('Common options:')
           opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
                  'for inserting uplot in the middle of Unix pipes') do |v|
             @pass = v || $stdout
@@ -97,6 +97,9 @@ module Uplot
       def main_parser
         @main_parser ||= create_default_parser do |main_parser|
           # Usage and help messages
+          # Here, help is stored in the banner.
+          # Because help of main_parser may be called by sub_parser method, 
+          # local variable is not used.
           main_parser.banner = \
             <<~MSG
               
@@ -118,7 +121,20 @@ module Uplot
 
                   count      c             draw a baplot based on the number of 
                                            occurrences (slow)
+              
+              General options:
+                  --help                   print command specific help menu
+                  --version                print the version of uplot
             MSG
+
+          # Actually, main_parser can take common optional arguments.
+          # However, these options dose not be shown in the help menu.
+          # I think the main help should be simple.
+          main_parser.on('--help', 'print sub-command help menu') do
+            puts main_parser.banner
+            puts
+            exit
+          end
         end
       end
 
@@ -132,8 +148,11 @@ module Uplot
           MSG
 
           case command
+          
+          # If you type only `uplot` in the terminal.
           when nil
-            warn main_parser.help
+            warn main_parser.banner
+            warn "\n"
             exit 1
 
           when :barplot, :bar
