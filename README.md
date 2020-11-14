@@ -15,7 +15,7 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 gem install u-plot
 ```
 
-Note the hyphen between u and the plot.
+Note: The name of the Gem is `u-plot` (not uplot).
 
 ## Screenshots
 
