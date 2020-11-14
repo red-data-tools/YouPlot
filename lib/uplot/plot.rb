@@ -18,7 +18,7 @@ module Uplot
       if series.size == 1
         # If there is only one series, use the line number for label.
         params.title ||= headers[0] if headers
-        labels = Array.new(series[0].size){|i| (i+1).to_s}
+        labels = Array.new(series[0].size) { |i| (i + 1).to_s }
         values = series[0].map(&:to_f)
       else
         params.title ||= headers[1] if headers

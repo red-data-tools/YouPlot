@@ -148,7 +148,7 @@ module Uplot
           MSG
 
           case command
-          
+
           # If you type only `uplot` in the terminal.
           when nil
             warn main_parser.banner

@@ -62,12 +62,10 @@ module Uplot
         else
           arr
         end
+      elsif headers
+        transpose2(arr[1..-1])
       else
-        if headers
-          transpose2(arr[1..-1])
-        else
-          transpose2(arr)
-        end
+        transpose2(arr)
       end
     end
 
