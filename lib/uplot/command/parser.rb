@@ -96,10 +96,9 @@ module Uplot
 
       def main_parser
         @main_parser ||= create_default_parser do |main_parser|
-          # Usage and help messages
-          # Here, help is stored in the banner.
-          # Because help of main_parser may be called by sub_parser method, 
-          # local variable is not used.
+          # Here, help message is stored in the banner.
+          # Because help of main_parser may be referred by `sub_parser`.
+          
           main_parser.banner = \
             <<~MSG
               
