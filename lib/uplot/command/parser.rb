@@ -81,7 +81,7 @@ module Uplot
           opt.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
             @fmt = v
           end
-          opt.on('--debug', TrueClass) do |v|
+          opt.on('--debug', TrueClass, 'print preprocessed data') do |v|
             @debug = v
           end
           yield opt if block_given?
@@ -101,17 +101,17 @@ module Uplot
               Usage:   uplot <command> [options] <in.tsv>
 
               Commands:
-                  barplot    bar
-                  histogram  hist
-                  lineplot   line
-                  lineplots  lines
-                  scatter    s
-                  density    d
-                  boxplot    box
+                  barplot    bar           draw a horizontal barplot
+                  histogram  hist          draw a horizontal histogram
+                  lineplot   line          draw a line chart
+                  lineplots  lines         draw a line chart with multiple series
+                  scatter    s             draw a scatter plot
+                  density    d             draw a density plot
+                  boxplot    box           draw a horizontal boxplot
                   colors                   show the list of available colors
 
-                  count      c             baplot based on the number of occurrences
-                                           (slower than `sort | uniq -c | sort -n -k1`)
+                  count      c             draw a baplot based on the number of 
+                                           occurrences (slow)
             MSG
         end
       end
