@@ -1,6 +1,6 @@
 # uplot
 
-[![Build Status](https://travis-ci.com/kojix2/uplot.svg?branch=master)](https://travis-ci.com/kojix2/uplot)
+![Build Status](https://github.com/kojix2/uplot/workflows/test/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/u-plot.svg)](https://badge.fury.io/rb/u-plot)
 [![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](https://rubydoc.info/gems/u-plot)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
