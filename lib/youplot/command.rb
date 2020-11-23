@@ -3,6 +3,9 @@
 require_relative 'preprocessing'
 require_relative 'command/parser'
 
+# FIXME
+require_relative 'backends/unicode_plot_backend'
+
 module YouPlot
   Data = Struct.new(:headers, :series)
 
@@ -11,8 +14,9 @@ module YouPlot
     attr_reader :data, :fmt, :parser
 
     def initialize
-      @params = Params.new
-      @parser = Parser.new
+      @params  = Params.new
+      @parser  = Parser.new
+      @backend = YouPlot::Backends::UnicodePlotBackend
     end
 
     def run
@@ -28,7 +32,7 @@ module YouPlot
       @debug    = parser.debug
 
       if command == :colors
-        Plot.colors(parser.color_names)
+        @backend.colors(parser.color_names)
         exit
       end
 
@@ -39,21 +43,21 @@ module YouPlot
         pp @data if @debug
         plot = case command
                when :bar, :barplot
-                 Plot.barplot(data, params)
+                 @backend.barplot(data, params)
                when :count, :c
-                 Plot.barplot(data, params, count: true)
+                 @backend.barplot(data, params, count: true)
                when :hist, :histogram
-                 Plot.histogram(data, params)
+                 @backend.histogram(data, params)
                when :line, :lineplot
-                 Plot.line(data, params)
+                 @backend.line(data, params)
                when :lines, :lineplots
-                 Plot.lines(data, params, fmt)
+                 @backend.lines(data, params, fmt)
                when :scatter, :s
-                 Plot.scatter(data, params, fmt)
+                 @backend.scatter(data, params, fmt)
                when :density, :d
-                 Plot.density(data, params, fmt)
+                 @backend.density(data, params, fmt)
                when :box, :boxplot
-                 Plot.boxplot(data, params)
+                 @backend.boxplot(data, params)
                else
                  raise "unrecognized plot_type: #{command}"
                end
