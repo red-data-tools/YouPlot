@@ -30,6 +30,7 @@ module YouPlot
       pass      = parser.pass
       output    = parser.output
       fmt       = parser.fmt
+      @encoding = parser.encoding
       @debug    = parser.debug
 
       if command == :colors
@@ -40,7 +41,12 @@ module YouPlot
       # Sometimes the input file does not end with a newline code.
       while (input = Kernel.gets(nil))
         input.freeze
-        @data = Preprocessing.input(input, delimiter, headers, transpose)
+        @data = if @encoding
+                  input2 = input.dup.force_encoding(@encoding).encode('utf-8')
+                  Preprocessing.input(input2, delimiter, headers, transpose)
+                else
+                  Preprocessing.input(input, delimiter, headers, transpose)
+                end
         pp @data if @debug
         plot = case command
                when :bar, :barplot

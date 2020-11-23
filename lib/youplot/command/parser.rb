@@ -8,7 +8,7 @@ module YouPlot
     class Parser
       attr_reader :command, :params,
                   :delimiter, :transpose, :headers, :pass, :output, :fmt,
-                  :color_names, :debug
+                  :color_names, :encoding, :debug
 
       def initialize
         @command     = nil
@@ -20,6 +20,7 @@ module YouPlot
         @pass        = false
         @output      = $stderr
         @fmt         = 'xyy'
+        @encoding    = nil
         @debug       = false
         @color_names = false
       end
@@ -80,6 +81,9 @@ module YouPlot
           end
           opt.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
             @fmt = v
+          end
+          opt.on('--encoding VAL', String, 'Specify the input encoding') do |v|
+            @encoding = v
           end
           # Optparse adds the help option, but it doesn't show up in usage.
           # This is why you need the code below.
