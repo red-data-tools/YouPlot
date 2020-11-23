@@ -2,9 +2,9 @@
 
 require_relative '../test_helper'
 
-class UplotPreprocessingTest < Test::Unit::TestCase
+class YouPlotPreprocessingTest < Test::Unit::TestCase
   def setup
-    @m = Uplot::Preprocessing
+    @m = YouPlot::Preprocessing
   end
 
   test :transpose2 do

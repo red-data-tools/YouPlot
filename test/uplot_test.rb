@@ -2,8 +2,8 @@
 
 require 'test_helper'
 
-class UplotTest < Test::Unit::TestCase
+class YouPlotTest < Test::Unit::TestCase
   def test_that_it_has_a_version_number
-    assert_kind_of String, ::Uplot::VERSION
+    assert_kind_of String, ::YouPlot::VERSION
   end
 end

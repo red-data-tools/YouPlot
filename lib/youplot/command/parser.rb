@@ -3,7 +3,7 @@
 require 'optparse'
 require_relative 'params'
 
-module Uplot
+module YouPlot
   class Command
     class Parser
       attr_reader :command, :params,
@@ -26,14 +26,14 @@ module Uplot
 
       def create_default_parser
         OptionParser.new do |opt|
-          opt.program_name  = 'uplot'
-          opt.version       = Uplot::VERSION
+          opt.program_name  = 'YouPlot'
+          opt.version       = YouPlot::VERSION
           opt.summary_width = 24
           opt.on_tail('') # Add a blank line at the end
           opt.separator('')
           opt.on('Common options:')
           opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
-                 'for inserting uplot in the middle of Unix pipes') do |v|
+                 'for inserting YouPlot in the middle of Unix pipes') do |v|
             @pass = v || $stdout
           end
           opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
@@ -102,9 +102,9 @@ module Uplot
           main_parser.banner = \
             <<~MSG
               
-              Program: uplot (Tools for plotting on the terminal)
-              Version: #{Uplot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
-              Source:  https://github.com/kojix2/uplot
+              Program: YouPlot (Tools for plotting on the terminal)
+              Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
+              Source:  https://github.com/kojix2/youplot
 
               Usage:   uplot <command> [options] <in.tsv>
 
@@ -123,7 +123,7 @@ module Uplot
               
               General options:
                   --help                   print command specific help menu
-                  --version                print the version of uplot
+                  --version                print the version of YouPlot 
             MSG
 
           # Actually, main_parser can take common optional arguments.
@@ -141,7 +141,7 @@ module Uplot
         @sub_parser ||= create_default_parser do |parser|
           parser.banner = <<~MSG
 
-            Usage: uplot #{command} [options] <in.tsv>
+            Usage: YouPlot #{command} [options] <in.tsv>
 
             Options for #{command}:
           MSG

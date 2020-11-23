@@ -1,8 +1,8 @@
-# uplot
+# YouPlot
 
-![Build Status](https://github.com/kojix2/uplot/workflows/test/badge.svg)
-[![Gem Version](https://badge.fury.io/rb/u-plot.svg)](https://badge.fury.io/rb/u-plot)
-[![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](https://rubydoc.info/gems/u-plot)
+![Build Status](https://github.com/kojix2/youplot/workflows/test/badge.svg)
+[![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
+[![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](https://rubydoc.info/gems/youplot)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 
 Create ASCII charts on the terminal with data from standard streams in the pipeline. 
@@ -12,10 +12,8 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 ## Installation
 
 ```
-gem install u-plot
+gem install youplot
 ```
-
-Note: The name of the Gem is `u-plot` (not uplot).
 
 ## Screenshots
 
@@ -81,9 +79,9 @@ uplot colors
 `uplot --help`
 
 ```
-Program: uplot (Tools for plotting on the terminal)
+Program: YouPlot (Tools for plotting on the terminal)
 Version: 0.2.7 (using UnicodePlot 0.0.4)
-Source:  https://github.com/kojix2/uplot
+Source:  https://github.com/kojix2/youplot
 
 Usage:   uplot <command> [options] <in.tsv>
 
@@ -102,7 +100,7 @@ Commands:
 
 Options:
     -O, --pass [VAL]         file to output standard input data to [stdout]
-                             for inserting uplot in the middle of Unix pipes
+                             for inserting YouPlot in the middle of Unix pipes
     -o, --output VAL         file to output results to [stderr]
     -d, --delimiter VAL      use DELIM instead of TAB for field delimiter
     -H, --headers            specify that the input has header row
@@ -143,7 +141,7 @@ Let's keep it simple.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/kojix2/uplot](https://github.com/kojix2/uplot).
+Bug reports and pull requests are welcome on GitHub at [https://github.com/kojix2/youplot](https://github.com/kojix2/youplot).
 
 ## License
 

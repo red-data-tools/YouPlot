@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/uplot/version'
+require_relative 'lib/youplot/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'u-plot'
-  spec.version       = Uplot::VERSION
+  spec.name          = 'youplot'
+  spec.version       = YouPlot::VERSION
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 
@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     Create ASCII charts on the terminal with data from standard streams in the 
     pipeline. 
   MSG
-  spec.homepage      = 'https://github.com/kojix2/uplot'
+  spec.homepage      = 'https://github.com/kojix2/youplot'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 

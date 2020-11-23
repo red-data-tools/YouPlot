@@ -3,6 +3,6 @@
 require 'simplecov'
 SimpleCov.start
 
-require 'uplot'
+require 'youplot'
 
 require 'test/unit'

@@ -2,7 +2,7 @@
 
 require 'unicode_plot'
 
-module Uplot
+module YouPlot
   # plotting functions.
   module Plot
     module_function
@@ -146,7 +146,7 @@ module Uplot
     def check_series_size(data, fmt)
       series = data.series
       if series.size == 1
-        warn 'uplot: There is only one series of input data. Please check the delimiter.'
+        warn 'youplot: There is only one series of input data. Please check the delimiter.'
         warn ''
         warn "  Headers: \e[35m#{data.headers.inspect}\e[0m"
         warn "  The first item is: \e[35m\"#{series[0][0]}\"\e[0m"
@@ -154,7 +154,7 @@ module Uplot
         exit 1
       end
       if fmt == 'xyxy' && series.size.odd?
-        warn 'uplot: In the xyxy format, the number of series must be even.'
+        warn 'YouPlot: In the xyxy format, the number of series must be even.'
         warn ''
         warn "  Number of series: \e[35m#{series.size}\e[0m"
         warn "  Headers: \e[35m#{data.headers.inspect}\e[0m"

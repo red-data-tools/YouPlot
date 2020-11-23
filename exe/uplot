@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'uplot'
+require 'youplot'
 
-Uplot::Command.new.run
+YouPlot::Command.new.run

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Uplot
+module YouPlot
   class Command
     # UnicodePlot parameters.
     # * Normally in a Ruby program, you might use hash for the parameter object.

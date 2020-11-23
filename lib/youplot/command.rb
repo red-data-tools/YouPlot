@@ -3,7 +3,7 @@
 require_relative 'preprocessing'
 require_relative 'command/parser'
 
-module Uplot
+module YouPlot
   Data = Struct.new(:headers, :series)
 
   class Command

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module Uplot
-  VERSION = '0.2.8'
+module YouPlot
+  VERSION = '0.3.0'
 end

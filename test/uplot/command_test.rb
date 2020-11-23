@@ -2,5 +2,5 @@
 
 require_relative '../test_helper'
 
-class UplotCommandTest < Test::Unit::TestCase
+class YouPlotCommandTest < Test::Unit::TestCase
 end

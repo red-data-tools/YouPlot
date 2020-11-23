@@ -2,7 +2,7 @@
 
 require 'csv'
 
-module Uplot
+module YouPlot
   module Preprocessing
     module_function
 
