@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*']
   spec.bindir        = 'exe'
-  spec.executables   = ['uplot']
+  spec.executables   = ['uplot', 'youplot']
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'unicode_plot'
