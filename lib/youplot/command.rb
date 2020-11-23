@@ -13,14 +13,15 @@ module YouPlot
     attr_accessor :params
     attr_reader :data, :fmt, :parser
 
-    def initialize
+    def initialize(argv = ARGV)
+      @argv    = argv
       @params  = Params.new
       @parser  = Parser.new
       @backend = YouPlot::Backends::UnicodePlotBackend
     end
 
     def run
-      parser.parse_options
+      parser.parse_options(@argv)
       command   = parser.command
       params    = parser.params
       delimiter = parser.delimiter
@@ -62,7 +63,8 @@ module YouPlot
                  raise "unrecognized plot_type: #{command}"
                end
 
-        if output.is_a?(IO)
+        case output
+        when IO
           plot.render(output)
         else
           File.open(output, 'w') do |f|
@@ -70,11 +72,14 @@ module YouPlot
           end
         end
 
-        if pass.is_a?(IO)
-          print input
-        elsif pass
-          File.open(pass, 'w') do |f|
-            f.print(input)
+        case pass
+        when IO
+          pass.print(input)
+        else
+          if pass
+            File.open(pass, 'w') do |f|
+              f.print(input)
+            end
           end
         end
       end
