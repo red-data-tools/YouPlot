@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'processing'
 require 'unicode_plot'
 
 module YouPlot
@@ -13,7 +14,7 @@ module YouPlot
         series = data.series
         # `uplot count`
         if count
-          series = Preprocessing.count_values(series[0])
+          series = Processing.count_values(series[0])
           params.title = headers[0] if headers
         end
         if series.size == 1
