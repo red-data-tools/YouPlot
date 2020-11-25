@@ -6,7 +6,7 @@ module YouPlot
   # Read and interpret Delimiter-separated values format file or stream.
   module DSVReader
     module_function
-    
+
     def input(input, delimiter, headers, transpose)
       arr = parse_as_csv(input, delimiter)
       headers = get_headers(arr, headers, transpose)
