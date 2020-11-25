@@ -40,14 +40,28 @@ module YouPlot
 
       # Sometimes the input file does not end with a newline code.
       while (input = Kernel.gets(nil))
-        input.freeze
+
+        # Pass the input to subsequent pipelines
+        case pass
+        when IO
+          pass.print(input)
+        else
+          if pass
+            File.open(pass, 'w') do |f|
+              f.print(input)
+            end
+          end
+        end
+
         @data = if @encoding
                   input2 = input.dup.force_encoding(@encoding).encode('utf-8')
                   Preprocessing.input(input2, delimiter, headers, transpose)
                 else
                   Preprocessing.input(input, delimiter, headers, transpose)
                 end
+
         pp @data if @debug
+
         plot = case command
                when :bar, :barplot
                  @backend.barplot(data, params)
@@ -78,16 +92,6 @@ module YouPlot
           end
         end
 
-        case pass
-        when IO
-          pass.print(input)
-        else
-          if pass
-            File.open(pass, 'w') do |f|
-              f.print(input)
-            end
-          end
-        end
       end
     end
   end
