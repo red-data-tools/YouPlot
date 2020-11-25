@@ -3,9 +3,10 @@
 require 'csv'
 
 module YouPlot
-  module Preprocessing
+  # Read and interpret Delimiter-separated values format file or stream.
+  module DSVReader
     module_function
-
+    
     def input(input, delimiter, headers, transpose)
       arr = parse_as_csv(input, delimiter)
       headers = get_headers(arr, headers, transpose)
@@ -67,20 +68,6 @@ module YouPlot
       else
         transpose2(arr)
       end
-    end
-
-    def count_values(arr)
-      # tally was added in Ruby 2.7
-      if Enumerable.method_defined? :tally
-        arr.tally
-      else
-        # https://github.com/marcandre/backports
-        arr.each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }
-           .tap { |h| h.default = nil }
-      end
-        .sort { |a, b| a[1] <=> b[1] }
-        .reverse
-        .transpose
     end
   end
 end

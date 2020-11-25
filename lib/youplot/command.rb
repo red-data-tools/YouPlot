@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'preprocessing'
+require_relative 'dsv_reader'
 require_relative 'command/parser'
 
 # FIXME
@@ -55,9 +55,9 @@ module YouPlot
 
         @data = if @encoding
                   input2 = input.dup.force_encoding(@encoding).encode('utf-8')
-                  Preprocessing.input(input2, delimiter, headers, transpose)
+                  DSVReader.input(input2, delimiter, headers, transpose)
                 else
-                  Preprocessing.input(input, delimiter, headers, transpose)
+                  DSVReader.input(input, delimiter, headers, transpose)
                 end
 
         pp @data if @debug
