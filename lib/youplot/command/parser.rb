@@ -79,9 +79,6 @@ module YouPlot
           opt.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
             params.labels = v
           end
-          opt.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-            @fmt = v
-          end
           opt.on('--encoding VAL', String, 'Specify the input encoding') do |v|
             @encoding = v
           end
@@ -165,6 +162,9 @@ module YouPlot
             parser.on_head('--xscale VAL', String, 'axis scaling') do |v|
               params.xscale = v
             end
+            parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
+              @fmt = v
+            end
 
           when :count, :c
             parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
@@ -192,6 +192,9 @@ module YouPlot
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
+            parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
+              @fmt = v
+            end
 
           when :lineplots, :lines
             parser.on_head('--canvas VAL', String) do |v|
@@ -202,6 +205,9 @@ module YouPlot
             end
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
+            end
+            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+              @fmt = v
             end
 
           when :scatter, :s
@@ -214,6 +220,9 @@ module YouPlot
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
+            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+              @fmt = v
+            end
 
           when :density, :d
             parser.on_head('--grid', TrueClass) do |v|
@@ -224,6 +233,9 @@ module YouPlot
             end
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
+            end
+            parser.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+              @fmt = v
             end
 
           when :boxplot, :box

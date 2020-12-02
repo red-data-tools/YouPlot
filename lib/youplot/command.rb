@@ -64,13 +64,13 @@ module YouPlot
 
         plot = case command
                when :bar, :barplot
-                 @backend.barplot(data, params)
+                 @backend.barplot(data, params, fmt)
                when :count, :c
                  @backend.barplot(data, params, count: true)
                when :hist, :histogram
                  @backend.histogram(data, params)
                when :line, :lineplot
-                 @backend.line(data, params)
+                 @backend.line(data, params, fmt)
                when :lines, :lineplots
                  @backend.lines(data, params, fmt)
                when :scatter, :s

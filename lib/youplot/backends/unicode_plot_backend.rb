@@ -9,7 +9,7 @@ module YouPlot
     module UnicodePlotBackend
       module_function
 
-      def barplot(data, params, count: false)
+      def barplot(data, params, fmt = nil, count: false)
         headers = data.headers
         series = data.series
         # `uplot count`
@@ -18,14 +18,24 @@ module YouPlot
           params.title = headers[0] if headers
         end
         if series.size == 1
-          # If there is only one series, use the line number for label.
+          # If there is only one series.use the line number for label.
           params.title ||= headers[0] if headers
           labels = Array.new(series[0].size) { |i| (i + 1).to_s }
           values = series[0].map(&:to_f)
         else
-          params.title ||= headers[1] if headers
-          labels = series[0]
-          values = series[1].map(&:to_f)
+          # If there are 2 or more series...
+          if fmt == 'yx'
+            # assume that the first 2 series are the y and x series respectively.
+            x_col = 1
+            y_col = 0
+          else
+            # assume that the first 2 series are the x and y series respectively.
+            x_col = 0
+            y_col = 1
+          end
+          params.title ||= headers[y_col] if headers
+          labels = series[x_col]
+          values = series[y_col].map(&:to_f)
         end
         UnicodePlot.barplot(labels, values, **params.to_hc)
       end
@@ -38,7 +48,7 @@ module YouPlot
         UnicodePlot.histogram(values, **params.to_hc)
       end
 
-      def line(data, params)
+      def line(data, params, fmt = nil)
         headers = data.headers
         series = data.series
         if series.size == 1
@@ -47,14 +57,22 @@ module YouPlot
           y = series[0].map(&:to_f)
           UnicodePlot.lineplot(y, **params.to_hc)
         else
-          # If there are 2 or more series,
-          # assume that the first 2 series are the x and y series respectively.
-          if headers
-            params.xlabel ||= headers[0]
-            params.ylabel ||= headers[1]
+          # If there are 2 or more series...
+          if fmt == 'yx'
+            # assume that the first 2 series are the y and x series respectively.
+            x_col = 1
+            y_col = 0
+          else
+            # assume that the first 2 series are the x and y series respectively.
+            x_col = 0
+            y_col = 1
           end
-          x = series[0].map(&:to_f)
-          y = series[1].map(&:to_f)
+          if headers
+            params.xlabel ||= headers[x_col]
+            params.ylabel ||= headers[y_col]
+          end
+          x = series[x_col].map(&:to_f)
+          y = series[y_col].map(&:to_f)
           UnicodePlot.lineplot(x, y, **params.to_hc)
         end
       end
@@ -103,6 +121,8 @@ module YouPlot
           plot_xyy(data, method1, params)
         when 'xyxy'
           plot_xyxy(data, method1, params)
+        when 'yx'
+          raise "Incorrect format: #{fmt}"
         else
           raise "Unknown format: #{fmt}"
         end
