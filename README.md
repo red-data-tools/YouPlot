@@ -73,11 +73,12 @@ curl -sL https://git.io/YouPlotIris \
 
 Note: `count` is slower than other Unix commands because it runs in a Ruby script.
 
-### colors
 
-```sh
-uplot colors
-```
+## Usage
+
+### file
+
+### stream
 
 ### help
 
@@ -96,6 +97,13 @@ Options for histogram:
 Options:
 ...
 ```
+
+### colors
+
+```sh
+uplot colors
+```
+
 
 ## Development
 
