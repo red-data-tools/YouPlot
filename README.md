@@ -26,15 +26,17 @@ gem install youplot
 ### histogram
 
 ```sh
-curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris.csv \
-| cut -f1-4 -d, \
-| uplot scatter -H -d, -t IRIS
+echo -e "from numpy import random;" \
+        "n = random.randn(10000);"  \
+        "print('\\\n'.join(str(i) for i in n))" \
+| python \
+| uplot hist --nbins 20
 ```
 
 ### lineplot
 
 ```sh
-curl -s https://www.mhlw.go.jp/content/pcr_positive_daily.csv \
+curl -s https://git.io/YouPlotIris \
 | cut -f2 -d, \
 | uplot line -w 50 -h 15 -t 'PCR positive tests' --xlabel Date --ylabel number
 ```
@@ -42,7 +44,7 @@ curl -s https://www.mhlw.go.jp/content/pcr_positive_daily.csv \
 ### scatter
 
 ```sh
-curl -s https://git.io/JIiqE \
+curl -s https://git.io/YouPlotIris \
 | cut -f1-4 \
 | uplot scatter -H -t IRIS
 ```
@@ -50,7 +52,7 @@ curl -s https://git.io/JIiqE \
 ### density
 
 ```sh
-curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris.csv \
+curl -s https://git.io/YouPlotIris \
 | cut -f1-4 \
 | uplot density -H -t IRIS
 ```
@@ -58,7 +60,7 @@ curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris
 ### boxplot
 
 ```sh
-curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris.csv \
+curl -s https://git.io/YouPlotIris \
 | cut -f1-4 \
 | uplot boxplot -H -t IRIS
 ```
