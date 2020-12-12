@@ -36,15 +36,15 @@ echo -e "from numpy import random;" \
 ### lineplot
 
 ```sh
-curl -s https://git.io/YouPlotIris \
-| cut -f2 -d, \
-| uplot line -w 50 -h 15 -t 'PCR positive tests' --xlabel Date --ylabel number
+curl -sL https://git.io/AirPassengers \ # CSV
+| cut -f2,3 -d, \
+| uplot line -w 50 -h 15 -t 'AirPassengers' --xlim 1950,1960
 ```
 
 ### scatter
 
 ```sh
-curl -s https://git.io/YouPlotIris \
+curl -sL https://git.io/YouPlotIris \ # TSV
 | cut -f1-4 \
 | uplot scatter -H -t IRIS
 ```
@@ -52,7 +52,7 @@ curl -s https://git.io/YouPlotIris \
 ### density
 
 ```sh
-curl -s https://git.io/YouPlotIris \
+curl -sL https://git.io/YouPlotIris \
 | cut -f1-4 \
 | uplot density -H -t IRIS
 ```
@@ -60,7 +60,7 @@ curl -s https://git.io/YouPlotIris \
 ### boxplot
 
 ```sh
-curl -s https://git.io/YouPlotIris \
+curl -sL https://git.io/YouPlotIris \
 | cut -f1-4 \
 | uplot boxplot -H -t IRIS
 ```
