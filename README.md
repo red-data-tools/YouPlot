@@ -53,7 +53,7 @@ curl -sL https://git.io/AirPassengers \
 ### scatter
 
 ```sh
-curl -sL https://git.io/YouPlotIris \
+curl -sL https://git.io/IRIStsv \
 | cut -f1-4 \
 | uplot scatter -H -t IRIS
 ```
@@ -63,7 +63,7 @@ curl -sL https://git.io/YouPlotIris \
 ### density
 
 ```sh
-curl -sL https://git.io/YouPlotIris \
+curl -sL https://git.io/IRIStsv \
 | cut -f1-4 \
 | uplot density -H -t IRIS
 ```
@@ -73,7 +73,7 @@ curl -sL https://git.io/YouPlotIris \
 ### boxplot
 
 ```sh
-curl -sL https://git.io/YouPlotIris \
+curl -sL https://git.io/IRIStsv \
 | cut -f1-4 \
 | uplot boxplot -H -t IRIS
 ```
