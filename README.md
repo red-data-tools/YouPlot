@@ -26,6 +26,8 @@ curl -sL https://git.io/ISLANDScsv \
 | uplot bar -d, -t "Areas of the World's Major Landmasses"
 ```
 
+![image](https://user-images.githubusercontent.com/5798442/101988075-038cde00-3cdb-11eb-81be-bbd403a318db.png)
+
 ### histogram
 
 ```sh
@@ -36,6 +38,8 @@ echo -e "from numpy import random;" \
 | uplot hist --nbins 20
 ```
 
+![image](https://user-images.githubusercontent.com/5798442/101988180-63838480-3cdb-11eb-8b4f-67286f8ebe05.png)
+
 ### lineplot
 
 ```sh
@@ -43,6 +47,8 @@ curl -sL https://git.io/AirPassengers \
 | cut -f2,3 -d, \
 | uplot line -d, -w 50 -h 15 -t AirPassengers --xlim 1950,1960 --ylim 0,600
 ```
+
+![image](https://user-images.githubusercontent.com/5798442/101988206-86159d80-3cdb-11eb-95fe-b7fbf2a1faf4.png)
 
 ### scatter
 
@@ -52,6 +58,8 @@ curl -sL https://git.io/YouPlotIris \
 | uplot scatter -H -t IRIS
 ```
 
+![image](https://user-images.githubusercontent.com/5798442/101988233-ac3b3d80-3cdb-11eb-9916-658bf631d72f.png)
+
 ### density
 
 ```sh
@@ -60,6 +68,8 @@ curl -sL https://git.io/YouPlotIris \
 | uplot density -H -t IRIS
 ```
 
+![image](https://user-images.githubusercontent.com/5798442/101988248-c5dc8500-3cdb-11eb-906b-59afaac98773.png)
+
 ### boxplot
 
 ```sh
@@ -67,6 +77,8 @@ curl -sL https://git.io/YouPlotIris \
 | cut -f1-4 \
 | uplot boxplot -H -t IRIS
 ```
+
+![image](https://user-images.githubusercontent.com/5798442/101988276-f02e4280-3cdb-11eb-8cef-cd5a9dee4fd8.png)
 
 ### count
 
