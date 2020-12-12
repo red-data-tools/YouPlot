@@ -36,14 +36,16 @@ echo -e "from numpy import random;" \
 ### lineplot
 
 ```sh
-curl -sL https://git.io/AirPassengers \ # CSV
+# CSV
+curl -sL https://git.io/AirPassengers \
 | cut -f2,3 -d, \
-| uplot line -w 50 -h 15 -t 'AirPassengers' --xlim 1950,1960
+| uplot line -d, -w 50 -h 15 -t AirPassengers --xlim 1950,1960 --ylim 0,600
 ```
 
 ### scatter
 
 ```sh
+# TSV
 curl -sL https://git.io/YouPlotIris \ # TSV
 | cut -f1-4 \
 | uplot scatter -H -t IRIS
