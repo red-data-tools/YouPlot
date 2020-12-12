@@ -69,8 +69,6 @@ curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris
 uplot colors
 ```
 
-<img src="https://i.imgur.com/LxyHQsz.png">
-
 ## Usage
 
 `uplot --help`
