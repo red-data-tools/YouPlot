@@ -15,16 +15,20 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 gem install youplot
 ```
 
-## Screenshots
+## Quick Start
 
-**histogram**
+### barplot
 
 ```sh
-ruby -r numo/narray -e "puts Numo::DFloat.new(1000).rand_norm.to_a" \
-  | uplot hist --nbins 15
+curl -sL https://git.io/ISLANDScsv \
+| sort -nk2 -t, \
+| tail \
+| uplot bar -d, -t "Areas of the World's Major Landmasses"
 ```
 
-<img src="https://i.imgur.com/wpsoGJq.png" width="75%" height="75%">
+![image](https://user-images.githubusercontent.com/5798442/101988075-038cde00-3cdb-11eb-81be-bbd403a318db.png)
+
+### histogram
 
 ```sh
 echo -e "from numpy import random;" \
@@ -34,90 +38,65 @@ echo -e "from numpy import random;" \
 | uplot hist --nbins 20
 ```
 
-<img src="https://i.imgur.com/97R2MQx.png" width="75%" height="75%">
+![image](https://user-images.githubusercontent.com/5798442/101988180-63838480-3cdb-11eb-8b4f-67286f8ebe05.png)
 
-**scatter**
-
-```sh
-curl -s https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv \
-| cut -f1-4 -d, \
-| uplot scatter -H -d, -t IRIS
-```
-
-<img src="https://i.imgur.com/STX7bFT.png" width="75%" height="75%">
-
-**line**
+### lineplot
 
 ```sh
-curl -s https://www.mhlw.go.jp/content/pcr_positive_daily.csv \
-| cut -f2 -d, \
-| uplot line -w 50 -h 15 -t 'PCR positive tests' --xlabel Date --ylabel number
+curl -sL https://git.io/AirPassengers \
+| cut -f2,3 -d, \
+| uplot line -d, -w 50 -h 15 -t AirPassengers --xlim 1950,1960 --ylim 0,600
 ```
 
-<img src="https://i.imgur.com/PVl5dsa.png" width="75%" height="75%">
+![image](https://user-images.githubusercontent.com/5798442/101988206-86159d80-3cdb-11eb-95fe-b7fbf2a1faf4.png)
 
-**box**
+### scatter
 
 ```sh
-curl -s https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv \
-| cut -f1-4 -d, \
-| uplot box -H -d, -t IRIS
+curl -sL https://git.io/YouPlotIris \
+| cut -f1-4 \
+| uplot scatter -H -t IRIS
 ```
 
-<img src="https://i.imgur.com/sNI4SmN.png" width="75%" height="75%">
+![image](https://user-images.githubusercontent.com/5798442/101988233-ac3b3d80-3cdb-11eb-9916-658bf631d72f.png)
 
-**colors**
+### density
 
 ```sh
-uplot colors
+curl -sL https://git.io/YouPlotIris \
+| cut -f1-4 \
+| uplot density -H -t IRIS
 ```
 
-<img src="https://i.imgur.com/LxyHQsz.png">
+![image](https://user-images.githubusercontent.com/5798442/101988248-c5dc8500-3cdb-11eb-906b-59afaac98773.png)
+
+### boxplot
+
+```sh
+curl -sL https://git.io/YouPlotIris \
+| cut -f1-4 \
+| uplot boxplot -H -t IRIS
+```
+
+![image](https://user-images.githubusercontent.com/5798442/101988276-f02e4280-3cdb-11eb-8cef-cd5a9dee4fd8.png)
+
+### count
+
+```sh
+curl -sL https://git.io/TITANICcsv \
+
+```
+
+Note: `count` is slower than other Unix commands because it runs in a Ruby script.
+
 
 ## Usage
 
-`uplot --help`
+### file
 
-```
-Program: YouPlot (Tools for plotting on the terminal)
-Version: 0.2.7 (using UnicodePlot 0.0.4)
-Source:  https://github.com/kojix2/youplot
+### stream
 
-Usage:   uplot <command> [options] <in.tsv>
-
-Commands:
-    barplot    bar
-    histogram  hist
-    lineplot   line
-    lineplots  lines
-    scatter    s
-    density    d
-    boxplot    box
-    colors                   show the list of available colors
-
-    count      c             baplot based on the number of occurrences
-                             (slower than `sort | uniq -c | sort -n -k1`)
-
-Options:
-    -O, --pass [VAL]         file to output standard input data to [stdout]
-                             for inserting YouPlot in the middle of Unix pipes
-    -o, --output VAL         file to output results to [stderr]
-    -d, --delimiter VAL      use DELIM instead of TAB for field delimiter
-    -H, --headers            specify that the input has header row
-    -T, --transpose          transpose the axes of the input data
-    -t, --title VAL          print string on the top of plot
-    -x, --xlabel VAL         print string on the bottom of the plot
-    -y, --ylabel VAL         print string on the far left of the plot
-    -w, --width VAL          number of characters per row
-    -h, --height VAL         number of rows
-    -b, --border VAL         specify the style of the bounding box
-    -m, --margin VAL         number of spaces to the left of the plot
-    -p, --padding VAL        space of the left and right of the plot
-    -c, --color VAL          color of the drawing
-        --[no-]labels        hide the labels
-        --fmt VAL            xyxy : header is like x1, y1, x2, y2, x3, y3...
-                             xyy  : header is like x, y1, y2, y2, y3...
-```
+### help
 
 Use `--help` to print command-specific options.
 
@@ -134,6 +113,13 @@ Options for histogram:
 Options:
 ...
 ```
+
+### colors
+
+```sh
+uplot colors
+```
+
 
 ## Development
 
