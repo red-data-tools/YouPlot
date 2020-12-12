@@ -20,7 +20,10 @@ gem install youplot
 ### barplot
 
 ```sh
-
+curl -sL https://git.io/ISLANDScsv \
+| sort -nk2 -t, \
+| tail \
+| uplot bar -d, -t "Areas of the World's Major Landmasses"
 ```
 
 ### histogram
@@ -68,6 +71,7 @@ curl -sL https://git.io/YouPlotIris \
 ### count
 
 ```sh
+curl -sL https://git.io/TITANICcsv \
 
 ```
 
