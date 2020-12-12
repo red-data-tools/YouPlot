@@ -42,25 +42,25 @@ curl -s https://www.mhlw.go.jp/content/pcr_positive_daily.csv \
 ### scatter
 
 ```sh
-curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris.csv \
-| cut -f1-4 -d, \
-| uplot scatter -H -d, -t IRIS
+curl -s https://git.io/JIiqE \
+| cut -f1-4 \
+| uplot scatter -H -t IRIS
 ```
 
 ### density
 
 ```sh
 curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris.csv \
-| cut -f1-4 -d, \
-| uplot density -H -d, -t IRIS
+| cut -f1-4 \
+| uplot density -H -t IRIS
 ```
 
 ### boxplot
 
 ```sh
 curl -s https://raw.githubusercontent.com/kojix2/youplot/main/test/fixtures/iris.csv \
-| cut -f1-4 -d, \
-| uplot boxplot -H -d, -t IRIS
+| cut -f1-4 \
+| uplot boxplot -H -t IRIS
 ```
 
 ### colors
