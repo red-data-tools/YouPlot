@@ -15,7 +15,7 @@ Create ASCII charts on the terminal with data from standard streams in the pipel
 gem install youplot
 ```
 
-## Screenshots
+## Quick Start
 
 ### barplot
 
@@ -65,9 +65,13 @@ curl -sL https://git.io/YouPlotIris \
 | uplot boxplot -H -t IRIS
 ```
 
-### count(slow)
+### count
 
+```sh
 
+```
+
+Note: `count` is slower than other Unix commands because it runs in a Ruby script.
 
 ### colors
 
@@ -75,9 +79,7 @@ curl -sL https://git.io/YouPlotIris \
 uplot colors
 ```
 
-## Usage
-
-`uplot --help`
+### help
 
 Use `--help` to print command-specific options.
 
