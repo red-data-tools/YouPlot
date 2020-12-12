@@ -65,6 +65,10 @@ curl -sL https://git.io/YouPlotIris \
 | uplot boxplot -H -t IRIS
 ```
 
+### count(slow)
+
+
+
 ### colors
 
 ```sh
