@@ -83,8 +83,9 @@ curl -sL https://git.io/IRIStsv \
 ### count
 
 ```sh
-curl -sL https://git.io/TITANICcsv \
-
+cat gencode.v35.annotation.gff3 \
+| grep -v '#' | grep 'gene' | cut -f1 | \
+ uplot count -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
 Note: `count` is slower than other Unix commands because it runs in a Ruby script.
