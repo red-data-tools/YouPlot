@@ -89,7 +89,7 @@ cat gencode.v35.annotation.gff3 \
 
 ![count](https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png)
 
-Note: `count` command is not very fast because it runs in a Ruby script.
+Note: `count` is not very fast because it runs in a Ruby script.
 This is fine if the data is small, that is, in most cases. However, if you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
 
 ```sh
