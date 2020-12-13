@@ -1,11 +1,11 @@
-# YouPlot
+![Logo](https://user-images.githubusercontent.com/5798442/102004318-ec89d280-3d52-11eb-8608-d890b42593f1.png)
 
 ![Build Status](https://github.com/kojix2/youplot/workflows/test/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
 [![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](https://rubydoc.info/gems/youplot)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 
-Create ASCII charts on the terminal with data from standard streams in the pipeline. 
+YouPlot - Create ASCII charts on the terminal with data from standard streams in the pipeline. 
 
 :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
 
