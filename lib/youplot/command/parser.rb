@@ -21,8 +21,9 @@ module YouPlot
         @output      = $stderr
         @fmt         = 'xyy'
         @encoding    = nil
-        @debug       = false
         @color_names = false
+        
+        @debug       = false
       end
 
       def create_default_parser
@@ -78,6 +79,9 @@ module YouPlot
           end
           opt.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
             params.labels = v
+          end
+          opt.on('--progress', TrueClass, 'progressive') do |v|
+            @progressive = v
           end
           opt.on('--encoding VAL', String, 'Specify the input encoding') do |v|
             @encoding = v
