@@ -26,7 +26,7 @@ curl -sL https://git.io/ISLANDScsv \
 | uplot bar -d, -t "Areas of the World's Major Landmasses"
 ```
 
-![image](https://user-images.githubusercontent.com/5798442/101988075-038cde00-3cdb-11eb-81be-bbd403a318db.png)
+![barplot](https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png)
 
 ### histogram
 
@@ -37,8 +37,7 @@ echo -e "from numpy import random;" \
 | python \
 | uplot hist --nbins 20
 ```
-
-![image](https://user-images.githubusercontent.com/5798442/101988180-63838480-3cdb-11eb-8b4f-67286f8ebe05.png)
+![histogram](https://user-images.githubusercontent.com/5798442/101999820-21cafc00-3d24-11eb-86db-e410d19b07df.png)
 
 ### lineplot
 
@@ -48,47 +47,60 @@ curl -sL https://git.io/AirPassengers \
 | uplot line -d, -w 50 -h 15 -t AirPassengers --xlim 1950,1960 --ylim 0,600
 ```
 
-![image](https://user-images.githubusercontent.com/5798442/101988206-86159d80-3cdb-11eb-95fe-b7fbf2a1faf4.png)
+![lineplot](https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png)
 
 ### scatter
 
 ```sh
-curl -sL https://git.io/YouPlotIris \
+curl -sL https://git.io/IRIStsv \
 | cut -f1-4 \
 | uplot scatter -H -t IRIS
 ```
 
-![image](https://user-images.githubusercontent.com/5798442/101988233-ac3b3d80-3cdb-11eb-9916-658bf631d72f.png)
+![scatter](https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png)
 
 ### density
 
 ```sh
-curl -sL https://git.io/YouPlotIris \
+curl -sL https://git.io/IRIStsv \
 | cut -f1-4 \
 | uplot density -H -t IRIS
 ```
 
-![image](https://user-images.githubusercontent.com/5798442/101988248-c5dc8500-3cdb-11eb-906b-59afaac98773.png)
+![density](https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png)
 
 ### boxplot
 
 ```sh
-curl -sL https://git.io/YouPlotIris \
+curl -sL https://git.io/IRIStsv \
 | cut -f1-4 \
 | uplot boxplot -H -t IRIS
 ```
 
-![image](https://user-images.githubusercontent.com/5798442/101988276-f02e4280-3cdb-11eb-8cef-cd5a9dee4fd8.png)
+![boxplot](https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png)
 
 ### count
 
-```sh
-curl -sL https://git.io/TITANICcsv \
+In this example, YouPlot counts the number of chromosomes where the gene is located from the human gene annotation file and create a bar chart. The human gene annotation file can be downloaded from the following website.
 
+* https://www.gencodegenes.org/human/
+
+```sh
+cat gencode.v35.annotation.gff3 \
+| grep -v '#' | grep 'gene' | cut -f1 | \
+ uplot count -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
-Note: `count` is slower than other Unix commands because it runs in a Ruby script.
+![count](https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png)
 
+Note: `count` is not very fast because it runs in a Ruby script.
+This is fine if the data is small, that is, in most cases. However, if you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
+
+```sh
+cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
+|sort | uniq -c | sort -nrk2 | awk '{print $2,$1}' \
+| uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
+```
 
 ## Usage
 
