@@ -81,6 +81,10 @@ curl -sL https://git.io/IRIStsv \
 
 ### count
 
+In this example, YouPlot counts the number of chromosomes where the gene is located from the human gene annotation file and create a bar chart. The human gene annotation file can be downloaded from the following website.
+
+* https://www.gencodegenes.org/human/
+
 ```sh
 cat gencode.v35.annotation.gff3 \
 | grep -v '#' | grep 'gene' | cut -f1 | \
