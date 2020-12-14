@@ -35,58 +35,73 @@ module YouPlot
 
       # Sometimes the input file does not end with a newline code.
       while (input = Kernel.gets(nil))
+        main(input)
+      end
+    end
 
-        # Pass the input to subsequent pipelines
-        case @options[:pass]
-        when IO
-          @options[:pass].print(input)
-        else
-          if @options[:pass]
-            File.open(@options[:pass], 'w') do |f|
-              f.print(input)
-            end
+    private
+
+    def main(input)
+      output_data(input)
+
+      @data = read_dsv(input)
+
+      pp @data if options[:debug]
+
+      plot = create_plot
+      output_plot(plot)
+    end
+
+    def read_dsv(input)
+      input = input.dup.force_encoding(options[:encoding]).encode('utf-8') if options[:encoding]
+      DSVReader.input(input, options[:delimiter], options[:headers], options[:transpose])
+    end
+
+    def create_plot
+      case command
+      when :bar, :barplot
+        @backend.barplot(data, params, options[:fmt])
+      when :count, :c
+        @backend.barplot(data, params, count: true)
+      when :hist, :histogram
+        @backend.histogram(data, params)
+      when :line, :lineplot
+        @backend.line(data, params, options[:fmt])
+      when :lines, :lineplots
+        @backend.lines(data, params, options[:fmt])
+      when :scatter, :s
+        @backend.scatter(data, params, options[:fmt])
+      when :density, :d
+        @backend.density(data, params, options[:fmt])
+      when :box, :boxplot
+        @backend.boxplot(data, params)
+      else
+        raise "unrecognized plot_type: #{command}"
+      end
+    end
+
+    def output_data(input)
+      # Pass the input to subsequent pipelines
+      case options[:pass]
+      when IO
+        options[:pass].print(input)
+      else
+        if options[:pass]
+          File.open(options[:pass], 'w') do |f|
+            f.print(input)
           end
         end
+      end
+    end
 
-        @data = if @options[:encoding]
-                  input2 = input.dup.force_encoding(@options[:encoding]).encode('utf-8')
-                  DSVReader.input(input2, @options[:delimiter], @options[:headers], @options[:transpose])
-                else
-                  DSVReader.input(input, @options[:delimiter], @options[:headers], @options[:transpose])
-                end
-
-        pp @data if @options[:debug]
-
-        plot = case command
-               when :bar, :barplot
-                 @backend.barplot(data, params, @options[:fmt])
-               when :count, :c
-                 @backend.barplot(data, params, count: true)
-               when :hist, :histogram
-                 @backend.histogram(data, params)
-               when :line, :lineplot
-                 @backend.line(data, params, @options[:fmt])
-               when :lines, :lineplots
-                 @backend.lines(data, params, @options[:fmt])
-               when :scatter, :s
-                 @backend.scatter(data, params, @options[:fmt])
-               when :density, :d
-                 @backend.density(data, params, @options[:fmt])
-               when :box, :boxplot
-                 @backend.boxplot(data, params)
-               else
-                 raise "unrecognized plot_type: #{command}"
-               end
-
-        case @options[:output]
-        when IO
-          plot.render(@options[:output])
-        else
-          File.open(@options[:output], 'w') do |f|
-            plot.render(f)
-          end
+    def output_plot(plot)
+      case options[:output]
+      when IO
+        plot.render(options[:output])
+      else
+        File.open(options[:output], 'w') do |f|
+          plot.render(f)
         end
-
       end
     end
   end
