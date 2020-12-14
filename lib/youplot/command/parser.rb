@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require_relative 'cmd_options'
 require_relative 'plot_params'
 
 module YouPlot
   class Command
     class Parser
-      attr_reader :command, :params,
-                  :delimiter, :transpose, :headers, :pass, :output, :fmt,
-                  :color_names, :encoding, :debug
+      attr_reader :command, :options, :params
 
       def initialize
-        @command     = nil
-        @params      = PlotParams.new
+        @command = nil
 
-        @delimiter   = "\t"
-        @transpose   = false
-        @headers     = nil
-        @pass        = false
-        @output      = $stderr
-        @fmt         = 'xyy'
-        @encoding    = nil
-        @color_names = false
+        @options = CmdOptions.new(
+          delimiter: "\t",
+          transpose: false,
+          headers: nil,
+          pass: false,
+          output: $stderr,
+          fmt: 'xyy',
+          encoding: nil,
+          color_names: false,
+          debug: false
+        )
         
-        @debug       = false
+        @params = PlotParams.new
       end
 
       def create_default_parser
@@ -36,19 +37,19 @@ module YouPlot
           opt.on('Common options:')
           opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
                  'for inserting YouPlot in the middle of Unix pipes') do |v|
-            @pass = v || $stdout
+            @options[:pass] = v || $stdout
           end
           opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
-            @output = v
+            @options[:output] = v
           end
           opt.on('-d', '--delimiter VAL', String, 'use DELIM instead of TAB for field delimiter') do |v|
-            @delimiter = v
+            @options[:delimiter] = v
           end
           opt.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
-            @headers = v
+            @options[:headers] = v
           end
           opt.on('-T', '--transpose', TrueClass, 'transpose the axes of the input data') do |v|
-            @transpose = v
+            @options[:transpose] = v
           end
           opt.on('-t', '--title VAL', String, 'print string on the top of plot') do |v|
             params.title = v
@@ -81,10 +82,10 @@ module YouPlot
             params.labels = v
           end
           opt.on('--progress', TrueClass, 'progressive') do |v|
-            @progressive = v
+            @options[:progressive] = v
           end
           opt.on('--encoding VAL', String, 'Specify the input encoding') do |v|
-            @encoding = v
+            @options[:encoding] = v
           end
           # Optparse adds the help option, but it doesn't show up in usage.
           # This is why you need the code below.
@@ -93,7 +94,7 @@ module YouPlot
             exit
           end
           opt.on('--debug', TrueClass, 'print preprocessed data') do |v|
-            @debug = v
+            @options[:debug] = v
           end
           yield opt if block_given?
         end
@@ -167,7 +168,7 @@ module YouPlot
               params.xscale = v
             end
             parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-              @fmt = v
+              @options[:fmt] = v
             end
 
           when :count, :c
@@ -197,7 +198,7 @@ module YouPlot
               params.ylim = v.take(2)
             end
             parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-              @fmt = v
+              @options[:fmt] = v
             end
 
           when :lineplots, :lines
@@ -211,7 +212,7 @@ module YouPlot
               params.ylim = v.take(2)
             end
             parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-              @fmt = v
+              @options[:fmt] = v
             end
 
           when :scatter, :s
@@ -225,7 +226,7 @@ module YouPlot
               params.ylim = v.take(2)
             end
             parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-              @fmt = v
+              @options[:fmt] = v
             end
 
           when :density, :d
@@ -239,7 +240,7 @@ module YouPlot
               params.ylim = v.take(2)
             end
             parser.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-              @fmt = v
+              @options[:fmt] = v
             end
 
           when :boxplot, :box
@@ -249,7 +250,7 @@ module YouPlot
 
           when :colors
             parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
-              @color_names = v
+              @options[:color_names] = v
             end
 
           else
