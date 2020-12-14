@@ -23,7 +23,7 @@ module YouPlot
           color_names: false,
           debug: false
         )
-        
+
         @params = PlotParams.new
       end
 
@@ -211,7 +211,8 @@ module YouPlot
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                           'xyy  : header is like x, y1, y2, y2, y3...') do |v|
               @options[:fmt] = v
             end
 
@@ -225,7 +226,8 @@ module YouPlot
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                           'xyy  : header is like x, y1, y2, y2, y3...') do |v|
               @options[:fmt] = v
             end
 
@@ -239,7 +241,8 @@ module YouPlot
             parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...', 'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+            parser.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                      'xyy  : header is like x, y1, y2, y2, y3...') do |v|
               @options[:fmt] = v
             end
 
