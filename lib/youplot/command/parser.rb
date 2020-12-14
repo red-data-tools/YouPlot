@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'params'
+require_relative 'plot_params'
 
 module YouPlot
   class Command
@@ -12,7 +12,7 @@ module YouPlot
 
       def initialize
         @command     = nil
-        @params      = Params.new
+        @params      = PlotParams.new
 
         @delimiter   = "\t"
         @transpose   = false

@@ -15,7 +15,6 @@ module YouPlot
 
     def initialize(argv = ARGV)
       @argv    = argv
-      @params  = Params.new
       @parser  = Parser.new
       @backend = YouPlot::Backends::UnicodePlotBackend
     end
@@ -23,7 +22,7 @@ module YouPlot
     def run
       parser.parse_options(@argv)
       command   = parser.command
-      params    = parser.params
+      @params   = parser.params
       delimiter = parser.delimiter
       transpose = parser.transpose
       headers   = parser.headers

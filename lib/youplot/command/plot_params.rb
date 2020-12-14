@@ -7,7 +7,7 @@ module YouPlot
     # * Here, I use Struct for 2 safety reason.
     # * The keys are static in Struct.
     # * Struct does not conflict with keyword arguments. Hash dose.
-    Params = Struct.new(
+    PlotParams = Struct.new(
       # Sort me!
       :title,
       :width,
