@@ -6,7 +6,7 @@
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![DOI](https://zenodo.org/badge/283230219.svg)](https://zenodo.org/badge/latestdoi/283230219)
 
-YouPlot - Create ASCII charts on the terminal with data from standard streams in the pipeline. 
+YouPlot is a command line tool for Unicode Plotting working with data from standard stream.
 
 :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
 
