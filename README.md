@@ -18,6 +18,8 @@ gem install youplot
 
 ## Quick Start
 
+`cat data.tsv | uplot <command> [options]`
+
 ### barplot
 
 ```sh
@@ -103,7 +105,19 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 | uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
-## 
+## Usage
+
+### how to use YouPlot?
+
+`uplot` is the same as `youplot`. You can use either.
+
+|                                   |                                                |
+|-----------------------------------|------------------------------------------------|
+| Reads data from standard input    | `cat data.tsv \| uplot <command> [options]`    |
+| Reads data from a file            | `uplot <command> [options] data.tsv`           |
+| Outputs data from stdin to stdout | `pipeline1 \| uplot <command> -O \| pipeline2` |
+
+### plot commands
 
 | command   | short |                                        |
 |-----------|-------|----------------------------------------|
@@ -139,6 +153,11 @@ Options:
 ```sh
 uplot colors
 ```
+
+## Why YouPlot?
+
+Wouldn't it be a bit of pain to have to run R, Python, Julia, gnuplot or whatever REPL just to check your data?
+YouPlot is a command line tool for this purpose. With YouPlot, you can continue working without leaving your terminal and shell. 
 
 ## Development
 
