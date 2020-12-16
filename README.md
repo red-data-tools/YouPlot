@@ -103,11 +103,18 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 | uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
-## Usage
+## 
 
-### file
+| command   | short |                                        |
+|-----------|-------|----------------------------------------|
+| barplot   | bar   | draw a horizontal barplot              |
+| histogram | hist  | draw a horizontal histogram            |
+| lineplot  | line  | draw a line chart                      |
+| lineplots | lines | draw a line chart with multiple series |
+| scatter   | s     | draw a scatter plot                    |
+| density   | d     | draw a density plot                    |
+| boxplot   | box   | draw a horizontal boxplot              |
 
-### stream
 
 ### help
 
@@ -133,14 +140,22 @@ Options:
 uplot colors
 ```
 
-
 ## Development
 
-Let's keep it simple.
+```sh
+git clone https://github.com/your_name/GR.rb # Clone the Git repo
+cd GR.rb
+bundle install             # Install the gem dependencies
+bundle exec rake test      # Run the test
+bundle exec rake install   # Installation from source code
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/kojix2/youplot](https://github.com/kojix2/youplot).
+* [Report bugs](https://github.com/kojix2/youplot/issues)
+* Fix bugs and [submit pull requests](https://github.com/kojix2/youplot/pulls)
+* Write, clarify, or fix documentation
+* Suggest or add new features
 
 ## License
 
