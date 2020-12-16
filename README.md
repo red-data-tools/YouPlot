@@ -18,6 +18,8 @@ gem install youplot
 
 ## Quick Start
 
+`cat data.tsv | uplot <command> [options]`
+
 ### barplot
 
 ```sh
@@ -103,9 +105,38 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 | uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
-## 
+## Usage
 
-| command   | short |                                        |
+### Why YouPlot?
+
+Wouldn't it be a bit of pain to have to run R, Python, Julia, gnuplot or whatever REPL just to check your data?
+YouPlot is a command line tool for this purpose. With YouPlot, you can continue working without leaving your terminal and shell. 
+
+### how to use YouPlot?
+
+`uplot` is the shortened form of `youplot`. You can use either.
+
+|                                   |                                                |
+|-----------------------------------|------------------------------------------------|
+| Reads data from standard input    | `cat data.tsv \| uplot <command> [options]`    |
+| Reads data from files             | `uplot <command> [options] data.tsv ...`       |
+| Outputs data from stdin to stdout | `pipeline1 \| uplot <command> -O \| pipeline2` |
+
+### Where to output the plot?
+
+By default, the plot is output to *standard error output*. 
+The output file or stream for the plot can be specified with the `-o` option.
+
+### Where to output the input data?
+
+By default, the input data is not output anywhere.
+The `-O` option, with no arguments, outputs the input data directly to the standard output. This is useful when passing data to a subsequent pipeline.
+
+### What types of plots are available?
+
+The following sub-commands are available
+
+| command   | short | how it works                           |
 |-----------|-------|----------------------------------------|
 | barplot   | bar   | draw a horizontal barplot              |
 | histogram | hist  | draw a horizontal histogram            |
@@ -115,8 +146,13 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 | density   | d     | draw a density plot                    |
 | boxplot   | box   | draw a horizontal boxplot              |
 
+See Quick Start for `count`.
 
-### help
+| command   | short | how it works                                             |
+|-----------|-------|----------------------------------------------------------|
+| count     | c     |  draw a baplot based on the number of occurrences (slow) |
+
+### How to view detailed command line options
 
 Use `--help` to print command-specific options.
 
@@ -134,20 +170,10 @@ Options:
 ...
 ```
 
-### colors
+### How to view the list of available colors?
 
 ```sh
 uplot colors
-```
-
-## Development
-
-```sh
-git clone https://github.com/your_name/GR.rb # Clone the Git repo
-cd GR.rb
-bundle install             # Install the gem dependencies
-bundle exec rake test      # Run the test
-bundle exec rake install   # Installation from source code
 ```
 
 ## Contributing
@@ -156,6 +182,17 @@ bundle exec rake install   # Installation from source code
 * Fix bugs and [submit pull requests](https://github.com/kojix2/youplot/pulls)
 * Write, clarify, or fix documentation
 * Suggest or add new features
+
+
+### Development
+
+```sh
+git clone https://github.com/your_name/GR.rb # Clone the Git repo
+cd GR.rb
+bundle install             # Install the gem dependencies
+bundle exec rake test      # Run the test
+bundle exec rake install   # Installation from source code
+```
 
 ## License
 
