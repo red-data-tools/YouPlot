@@ -35,12 +35,13 @@ module YouPlot
           opt.on_tail('') # Add a blank line at the end
           opt.separator('')
           opt.on('Common options:')
-          opt.on('-O', '--pass [VAL]', 'file to output standard input data to [stdout]',
+          opt.on('-O', '--pass [FILE]', 'file to output input data to [stdout]',
                  'for inserting YouPlot in the middle of Unix pipes') do |v|
             @options[:pass] = v || $stdout
           end
-          opt.on('-o', '--output VAL', 'file to output results to [stderr]') do |v|
-            @options[:output] = v
+          opt.on('-o', '--output [FILE]', 'file to output plots to [stdout]',
+                 'If no option is specified, plot will print to stderr') do |v|
+            @options[:output] = v || $stdout
           end
           opt.on('-d', '--delimiter VAL', String, 'use DELIM instead of TAB for field delimiter') do |v|
             @options[:delimiter] = v
