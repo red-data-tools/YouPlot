@@ -25,7 +25,7 @@ gem install youplot
 ```sh
 curl -sL https://git.io/ISLANDScsv \
 | sort -nk2 -t, \
-| tail \
+| tail -n15 \
 | uplot bar -d, -t "Areas of the World's Major Landmasses"
 ```
 
