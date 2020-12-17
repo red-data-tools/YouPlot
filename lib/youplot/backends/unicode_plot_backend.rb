@@ -152,17 +152,23 @@ module YouPlot
       end
 
       def colors(color_names = false)
+        # FIXME
+        s = String.new
         UnicodePlot::StyledPrinter::TEXT_COLORS.each do |k, v|
-          print v
-          print k
+          s << v
+          s << k.to_s
           unless color_names
-            print "\t"
-            print '  ●'
+            s << "\t"
+            s << '  ●'
           end
-          print "\033[0m"
-          print "\t"
+          s << "\033[0m"
+          s << "\t"
         end
-        puts
+        s << "\n"
+        def s.render(obj)
+          obj.print(self)
+        end
+        s
       end
 
       def check_series_size(data, fmt)

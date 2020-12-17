@@ -123,7 +123,7 @@ module YouPlot
                   scatter    s             draw a scatter plot
                   density    d             draw a density plot
                   boxplot    box           draw a horizontal boxplot
-                  colors                   show the list of available colors
+                  colors     color         show the list of available colors
 
                   count      c             draw a baplot based on the number of 
                                            occurrences (slow)
@@ -252,7 +252,7 @@ module YouPlot
               params.xlim = v.take(2)
             end
 
-          when :colors
+          when :colors, :color, :colours, :colour
             parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
               @options[:color_names] = v
             end

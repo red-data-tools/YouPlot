@@ -28,14 +28,14 @@ module YouPlot
       @options ||= parser.options
       @params  ||= parser.params
 
-      if command == :colors
-        @backend.colors(parser.color_names)
-        exit
-      end
-
-      # Sometimes the input file does not end with a newline code.
-      while (input = Kernel.gets(nil))
-        main(input)
+      if %i[colors color colours colour].include? @command
+        plot = create_plot
+        output_plot(plot)
+      else
+        # Sometimes the input file does not end with a newline code.
+        while (input = Kernel.gets(nil))
+          main(input)
+        end
       end
     end
 
@@ -75,6 +75,8 @@ module YouPlot
         @backend.density(data, params, options[:fmt])
       when :box, :boxplot
         @backend.boxplot(data, params)
+      when :colors, :color, :colours, :colour
+        @backend.colors(options[:color_names])
       else
         raise "unrecognized plot_type: #{command}"
       end

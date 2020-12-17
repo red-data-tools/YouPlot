@@ -106,12 +106,26 @@ class YouPlotCommandTest < Test::Unit::TestCase
 
   test :plot_output_stdout do
     YouPlot::Command.new(['bar', '-o', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
-    assert_equal "", @stderr_file.read
+    assert_equal '', @stderr_file.read
   end
 
   test :data_output_stdout do
     YouPlot::Command.new(['bar', '-O', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
     assert_equal fixture('iris-barplot.txt'), @stderr_file.read
     assert_equal File.read(File.expand_path('../fixtures/iris.csv', __dir__)), @stdout_file.read
+  end
+
+  %i[colors color colours colour].each do |cmd_name|
+    test cmd_name do
+      YouPlot::Command.new([cmd_name.to_s]).run
+      assert_equal fixture('colors.txt'), @stderr_file.read
+      assert_equal '', @stdout_file.read
+    end
+  end
+
+  test :colors_output_stdout do
+    YouPlot::Command.new(['colors', '-o']).run
+    assert_equal '', @stderr_file.read
+    assert_equal fixture('colors.txt'), @stdout_file.read
   end
 end
