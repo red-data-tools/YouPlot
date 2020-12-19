@@ -156,7 +156,7 @@ See Quick Start for `count`.
 
 If your input data contains a header line, you need to specify the `-H` option.
 
-## How to specify the delimiter?
+### How to specify the delimiter?
 
 Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. The default value is tab, so you do not need to specify anything for tab-delimited text.
 
