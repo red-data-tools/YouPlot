@@ -152,9 +152,13 @@ See Quick Start for `count`.
 |-----------|-------|----------------------------------------------------------|
 | count     | c     |  draw a baplot based on the number of occurrences (slow) |
 
-### Can YouPlot detect if a header line is present or not?
+### What if the header line is included?
 
-No. If your input data contains a header line, you need to specify the `-H` option.
+If your input data contains a header line, you need to specify the `-H` option.
+
+## How to specify the delimiter?
+
+Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. The default value is tab, so you do not need to specify anything for tab-delimited text.
 
 ### Is there a way to specify a specific column as the x-axis or y-axis?
 
