@@ -193,6 +193,7 @@ uplot colors
 * [Report bugs](https://github.com/kojix2/youplot/issues)
 * Fix bugs and [submit pull requests](https://github.com/kojix2/youplot/pulls)
 * Write, clarify, or fix documentation
+  * English corrections by native speakers are welcome.
 * Suggest or add new features
 
 
