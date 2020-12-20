@@ -18,7 +18,8 @@ gem install youplot
 
 ## Quick Start
 
-`cat data.tsv | uplot <command> [options]`
+* `cat data.tsv | uplot <command> [options]` or
+* `uplot <command> [options] <data.tsv>`
 
 ### barplot
 
