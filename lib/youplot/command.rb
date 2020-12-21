@@ -63,7 +63,16 @@ module YouPlot
     def main_progressive(input)
       output_data(input)
 
-      @raw_data ||= String.new
+      # FIXME
+      # Worked around the problem of not being able to draw
+      # plots when there is only one header line.
+      if @raw_data.nil?
+        @raw_data = String.new
+        if options[:headers]
+          @raw_data << input
+          return
+        end
+      end
       @raw_data << input
 
       # FIXME
