@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'cmd_options'
+require_relative 'options'
 require_relative 'plot_params'
 
 module YouPlot
@@ -12,7 +12,7 @@ module YouPlot
       def initialize
         @command = nil
 
-        @options = CmdOptions.new(
+        @options = Options.new(
           delimiter: "\t",
           transpose: false,
           headers: nil,

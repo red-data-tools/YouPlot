@@ -2,7 +2,7 @@
 
 module YouPlot
   class Command
-    CmdOptions = Struct.new(
+    Options = Struct.new(
       :delimiter,
       :transpose,
       :headers,
