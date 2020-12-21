@@ -32,9 +32,15 @@ module YouPlot
         plot = create_plot
         output_plot(plot)
       else
-        # Sometimes the input file does not end with a newline code.
-        while (input = Kernel.gets(nil))
-          main(input)
+        if options[:progressive]
+          while (input = Kernel.gets)
+            main_progress(input)
+          end
+        else
+          # Sometimes the input file does not end with a newline code.
+          while (input = Kernel.gets(nil))
+            main(input)
+          end
         end
       end
     end
@@ -50,6 +56,18 @@ module YouPlot
 
       plot = create_plot
       output_plot(plot)
+    end
+
+    def main_progress(input)
+      output_data(input)
+
+      @raw_data ||= String.new
+      @raw_data << input
+      
+      @data = read_dsv(@raw_data)
+
+      plot = create_plot
+      output_plot_progressive(plot)
     end
 
     def read_dsv(input)
@@ -104,6 +122,28 @@ module YouPlot
         File.open(options[:output], 'w') do |f|
           plot.render(f)
         end
+      end
+    end
+
+    def output_plot_progressive(plot)
+      case options[:output]
+      when IO
+        # RefactorMe
+        @output_stringio = StringIO.new(String.new)
+        def @output_stringio.tty?; true; end
+        out = @output_stringio.clone
+        plot.render(out)
+        lines = out.string.lines
+        lines.each do |line|
+          options[:output].print line.chomp
+          options[:output].print "\e[0K"
+          options[:output].puts
+        end
+        options[:output].flush
+        n = out.string.lines.size
+        options[:output].print "\e[#{n}F"
+      else
+        raise "In progressive mode, output to a file is not possible."
       end
     end
   end

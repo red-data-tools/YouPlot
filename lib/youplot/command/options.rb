@@ -7,6 +7,7 @@ module YouPlot
       :transpose,
       :headers,
       :pass,
+      :progressive,
       :output,
       :fmt,
       :encoding,

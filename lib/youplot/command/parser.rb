@@ -82,7 +82,7 @@ module YouPlot
           opt.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
             params.labels = v
           end
-          opt.on('--progress', TrueClass, 'progressive') do |v|
+          opt.on('--progress', TrueClass, 'progressive mode [experimental]') do |v|
             @options[:progressive] = v
           end
           opt.on('--encoding VAL', String, 'Specify the input encoding') do |v|
