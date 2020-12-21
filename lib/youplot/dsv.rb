@@ -7,7 +7,7 @@ module YouPlot
   module DSV
     module_function
 
-    def input(input, delimiter, headers, transpose)
+    def parse(input, delimiter, headers, transpose)
       arr = parse_as_csv(input, delimiter)
       headers = get_headers(arr, headers, transpose)
       series = get_series(arr, headers, transpose)

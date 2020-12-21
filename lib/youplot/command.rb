@@ -54,7 +54,7 @@ module YouPlot
 
     def read_dsv(input)
       input = input.dup.force_encoding(options[:encoding]).encode('utf-8') if options[:encoding]
-      DSV.input(input, options[:delimiter], options[:headers], options[:transpose])
+      DSV.parse(input, options[:delimiter], options[:headers], options[:transpose])
     end
 
     def create_plot
