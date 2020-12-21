@@ -31,16 +31,18 @@ module YouPlot
       if %i[colors color colours colour].include? @command
         plot = create_plot
         output_plot(plot)
+      elsif options[:progressive]
+        stop = false
+        Signal.trap(:INT) { stop = true }
+        while (input = Kernel.gets)
+          main_progressive(input)
+          break if stop
+        end
+        options[:output].print "\e[0J"
       else
-        if options[:progressive]
-          while (input = Kernel.gets)
-            main_progress(input)
-          end
-        else
-          # Sometimes the input file does not end with a newline code.
-          while (input = Kernel.gets(nil))
-            main(input)
-          end
+        # Sometimes the input file does not end with a newline code.
+        while (input = Kernel.gets(nil))
+          main(input)
         end
       end
     end
@@ -58,12 +60,13 @@ module YouPlot
       output_plot(plot)
     end
 
-    def main_progress(input)
+    def main_progressive(input)
       output_data(input)
 
       @raw_data ||= String.new
       @raw_data << input
-      
+
+      # FIXME
       @data = read_dsv(@raw_data)
 
       plot = create_plot
@@ -129,9 +132,10 @@ module YouPlot
       case options[:output]
       when IO
         # RefactorMe
-        @output_stringio = StringIO.new(String.new)
-        def @output_stringio.tty?; true; end
-        out = @output_stringio.clone
+        out = StringIO.new(String.new)
+        def out.tty?
+          true
+        end
         plot.render(out)
         lines = out.string.lines
         lines.each do |line|
@@ -139,11 +143,12 @@ module YouPlot
           options[:output].print "\e[0K"
           options[:output].puts
         end
+        options[:output].print "\e[0J"
         options[:output].flush
         n = out.string.lines.size
         options[:output].print "\e[#{n}F"
       else
-        raise "In progressive mode, output to a file is not possible."
+        raise 'In progressive mode, output to a file is not possible.'
       end
     end
   end
