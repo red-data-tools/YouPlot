@@ -165,6 +165,14 @@ Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' dat
 
 Not yet. In principle, YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first row is the X axis, the second row is series 1, the third row is series 2, and so on. If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. The　`--fmt xyy`, `--fmt xyxy` and `--fmt yx` options give you a few more choices. See the `youplot <command> --help` for more details. YouPlot has limited functionality, but you can use shell scripts such as `awk '{print $2, $1}'` to swap lines.
 
+### How to plot real-time data?
+
+Experimental progressive mode is currently under development.
+
+```sh
+ruby -e 'loop{puts rand(100)}' | uplot line --progress
+```
+
 ### How to view detailed command line options?
 
 Use `--help` to print command-specific options.
