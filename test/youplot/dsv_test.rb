@@ -59,6 +59,8 @@ class YouPlotDSVTest < Test::Unit::TestCase
     assert_equal(nil, @m.get_headers([[1, 2, 3],
                                       [4, 5, 6],
                                       [7, 8, 9]], false, false))
+
+    assert_equal([1, 2, 3], @m.get_headers([[1, 2, 3]], true, false))
   end
 
   test :get_series do
@@ -123,5 +125,7 @@ class YouPlotDSVTest < Test::Unit::TestCase
                   [n, n, 6]], @m.get_series([[1],
                                              [2, 4],
                                              [3, 5, 6]], false, false))
+    
+    assert_equal([[], [] ,[]], @m.get_series([[1, 2, 3]], true, false))
   end
 end

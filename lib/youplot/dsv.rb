@@ -57,16 +57,22 @@ module YouPlot
     end
 
     def get_series(arr, headers, transpose)
-      if transpose
-        if headers
-          arr.map { |row| row[1..-1] }
+      if headers
+        if arr.size > 1
+          if transpose
+            arr.map { |row| row[1..-1] }
+          else
+            transpose2(arr[1..-1])
+          end
         else
-          arr
+          Array.new(arr[0].size, [])
         end
-      elsif headers
-        transpose2(arr[1..-1])
       else
-        transpose2(arr)
+        if transpose
+          arr
+        else
+          transpose2(arr)
+        end
       end
     end
   end
