@@ -2,9 +2,9 @@
 
 require_relative '../test_helper'
 
-class YouPlotDSVReaderTest < Test::Unit::TestCase
+class YouPlotDSVTest < Test::Unit::TestCase
   def setup
-    @m = YouPlot::DSVReader
+    @m = YouPlot::DSV
   end
 
   test :transpose2 do

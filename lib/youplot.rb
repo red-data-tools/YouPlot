@@ -2,7 +2,7 @@
 
 require 'unicode_plot'
 require 'youplot/version'
-require 'youplot/dsv_reader'
+require 'youplot/dsv'
 require 'youplot/command'
 
 module YouPlot

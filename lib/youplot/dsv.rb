@@ -4,7 +4,7 @@ require 'csv'
 
 module YouPlot
   # Read and interpret Delimiter-separated values format file or stream.
-  module DSVReader
+  module DSV
     module_function
 
     def input(input, delimiter, headers, transpose)

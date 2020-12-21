@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'dsv_reader'
+require_relative 'dsv'
 require_relative 'command/parser'
 
 # FIXME
@@ -54,7 +54,7 @@ module YouPlot
 
     def read_dsv(input)
       input = input.dup.force_encoding(options[:encoding]).encode('utf-8') if options[:encoding]
-      DSVReader.input(input, options[:delimiter], options[:headers], options[:transpose])
+      DSV.input(input, options[:delimiter], options[:headers], options[:transpose])
     end
 
     def create_plot
