@@ -85,7 +85,7 @@ curl -sL https://git.io/IRIStsv \
 
 ### count
 
-In this example, YouPlot counts the number of chromosomes where the gene is located from the human gene annotation file and create a bar chart. The human gene annotation file can be downloaded from the following website.
+In this example, YouPlot counts the number of chromosomes where the gene is located from the human gene annotation file and it creates a bar chart. The human gene annotation file can be downloaded from the following website.
 
 * https://www.gencodegenes.org/human/
 
@@ -98,7 +98,7 @@ cat gencode.v35.annotation.gff3 \
 ![count](https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png)
 
 Note: `count` is not very fast because it runs in a Ruby script.
-This is fine if the data is small, that is, in most cases. However, if you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
+This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
 
 ```sh
 cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
@@ -110,8 +110,8 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 
 ### Why YouPlot?
 
-Wouldn't it be a bit of pain to have to run R, Python, Julia, gnuplot or whatever REPL just to check your data?
-YouPlot is a command line tool for this purpose. With YouPlot, you can continue working without leaving your terminal and shell. 
+Wouldn't it be a pain to have to run R, Python, Julia, gnuplot or whatever REPL just to check your data?
+YouPlot is a command line tool for this purpose. With YouPlot, you can continue working without leaving your terminal and shell.
 
 ### how to use YouPlot?
 
@@ -125,17 +125,17 @@ YouPlot is a command line tool for this purpose. With YouPlot, you can continue 
 
 ### Where to output the plot?
 
-By default, the plot is output to *standard error output*. 
+By default, the plot is output to *standard error output*.
 The output file or stream for the plot can be specified with the `-o` option.
 
 ### Where to output the input data?
 
-By default, the input data is not output anywhere.
+By default, the input data is not shown anywhere.
 The `-O` option, with no arguments, outputs the input data directly to the standard output. This is useful when passing data to a subsequent pipeline.
 
 ### What types of plots are available?
 
-The following sub-commands are available
+The following sub-commands are available.
 
 | command   | short | how it works                           |
 |-----------|-------|----------------------------------------|
@@ -151,7 +151,7 @@ See Quick Start for `count`.
 
 | command   | short | how it works                                             |
 |-----------|-------|----------------------------------------------------------|
-| count     | c     |  draw a baplot based on the number of occurrences (slow) |
+| count     | c     |  draw a barplot based on the number of occurrences (slow) |
 
 ### What if the header line is included?
 
@@ -159,11 +159,11 @@ If your input data contains a header line, you need to specify the `-H` option.
 
 ### How to specify the delimiter?
 
-Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. The default value is tab, so you do not need to specify anything for tab-delimited text.
+Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. You do not need to use `-d` option for tab-delimited text since the default value is tab.
 
-### Is there a way to specify a specific column as the x-axis or y-axis?
+### Is there a way to specify a column as the x-axis or y-axis?
 
-Not yet. In principle, YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first row is the X axis, the second row is series 1, the third row is series 2, and so on. If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. The　`--fmt xyy`, `--fmt xyxy` and `--fmt yx` options give you a few more choices. See the `youplot <command> --help` for more details. YouPlot has limited functionality, but you can use shell scripts such as `awk '{print $2, $1}'` to swap lines.
+Not yet. In principle, YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first row is the X axis, the second row is series 1, the third row is series 2, and so on. If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. The　`--fmt xyy`, `--fmt xyxy` and `--fmt yx` options give you a few more choices. See `youplot <command> --help` for more details. YouPlot has limited functionalities, but you can use shell scripts such as `awk '{print $2, $1}'` to swap lines.
 
 ### How to plot real-time data?
 
