@@ -32,7 +32,9 @@ curl -sL https://git.io/ISLANDScsv \
 | uplot bar -d, -t "Areas of the World's Major Landmasses"
 ```
 
-![barplot](https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png)
+<p align="center">
+<img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
+</p>
 
 ### histogram
 
@@ -43,7 +45,10 @@ echo -e "from numpy import random;" \
 | python \
 | uplot hist --nbins 20
 ```
-![histogram](https://user-images.githubusercontent.com/5798442/101999820-21cafc00-3d24-11eb-86db-e410d19b07df.png)
+
+<p align="center">
+  <img alt="histogram" src="https://user-images.githubusercontent.com/5798442/101999820-21cafc00-3d24-11eb-86db-e410d19b07df.png">
+</p>
 
 ### lineplot
 
@@ -53,7 +58,9 @@ curl -sL https://git.io/AirPassengers \
 | uplot line -d, -w 50 -h 15 -t AirPassengers --xlim 1950,1960 --ylim 0,600
 ```
 
-![lineplot](https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png)
+<p align="center">
+  <img alt="lineplot" src="https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png">
+</p>
 
 ### scatter
 
@@ -63,7 +70,9 @@ curl -sL https://git.io/IRIStsv \
 | uplot scatter -H -t IRIS
 ```
 
-![scatter](https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png)
+<p align="center">
+  <img alt="scatter" src="https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png">
+</p>
 
 ### density
 
@@ -73,7 +82,9 @@ curl -sL https://git.io/IRIStsv \
 | uplot density -H -t IRIS
 ```
 
-![density](https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png)
+<p align="center">
+  <img alt="density" src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png">
+</p>
 
 ### boxplot
 
@@ -83,7 +94,9 @@ curl -sL https://git.io/IRIStsv \
 | uplot boxplot -H -t IRIS
 ```
 
-![boxplot](https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png)
+<p align="center">
+  <img alt="boxplot" src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png">
+</p>
 
 ### count
 
@@ -97,7 +110,9 @@ cat gencode.v35.annotation.gff3 \
  uplot count -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
-![count](https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png)
+<p align="center">
+  <img alt="count" src="https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png">
+</p>
 
 Note: `count` is not very fast because it runs in a Ruby script.
 This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
