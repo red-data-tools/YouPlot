@@ -8,11 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 
-  spec.summary       = 'Create Ascii charts on your terminal.'
-  spec.description   = <<~MSG
-    Create ASCII charts on the terminal with data from standard streams in the 
-    pipeline. 
-  MSG
+  spec.summary       = 'A command line tool for Unicode Plotting'
+  spec.description   = 'A command line tool for Unicode Plotting'
   spec.homepage      = 'https://github.com/kojix2/youplot'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
