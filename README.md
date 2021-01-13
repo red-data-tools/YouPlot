@@ -233,6 +233,12 @@ bundle exec rake test      # Run the test
 bundle exec rake install   # Installation from source code
 ```
 
+### Acknowledgements
+
+* [Red Data Tools](https://github.com/red-data-tools) - Technical support
+* [sampo grafiikka](https://jypg.net/sampo_grafiikka) - Project logo creation
+* [yutaas](https://github.com/yutaas) - English proofreading
+
 ## License
 
 [MIT License](https://opensource.org/licenses/MIT).
