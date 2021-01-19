@@ -7,6 +7,8 @@ require_relative 'plot_params'
 module YouPlot
   class Command
     class Parser
+      class Error < StandardError; end
+
       attr_reader :command, :options, :params,
                   :main_parser, :sub_parser
 
@@ -193,7 +195,7 @@ module YouPlot
         when nil
           warn main_parser.banner
           warn "\n"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
 
         when :barplot, :bar
           sub_parser_add_symbol
@@ -263,8 +265,13 @@ module YouPlot
           end
 
         else
-          warn "uplot: unrecognized command '#{command}'"
-          exit 1
+          error_message = "uplot: unrecognized command '#{command}'"
+          if YouPlot.run_as_executable?
+            warn error_message
+            exit 1
+          else
+            raise Error, error_message
+          end
         end
       end
 
@@ -273,16 +280,16 @@ module YouPlot
           create_main_parser.order!(argv)
         rescue OptionParser::ParseError => e
           warn "uplot: #{e.message}"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
         end
 
         @command = argv.shift&.to_sym
 
         begin
-          create_sub_parser.parse!(argv)
+          create_sub_parser&.parse!(argv)
         rescue OptionParser::ParseError => e
           warn "uplot: #{e.message}"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
         end
       end
     end

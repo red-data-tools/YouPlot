@@ -138,4 +138,12 @@ class YouPlotCommandTest < Test::Unit::TestCase
     assert_equal '', @stderr_file.read
     assert_equal fixture('colors.txt'), @stdout_file.read
   end
+
+  test :unrecognized_command do
+    assert_raise(YouPlot::Command::Parser::Error) do
+      YouPlot::Command.new(['abracadabra', '--hadley', '--wickham']).run
+    end
+    assert_equal '', @stderr_file.read
+    assert_equal '', @stdout_file.read
+  end
 end
