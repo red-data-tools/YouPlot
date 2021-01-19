@@ -105,32 +105,32 @@ module YouPlot
         @main_parser ||= create_default_parser do |main_parser|
           # Here, help message is stored in the banner.
           # Because help of main_parser may be referred by `sub_parser`.
-          
+
           main_parser.banner = \
             <<~MSG
-              
+
               Program: YouPlot (Tools for plotting on the terminal)
-              Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
-              Source:  https://github.com/kojix2/youplot
+                Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
+                Source:  https://github.com/kojix2/youplot
 
-              Usage:   uplot <command> [options] <in.tsv>
+                Usage:   uplot <command> [options] <in.tsv>
 
-              Commands:
-                  barplot    bar           draw a horizontal barplot
-                  histogram  hist          draw a horizontal histogram
-                  lineplot   line          draw a line chart
-                  lineplots  lines         draw a line chart with multiple series
-                  scatter    s             draw a scatter plot
-                  density    d             draw a density plot
-                  boxplot    box           draw a horizontal boxplot
-                  colors     color         show the list of available colors
+                Commands:
+                    barplot    bar           draw a horizontal barplot
+                    histogram  hist          draw a horizontal histogram
+                    lineplot   line          draw a line chart
+                    lineplots  lines         draw a line chart with multiple series
+                    scatter    s             draw a scatter plot
+                    density    d             draw a density plot
+                    boxplot    box           draw a horizontal boxplot
+                    colors     color         show the list of available colors
 
-                  count      c             draw a baplot based on the number of 
-                                           occurrences (slow)
-              
-              General options:
-                  --help                   print command specific help menu
-                  --version                print the version of YouPlot 
+                    count      c             draw a baplot based on the number of
+                                             occurrences (slow)
+
+                General options:
+                    --help                   print command specific help menu
+                    --version                print the version of YouPlot
             MSG
 
           # Actually, main_parser can take common optional arguments.
