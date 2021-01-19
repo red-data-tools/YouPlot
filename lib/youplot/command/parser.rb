@@ -141,32 +141,32 @@ module YouPlot
       end
 
       def sub_parser_add_symbol
-        @sub_parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
+        sub_parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
           params.symbol = v
         end
       end
 
       def sub_parser_add_xscale
         xscale_options = UnicodePlot::ValueTransformer::PREDEFINED_TRANSFORM_FUNCTIONS.keys.join(', ')
-        @sub_parser.on_head('--xscale STR', String, "axis scaling (#{xscale_options})") do |v|
+        sub_parser.on_head('--xscale STR', String, "axis scaling (#{xscale_options})") do |v|
           params.xscale = v
         end
       end
 
       def sub_parser_add_canvas
-        @sub_parser.on_head('--canvas STR', String, 'type of canvas') do |v|
+        sub_parser.on_head('--canvas STR', String, 'type of canvas') do |v|
           params.canvas = v.to_sym
         end
       end
 
       def sub_parser_add_xlim
-        @sub_parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
+        sub_parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
           params.xlim = v.take(2)
         end
       end
 
       def sub_parser_add_ylim
-        @sub_parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
+        sub_parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
           params.ylim = v.take(2)
         end
       end
