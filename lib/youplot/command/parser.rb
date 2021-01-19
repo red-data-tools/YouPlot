@@ -153,6 +153,8 @@ module YouPlot
             Options for #{command}:
           MSG
 
+          xscale_options = UnicodePlot::ValueTransformer::PREDEFINED_TRANSFORM_FUNCTIONS.keys.join(', ')
+
           case command
 
           # If you type only `uplot` in the terminal.
@@ -165,7 +167,7 @@ module YouPlot
             parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
-            parser.on_head('--xscale VAL', String, 'axis scaling') do |v|
+            parser.on_head('--xscale VAL', String, "axis scaling (#{xscale_options})") do |v|
               params.xscale = v
             end
             parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
