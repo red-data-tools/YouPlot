@@ -221,6 +221,7 @@ module YouPlot
           sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
             @options[:fmt] = v
           end
+          sub_parser_add_ylim
           sub_parser_add_xlim
 
         when :lineplots, :lines
