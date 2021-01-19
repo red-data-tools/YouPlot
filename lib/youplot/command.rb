@@ -36,8 +36,10 @@ module YouPlot
         Signal.trap(:INT) { stop = true }
         options[:output].print "\e[?25l" # make cursor invisible
         while (input = Kernel.gets)
-          main_progressive(input)
+          n = main_progressive(input)
           break if stop
+
+          options[:output].print "\e[#{n}F"
         end
         options[:output].print "\e[0J"
         options[:output].print "\e[?25h" # make cursor visible
@@ -156,8 +158,7 @@ module YouPlot
         end
         options[:output].print "\e[0J"
         options[:output].flush
-        n = out.string.lines.size
-        options[:output].print "\e[#{n}F"
+        out.string.lines.size
       else
         raise 'In progressive mode, output to a file is not possible.'
       end
