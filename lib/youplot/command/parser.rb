@@ -29,74 +29,74 @@ module YouPlot
       end
 
       def create_default_parser
-        OptionParser.new do |opt|
-          opt.program_name  = 'YouPlot'
-          opt.version       = YouPlot::VERSION
-          opt.summary_width = 24
-          opt.on_tail('') # Add a blank line at the end
-          opt.separator('')
-          opt.on('Common options:')
-          opt.on('-O', '--pass [FILE]', 'file to output input data to [stdout]',
-                 'for inserting YouPlot in the middle of Unix pipes') do |v|
-            @options[:pass] = v || $stdout
+        OptionParser.new do |parser|
+          parser.program_name  = 'YouPlot'
+          parser.version       = YouPlot::VERSION
+          parser.summary_width = 24
+          parser.on_tail('') # Add a blank line at the end
+          parser.separator('')
+          parser.on('Common options:')
+          parser.on('-O', '--pass [FILE]', 'file to output input data to [stdout]',
+                    'for inserting YouPlot in the middle of Unix pipes') do |v|
+            options[:pass] = v || $stdout
           end
-          opt.on('-o', '--output [FILE]', 'file to output plots to [stdout]',
-                 'If no option is specified, plot will print to stderr') do |v|
-            @options[:output] = v || $stdout
+          parser.on('-o', '--output [FILE]', 'file to output plots to [stdout]',
+                    'If no option is specified, plot will print to stderr') do |v|
+            options[:output] = v || $stdout
           end
-          opt.on('-d', '--delimiter DELIM', String, 'use DELIM instead of [TAB] for field delimiter') do |v|
-            @options[:delimiter] = v
+          parser.on('-d', '--delimiter DELIM', String, 'use DELIM instead of [TAB] for field delimiter') do |v|
+            options[:delimiter] = v
           end
-          opt.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
-            @options[:headers] = v
+          parser.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
+            options[:headers] = v
           end
-          opt.on('-T', '--transpose', TrueClass, 'transpose the axes of the input data') do |v|
-            @options[:transpose] = v
+          parser.on('-T', '--transpose', TrueClass, 'transpose the axes of the input data') do |v|
+            options[:transpose] = v
           end
-          opt.on('-t', '--title STR', String, 'print string on the top of plot') do |v|
+          parser.on('-t', '--title STR', String, 'print string on the top of plot') do |v|
             params.title = v
           end
-          opt.on('-x', '--xlabel STR', String, 'print string on the bottom of the plot') do |v|
+          parser.on('-x', '--xlabel STR', String, 'print string on the bottom of the plot') do |v|
             params.xlabel = v
           end
-          opt.on('-y', '--ylabel STR', String, 'print string on the far left of the plot') do |v|
+          parser.on('-y', '--ylabel STR', String, 'print string on the far left of the plot') do |v|
             params.ylabel = v
           end
-          opt.on('-w', '--width INT', Integer, 'number of characters per row') do |v|
+          parser.on('-w', '--width INT', Integer, 'number of characters per row') do |v|
             params.width = v
           end
-          opt.on('-h', '--height INT', Numeric, 'number of rows') do |v|
+          parser.on('-h', '--height INT', Numeric, 'number of rows') do |v|
             params.height = v
           end
-          opt.on('-b', '--border STR', String, 'specify the style of the bounding box') do |v|
+          parser.on('-b', '--border STR', String, 'specify the style of the bounding box') do |v|
             params.border = v.to_sym
           end
-          opt.on('-m', '--margin INT', Numeric, 'number of spaces to the left of the plot') do |v|
+          parser.on('-m', '--margin INT', Numeric, 'number of spaces to the left of the plot') do |v|
             params.margin = v
           end
-          opt.on('-p', '--padding INT', Numeric, 'space of the left and right of the plot') do |v|
+          parser.on('-p', '--padding INT', Numeric, 'space of the left and right of the plot') do |v|
             params.padding = v
           end
-          opt.on('-c', '--color VAL', String, 'color of the drawing') do |v|
+          parser.on('-c', '--color VAL', String, 'color of the drawing') do |v|
             params.color = v =~ /\A[0-9]+\z/ ? v.to_i : v.to_sym
           end
-          opt.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
+          parser.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
             params.labels = v
           end
-          opt.on('--progress', TrueClass, 'progressive mode [experimental]') do |v|
-            @options[:progressive] = v
+          parser.on('--progress', TrueClass, 'progressive mode [experimental]') do |v|
+            options[:progressive] = v
           end
-          opt.on('--encoding STR', String, 'Specify the input encoding') do |v|
-            @options[:encoding] = v
+          parser.on('--encoding STR', String, 'Specify the input encoding') do |v|
+            options[:encoding] = v
           end
           # Optparse adds the help option, but it doesn't show up in usage.
           # This is why you need the code below.
-          opt.on('--help', 'print sub-command help menu') do
-            puts opt.help
+          parser.on('--help', 'print sub-command help menu') do
+            puts parser.help
             exit
           end
-          opt.on('--debug', TrueClass, 'print preprocessed data') do |v|
-            @options[:debug] = v
+          parser.on('--debug', TrueClass, 'print preprocessed data') do |v|
+            options[:debug] = v
           end
           # yield opt if block_given?
         end
@@ -198,7 +198,7 @@ module YouPlot
         when :barplot, :bar
           sub_parser_add_symbol
           sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-            @options[:fmt] = v
+            options[:fmt] = v
           end
           sub_parser_add_xscale
 
@@ -219,7 +219,7 @@ module YouPlot
           sub_parser_add_canvas
           sub_parser_add_grid
           sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-            @options[:fmt] = v
+            options[:fmt] = v
           end
           sub_parser_add_ylim
           sub_parser_add_xlim
@@ -229,7 +229,7 @@ module YouPlot
           sub_parser_add_grid
           sub_parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
                              'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-            @options[:fmt] = v
+            options[:fmt] = v
           end
           sub_parser_add_ylim
           sub_parser_add_xlim
@@ -239,7 +239,7 @@ module YouPlot
           sub_parser_add_grid
           sub_parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
                              'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-            @options[:fmt] = v
+            options[:fmt] = v
           end
           sub_parser_add_ylim
           sub_parser_add_xlim
@@ -249,7 +249,7 @@ module YouPlot
           sub_parser_add_grid
           sub_parser.on('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
                         'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-            @options[:fmt] = v
+            options[:fmt] = v
           end
           sub_parser_add_ylim
           sub_parser_add_xlim
@@ -259,7 +259,7 @@ module YouPlot
 
         when :colors, :color, :colours, :colour
           sub_parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
-            @options[:color_names] = v
+            options[:color_names] = v
           end
 
         else
