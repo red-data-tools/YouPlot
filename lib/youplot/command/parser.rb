@@ -43,7 +43,7 @@ module YouPlot
                  'If no option is specified, plot will print to stderr') do |v|
             @options[:output] = v || $stdout
           end
-          opt.on('-d', '--delimiter STR', String, 'use DELIM instead of TAB for field delimiter') do |v|
+          opt.on('-d', '--delimiter DELIM', String, 'use DELIM instead of [TAB] for field delimiter') do |v|
             @options[:delimiter] = v
           end
           opt.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
@@ -208,7 +208,7 @@ module YouPlot
             parser.on_head('--canvas STR', String) do |v|
               params.canvas = v
             end
-            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate (eg. ') do |v|
+            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
             parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
