@@ -93,7 +93,7 @@ module YouPlot
           # This is why you need the code below.
           parser.on('--help', 'print sub-command help menu') do
             puts parser.help
-            exit
+            exit if YouPlot.run_as_executable?
           end
           parser.on('--debug', TrueClass, 'print preprocessed data') do |v|
             options[:debug] = v
@@ -136,7 +136,7 @@ module YouPlot
         main_parser.on('--help', 'print sub-command help menu') do
           puts main_parser.banner
           puts
-          exit
+          exit if YouPlot.run_as_executable?
         end
       end
 

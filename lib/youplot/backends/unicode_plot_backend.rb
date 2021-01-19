@@ -181,14 +181,14 @@ module YouPlot
           warn "  Headers: \e[35m#{data.headers.inspect}\e[0m"
           warn "  The first item is: \e[35m\"#{series[0][0]}\"\e[0m"
           warn "  The last item is : \e[35m\"#{series[0][-1]}\"\e[0m"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
         end
         if fmt == 'xyxy' && series.size.odd?
           warn 'YouPlot: In the xyxy format, the number of series must be even.'
           warn ''
           warn "  Number of series: \e[35m#{series.size}\e[0m"
           warn "  Headers: \e[35m#{data.headers.inspect}\e[0m"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
         end
       end
     end

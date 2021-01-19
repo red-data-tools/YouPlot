@@ -25,10 +25,10 @@ module YouPlot
           Data.new(headers, series)
         elsif h_size > s_size
           warn "\e[35mThe number of headers is greater than the number of series.\e[0m"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
         elsif h_size < s_size
           warn "\e[35mThe number of headers is less than the number of series.\e[0m"
-          exit 1
+          exit 1 if YouPlot.run_as_executable?
         end
       end
     end

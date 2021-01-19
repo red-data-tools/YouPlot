@@ -6,4 +6,10 @@ require 'youplot/dsv'
 require 'youplot/command'
 
 module YouPlot
+  class << self
+    attr_accessor :run_as_executable
+    def run_as_executable?
+      @run_as_executable
+    end
+  end
 end

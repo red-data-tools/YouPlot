@@ -3,4 +3,4 @@
 
 require 'youplot'
 
-YouPlot::Command.new.run
+YouPlot::Command.new.run_as_executable

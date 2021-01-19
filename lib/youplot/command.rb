@@ -22,6 +22,11 @@ module YouPlot
       @backend = YouPlot::Backends::UnicodePlotBackend
     end
 
+    def run_as_executable
+      YouPlot.run_as_executable = true
+      run
+    end
+
     def run
       parser.parse_options(@argv)
       @command ||= parser.command
