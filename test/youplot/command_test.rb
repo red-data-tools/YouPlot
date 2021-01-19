@@ -104,6 +104,16 @@ class YouPlotCommandTest < Test::Unit::TestCase
     assert_equal fixture('iris-boxplot.txt'), @stderr_file.read
   end
 
+  test :c do
+    YouPlot::Command.new(['count', '-H', '-d,']).run
+    assert_equal fixture('iris-count.txt'), @stderr_file.read
+  end
+
+  test :count do
+    YouPlot::Command.new(['c', '-H', '-d,']).run
+    assert_equal fixture('iris-count.txt'), @stderr_file.read
+  end
+
   test :plot_output_stdout do
     YouPlot::Command.new(['bar', '-o', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
     assert_equal '', @stderr_file.read
