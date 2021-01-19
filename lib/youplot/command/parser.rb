@@ -43,7 +43,7 @@ module YouPlot
                  'If no option is specified, plot will print to stderr') do |v|
             @options[:output] = v || $stdout
           end
-          opt.on('-d', '--delimiter VAL', String, 'use DELIM instead of TAB for field delimiter') do |v|
+          opt.on('-d', '--delimiter STR', String, 'use DELIM instead of TAB for field delimiter') do |v|
             @options[:delimiter] = v
           end
           opt.on('-H', '--headers', TrueClass, 'specify that the input has header row') do |v|
@@ -52,28 +52,28 @@ module YouPlot
           opt.on('-T', '--transpose', TrueClass, 'transpose the axes of the input data') do |v|
             @options[:transpose] = v
           end
-          opt.on('-t', '--title VAL', String, 'print string on the top of plot') do |v|
+          opt.on('-t', '--title STR', String, 'print string on the top of plot') do |v|
             params.title = v
           end
-          opt.on('-x', '--xlabel VAL', String, 'print string on the bottom of the plot') do |v|
+          opt.on('-x', '--xlabel STR', String, 'print string on the bottom of the plot') do |v|
             params.xlabel = v
           end
-          opt.on('-y', '--ylabel VAL', String, 'print string on the far left of the plot') do |v|
+          opt.on('-y', '--ylabel STR', String, 'print string on the far left of the plot') do |v|
             params.ylabel = v
           end
-          opt.on('-w', '--width VAL', Integer, 'number of characters per row') do |v|
+          opt.on('-w', '--width INT', Integer, 'number of characters per row') do |v|
             params.width = v
           end
-          opt.on('-h', '--height VAL', Numeric, 'number of rows') do |v|
+          opt.on('-h', '--height INT', Numeric, 'number of rows') do |v|
             params.height = v
           end
-          opt.on('-b', '--border VAL', String, 'specify the style of the bounding box') do |v|
+          opt.on('-b', '--border STR', String, 'specify the style of the bounding box') do |v|
             params.border = v.to_sym
           end
-          opt.on('-m', '--margin VAL', Numeric, 'number of spaces to the left of the plot') do |v|
+          opt.on('-m', '--margin INT', Numeric, 'number of spaces to the left of the plot') do |v|
             params.margin = v
           end
-          opt.on('-p', '--padding VAL', Numeric, 'space of the left and right of the plot') do |v|
+          opt.on('-p', '--padding INT', Numeric, 'space of the left and right of the plot') do |v|
             params.padding = v
           end
           opt.on('-c', '--color VAL', String, 'color of the drawing') do |v|
@@ -85,7 +85,7 @@ module YouPlot
           opt.on('--progress', TrueClass, 'progressive mode [experimental]') do |v|
             @options[:progressive] = v
           end
-          opt.on('--encoding VAL', String, 'Specify the input encoding') do |v|
+          opt.on('--encoding STR', String, 'Specify the input encoding') do |v|
             @options[:encoding] = v
           end
           # Optparse adds the help option, but it doesn't show up in usage.
@@ -164,72 +164,72 @@ module YouPlot
             exit 1
 
           when :barplot, :bar
-            parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
+            parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
-            parser.on_head('--xscale VAL', String, "axis scaling (#{xscale_options})") do |v|
+            parser.on_head('--xscale STR', String, "axis scaling (#{xscale_options})") do |v|
               params.xscale = v
             end
-            parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
+            parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
               @options[:fmt] = v
             end
 
           when :count, :c
-            parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
+            parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
 
           when :histogram, :hist
-            parser.on_head('-n', '--nbins VAL', Numeric, 'approximate number of bins') do |v|
+            parser.on_head('-n', '--nbins INT', Numeric, 'approximate number of bins') do |v|
               params.nbins = v
             end
-            parser.on_head('--closed VAL', String, 'side of the intervals to be closed [left]') do |v|
+            parser.on_head('--closed STR', String, 'side of the intervals to be closed [left]') do |v|
               params.closed = v
             end
-            parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
+            parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
               params.symbol = v
             end
 
           when :lineplot, :line
-            parser.on_head('--canvas VAL', String, 'type of canvas') do |v|
+            parser.on_head('--canvas STR', String, 'type of canvas') do |v|
               params.canvas = v
             end
-            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on_head('--fmt VAL', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
+            parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
               @options[:fmt] = v
             end
 
           when :lineplots, :lines
-            parser.on_head('--canvas VAL', String) do |v|
+            parser.on_head('--canvas STR', String) do |v|
               params.canvas = v
             end
-            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate (eg. ') do |v|
               params.xlim = v.take(2)
             end
-            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+            parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
                            'xyy  : header is like x, y1, y2, y2, y3...') do |v|
               @options[:fmt] = v
             end
 
           when :scatter, :s
-            parser.on_head('--canvas VAL', String) do |v|
+            parser.on_head('--canvas STR', String) do |v|
               params.canvas = v
             end
-            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on_head('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+            parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
                            'xyy  : header is like x, y1, y2, y2, y3...') do |v|
               @options[:fmt] = v
             end
@@ -238,19 +238,19 @@ module YouPlot
             parser.on_head('--grid', TrueClass) do |v|
               params.grid = v
             end
-            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
-            parser.on_head('--ylim VAL', Array, 'plotting range for the y coordinate') do |v|
+            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
               params.ylim = v.take(2)
             end
-            parser.on('--fmt VAL', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+            parser.on('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
                       'xyy  : header is like x, y1, y2, y2, y3...') do |v|
               @options[:fmt] = v
             end
 
           when :boxplot, :box
-            parser.on_head('--xlim VAL', Array, 'plotting range for the x coordinate') do |v|
+            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
             end
 
