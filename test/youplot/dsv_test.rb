@@ -125,7 +125,7 @@ class YouPlotDSVTest < Test::Unit::TestCase
                   [n, n, 6]], @m.get_series([[1],
                                              [2, 4],
                                              [3, 5, 6]], false, false))
-    
-    assert_equal([[], [] ,[]], @m.get_series([[1, 2, 3]], true, false))
+
+    assert_equal([[], [], []], @m.get_series([[1, 2, 3]], true, false))
   end
 end
