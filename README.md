@@ -201,7 +201,7 @@ Usage: uplot histogram [options] <in.tsv>
 
 Options for histogram:
         --symbol VAL         character to be used to plot the bars
-        --closed VAL
+        --closed VAL         side of the intervals to be closed [left]
     -n, --nbins VAL          approximate number of bins
 
 Options:

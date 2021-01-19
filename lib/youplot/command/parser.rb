@@ -183,7 +183,7 @@ module YouPlot
             parser.on_head('-n', '--nbins VAL', Numeric, 'approximate number of bins') do |v|
               params.nbins = v
             end
-            parser.on_head('--closed VAL', String) do |v|
+            parser.on_head('--closed VAL', String, 'side of the intervals to be closed [left]') do |v|
               params.closed = v
             end
             parser.on_head('--symbol VAL', String, 'character to be used to plot the bars') do |v|
