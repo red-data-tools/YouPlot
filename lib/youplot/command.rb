@@ -34,11 +34,13 @@ module YouPlot
       elsif options[:progressive]
         stop = false
         Signal.trap(:INT) { stop = true }
+        options[:output].print "\e[?25l" # make cursor invisible
         while (input = Kernel.gets)
           main_progressive(input)
           break if stop
         end
         options[:output].print "\e[0J"
+        options[:output].print "\e[?25h" # make cursor visible
       else
         # Sometimes the input file does not end with a newline code.
         while (input = Kernel.gets(nil))
