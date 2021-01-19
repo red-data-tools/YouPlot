@@ -192,7 +192,7 @@ module YouPlot
 
           when :lineplot, :line
             parser.on_head('--canvas STR', String, 'type of canvas') do |v|
-              params.canvas = v
+              params.canvas = v.to_sym
             end
             parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
@@ -206,7 +206,7 @@ module YouPlot
 
           when :lineplots, :lines
             parser.on_head('--canvas STR', String) do |v|
-              params.canvas = v
+              params.canvas = v.to_sym
             end
             parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
@@ -221,7 +221,7 @@ module YouPlot
 
           when :scatter, :s
             parser.on_head('--canvas STR', String) do |v|
-              params.canvas = v
+              params.canvas = v.to_sym
             end
             parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
               params.xlim = v.take(2)
