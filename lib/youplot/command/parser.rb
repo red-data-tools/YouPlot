@@ -110,27 +110,27 @@ module YouPlot
             <<~MSG
 
               Program: YouPlot (Tools for plotting on the terminal)
-                Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
-                Source:  https://github.com/kojix2/youplot
+              Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
+              Source:  https://github.com/kojix2/youplot
 
-                Usage:   uplot <command> [options] <in.tsv>
+              Usage:   uplot <command> [options] <in.tsv>
 
-                Commands:
-                    barplot    bar           draw a horizontal barplot
-                    histogram  hist          draw a horizontal histogram
-                    lineplot   line          draw a line chart
-                    lineplots  lines         draw a line chart with multiple series
-                    scatter    s             draw a scatter plot
-                    density    d             draw a density plot
-                    boxplot    box           draw a horizontal boxplot
-                    colors     color         show the list of available colors
+              Commands:
+                  barplot    bar           draw a horizontal barplot
+                  histogram  hist          draw a horizontal histogram
+                  lineplot   line          draw a line chart
+                  lineplots  lines         draw a line chart with multiple series
+                  scatter    s             draw a scatter plot
+                  density    d             draw a density plot
+                  boxplot    box           draw a horizontal boxplot
+                  colors     color         show the list of available colors
 
-                    count      c             draw a baplot based on the number of
-                                             occurrences (slow)
+                  count      c             draw a baplot based on the number of
+                                           occurrences (slow)
 
-                General options:
-                    --help                   print command specific help menu
-                    --version                print the version of YouPlot
+              General options:
+                  --help                   print command specific help menu
+                  --version                print the version of YouPlot
             MSG
 
           # Actually, main_parser can take common optional arguments.
