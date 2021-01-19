@@ -67,12 +67,10 @@ module YouPlot
         else
           Array.new(arr[0].size, [])
         end
+      elsif transpose
+        arr
       else
-        if transpose
-          arr
-        else
-          transpose2(arr)
-        end
+        transpose2(arr)
       end
     end
   end
