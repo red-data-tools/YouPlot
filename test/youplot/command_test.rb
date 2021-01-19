@@ -105,11 +105,13 @@ class YouPlotCommandTest < Test::Unit::TestCase
   end
 
   test :c do
+    omit
     YouPlot::Command.new(['count', '-H', '-d,']).run
     assert_equal fixture('iris-count.txt'), @stderr_file.read
   end
 
   test :count do
+    omit
     YouPlot::Command.new(['c', '-H', '-d,']).run
     assert_equal fixture('iris-count.txt'), @stderr_file.read
   end
