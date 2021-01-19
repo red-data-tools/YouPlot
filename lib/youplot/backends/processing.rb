@@ -6,9 +6,9 @@ module YouPlot
     module Processing
       module_function
 
-      def count_values(arr)
+      def count_values(arr, tally: true)
         # tally was added in Ruby 2.7
-        if Enumerable.method_defined? :tally
+        if tally && Enumerable.method_defined?(:tally)
           arr.tally
         else
           # https://github.com/marcandre/backports
