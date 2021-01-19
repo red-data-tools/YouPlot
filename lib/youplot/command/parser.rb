@@ -7,7 +7,8 @@ require_relative 'plot_params'
 module YouPlot
   class Command
     class Parser
-      attr_reader :command, :options, :params
+      attr_reader :command, :options, :params,
+                  :main_parser, :sub_parser
 
       def initialize
         @command = nil
@@ -97,178 +98,170 @@ module YouPlot
           opt.on('--debug', TrueClass, 'print preprocessed data') do |v|
             @options[:debug] = v
           end
-          yield opt if block_given?
+          # yield opt if block_given?
         end
       end
 
-      def main_parser
-        @main_parser ||= create_default_parser do |main_parser|
-          # Here, help message is stored in the banner.
-          # Because help of main_parser may be referred by `sub_parser`.
+      def create_main_parser
+        @main_parser = create_default_parser
+        main_parser.banner = \
+          <<~MSG
 
-          main_parser.banner = \
-            <<~MSG
+            Program: YouPlot (Tools for plotting on the terminal)
+            Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
+            Source:  https://github.com/kojix2/youplot
 
-              Program: YouPlot (Tools for plotting on the terminal)
-              Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
-              Source:  https://github.com/kojix2/youplot
+            Usage:   uplot <command> [options] <in.tsv>
 
-              Usage:   uplot <command> [options] <in.tsv>
+            Commands:
+                barplot    bar           draw a horizontal barplot
+                histogram  hist          draw a horizontal histogram
+                lineplot   line          draw a line chart
+                lineplots  lines         draw a line chart with multiple series
+                scatter    s             draw a scatter plot
+                density    d             draw a density plot
+                boxplot    box           draw a horizontal boxplot
+                colors     color         show the list of available colors
 
-              Commands:
-                  barplot    bar           draw a horizontal barplot
-                  histogram  hist          draw a horizontal histogram
-                  lineplot   line          draw a line chart
-                  lineplots  lines         draw a line chart with multiple series
-                  scatter    s             draw a scatter plot
-                  density    d             draw a density plot
-                  boxplot    box           draw a horizontal boxplot
-                  colors     color         show the list of available colors
+                count      c             draw a baplot based on the number of
+                                         occurrences (slow)
 
-                  count      c             draw a baplot based on the number of
-                                           occurrences (slow)
+            General options:
+                --help                   print command specific help menu
+                --version                print the version of YouPlot
+          MSG
 
-              General options:
-                  --help                   print command specific help menu
-                  --version                print the version of YouPlot
-            MSG
-
-          # Actually, main_parser can take common optional arguments.
-          # However, these options dose not be shown in the help menu.
-          # I think the main help should be simple.
-          main_parser.on('--help', 'print sub-command help menu') do
-            puts main_parser.banner
-            puts
-            exit
-          end
+        # Help for the main parser is simple.
+        # Simply show the banner above.
+        main_parser.on('--help', 'print sub-command help menu') do
+          puts main_parser.banner
+          puts
+          exit
         end
       end
 
-      def sub_parser
-        @sub_parser ||= create_default_parser do |parser|
-          parser.banner = <<~MSG
+      def sub_parser_add_symbol
+        @sub_parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
+          params.symbol = v
+        end
+      end
+
+      def sub_parser_add_xscale
+        xscale_options = UnicodePlot::ValueTransformer::PREDEFINED_TRANSFORM_FUNCTIONS.keys.join(', ')
+        @sub_parser.on_head('--xscale STR', String, "axis scaling (#{xscale_options})") do |v|
+          params.xscale = v
+        end
+      end
+
+      def sub_parser_add_canvas
+        @sub_parser.on_head('--canvas STR', String, 'type of canvas') do |v|
+          params.canvas = v.to_sym
+        end
+      end
+
+      def sub_parser_add_xlim
+        @sub_parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
+          params.xlim = v.take(2)
+        end
+      end
+
+      def sub_parser_add_ylim
+        @sub_parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
+          params.ylim = v.take(2)
+        end
+      end
+
+      def create_sub_parser
+        @sub_parser = create_default_parser
+        sub_parser.banner = \
+          <<~MSG
 
             Usage: YouPlot #{command} [options] <in.tsv>
 
             Options for #{command}:
           MSG
 
-          xscale_options = UnicodePlot::ValueTransformer::PREDEFINED_TRANSFORM_FUNCTIONS.keys.join(', ')
+        case command
 
-          case command
+        # If you type only `uplot` in the terminal.
+        when nil
+          warn main_parser.banner
+          warn "\n"
+          exit 1
 
-          # If you type only `uplot` in the terminal.
-          when nil
-            warn main_parser.banner
-            warn "\n"
-            exit 1
-
-          when :barplot, :bar
-            parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
-              params.symbol = v
-            end
-            parser.on_head('--xscale STR', String, "axis scaling (#{xscale_options})") do |v|
-              params.xscale = v
-            end
-            parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-              @options[:fmt] = v
-            end
-
-          when :count, :c
-            parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
-              params.symbol = v
-            end
-
-          when :histogram, :hist
-            parser.on_head('-n', '--nbins INT', Numeric, 'approximate number of bins') do |v|
-              params.nbins = v
-            end
-            parser.on_head('--closed STR', String, 'side of the intervals to be closed [left]') do |v|
-              params.closed = v
-            end
-            parser.on_head('--symbol STR', String, 'character to be used to plot the bars') do |v|
-              params.symbol = v
-            end
-
-          when :lineplot, :line
-            parser.on_head('--canvas STR', String, 'type of canvas') do |v|
-              params.canvas = v.to_sym
-            end
-            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
-              params.xlim = v.take(2)
-            end
-            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
-              params.ylim = v.take(2)
-            end
-            parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-              @options[:fmt] = v
-            end
-
-          when :lineplots, :lines
-            parser.on_head('--canvas STR', String) do |v|
-              params.canvas = v.to_sym
-            end
-            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
-              params.xlim = v.take(2)
-            end
-            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
-              params.ylim = v.take(2)
-            end
-            parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
-                           'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-              @options[:fmt] = v
-            end
-
-          when :scatter, :s
-            parser.on_head('--canvas STR', String) do |v|
-              params.canvas = v.to_sym
-            end
-            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
-              params.xlim = v.take(2)
-            end
-            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
-              params.ylim = v.take(2)
-            end
-            parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
-                           'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-              @options[:fmt] = v
-            end
-
-          when :density, :d
-            parser.on_head('--grid', TrueClass) do |v|
-              params.grid = v
-            end
-            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
-              params.xlim = v.take(2)
-            end
-            parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
-              params.ylim = v.take(2)
-            end
-            parser.on('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
-                      'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-              @options[:fmt] = v
-            end
-
-          when :boxplot, :box
-            parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
-              params.xlim = v.take(2)
-            end
-
-          when :colors, :color, :colours, :colour
-            parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
-              @options[:color_names] = v
-            end
-
-          else
-            warn "uplot: unrecognized command '#{command}'"
-            exit 1
+        when :barplot, :bar
+          sub_parser_add_symbol
+          sub_parser_add_xscale
+          sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
+            @options[:fmt] = v
           end
+
+        when :count, :c
+          sub_parser_add_symbol
+          sub_parser_add_xscale
+
+        when :histogram, :hist
+          sub_parser.on_head('-n', '--nbins INT', Numeric, 'approximate number of bins') do |v|
+            params.nbins = v
+          end
+          sub_parser.on_head('--closed STR', String, 'side of the intervals to be closed [left]') do |v|
+            params.closed = v
+          end
+          sub_parser_add_symbol
+
+        when :lineplot, :line
+          sub_parser_add_canvas
+          sub_parser_add_xlim
+          sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
+            @options[:fmt] = v
+          end
+
+        when :lineplots, :lines
+          sub_parser_add_canvas
+          sub_parser_add_xlim
+          sub_parser_add_ylim
+          sub_parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                             'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+            @options[:fmt] = v
+          end
+
+        when :scatter, :s
+          sub_parser_add_canvas
+          sub_parser_add_xlim
+          sub_parser_add_ylim
+          sub_parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                             'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+            @options[:fmt] = v
+          end
+
+        when :density, :d
+          sub_parser.on_head('--grid', TrueClass) do |v|
+            params.grid = v
+          end
+          sub_parser_add_xlim
+          sub_parser_add_ylim
+          sub_parser.on('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                        'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+            @options[:fmt] = v
+          end
+
+        when :boxplot, :box
+          sub_parser_add_xlim
+
+        when :colors, :color, :colours, :colour
+          sub_parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
+            @options[:color_names] = v
+          end
+
+        else
+          warn "uplot: unrecognized command '#{command}'"
+          exit 1
         end
       end
 
       def parse_options(argv = ARGV)
         begin
-          main_parser.order!(argv)
+          create_main_parser.order!(argv)
         rescue OptionParser::ParseError => e
           warn "uplot: #{e.message}"
           exit 1
@@ -277,7 +270,7 @@ module YouPlot
         @command = argv.shift&.to_sym
 
         begin
-          sub_parser.parse!(argv)
+          create_sub_parser.parse!(argv)
         rescue OptionParser::ParseError => e
           warn "uplot: #{e.message}"
           exit 1
