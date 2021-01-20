@@ -135,4 +135,26 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
     assert_equal fixture('simple.tsv'), @stdout_file.read
   end
+
+  test :line_transpose do
+    $stdin = File.open(File.expand_path('../fixtures/simpleT.tsv', __dir__), 'r')
+    YouPlot::Command.new(['line', '--transpose']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  end
+
+  test :line_T do
+    $stdin = File.open(File.expand_path('../fixtures/simpleT.tsv', __dir__), 'r')
+    YouPlot::Command.new(['line', '-T']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  end
+
+  test :line_xlabel do
+    YouPlot::Command.new(['line', '--xlabel', 'X-LABEL']).run
+    assert_equal fixture('simple-lineplot-xlabel.txt'), @stderr_file.read
+  end
+
+  test :line_ylabel do
+    YouPlot::Command.new(['line', '--ylabel', 'Y-LABEL']).run
+    assert_equal fixture('simple-lineplot-ylabel.txt'), @stderr_file.read
+  end
 end
