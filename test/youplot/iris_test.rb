@@ -147,4 +147,10 @@ class YouPlotIRISTest < Test::Unit::TestCase
     assert_equal '', @stderr_file.read
     assert_equal '', @stdout_file.read
   end
+
+  test :encoding do
+    $stdin = File.open(File.expand_path('../fixtures/iris_utf16.csv', __dir__), 'r')
+    YouPlot::Command.new(['s', '--encoding', 'UTF-16', '-H', '-d,', '-t', 'IRIS-SCATTER']).run
+    assert_equal fixture('iris-scatter.txt'), @stderr_file.read
+  end
 end
