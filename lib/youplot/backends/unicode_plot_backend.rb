@@ -109,7 +109,7 @@ module YouPlot
         params.name ||= headers[0] if headers
         params.xlim ||= series2.map(&:first).flatten.minmax # why need?
         params.ylim ||= series2.map(&:last).flatten.minmax # why need?
-        x1, y1 = series.shift
+        x1, y1 = series2.shift
         plot = UnicodePlot.public_send(method1, x1, y1, **params.to_hc)
         series2.each_with_index do |(xi, yi), i|
           UnicodePlot.public_send(method2, plot, xi, yi, name: headers&.[]((i + 1) * 2))
