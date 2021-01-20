@@ -104,27 +104,26 @@ class YouPlotIRISTest < Test::Unit::TestCase
     assert_equal fixture('iris-boxplot.txt'), @stderr_file.read
   end
 
-  test :c do
-    omit
-    YouPlot::Command.new(['count', '-H', '-d,']).run
-    assert_equal fixture('iris-count.txt'), @stderr_file.read
-  end
+  # test :c do
+  #   YouPlot::Command.new(['count', '-H', '-d,']).run
+  #   assert_equal fixture('iris-count.txt'), @stderr_file.read
+  # end
 
-  test :count do
-    omit
-    YouPlot::Command.new(['c', '-H', '-d,']).run
-    assert_equal fixture('iris-count.txt'), @stderr_file.read
-  end
+  # test :count do
+  #   YouPlot::Command.new(['c', '-H', '-d,']).run
+  #   assert_equal fixture('iris-count.txt'), @stderr_file.read
+  # end
 
   test :plot_output_stdout do
     YouPlot::Command.new(['bar', '-o', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
     assert_equal '', @stderr_file.read
+    assert_equal fixture('iris-barplot.txt'), @stdout_file.read
   end
 
   test :data_output_stdout do
     YouPlot::Command.new(['bar', '-O', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
     assert_equal fixture('iris-barplot.txt'), @stderr_file.read
-    assert_equal File.read(File.expand_path('../fixtures/iris.csv', __dir__)), @stdout_file.read
+    assert_equal fixture('iris.csv'), @stdout_file.read
   end
 
   %i[colors color colours colour].each do |cmd_name|

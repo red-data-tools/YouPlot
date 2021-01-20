@@ -40,70 +40,77 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
-  # test :barplot do
-  #   YouPlot::Command.new(['barplot', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
-  #   assert_equal fixture('iris-barplot.txt'), @stderr_file.read
-  # end
+  test :barplot do
+    assert_raise(ArgumentError) do
+      YouPlot::Command.new(['barplot']).run
+    end
+  end
 
-  # test :hist do
-  #   YouPlot::Command.new(['hist', '-H', '-d,', '-t', 'IRIS-HISTOGRAM']).run
-  #   assert_equal fixture('iris-histogram.txt'), @stderr_file.read
-  # end
+  test :hist do
+    YouPlot::Command.new(['hist']).run
+    assert_equal fixture('simple-histogram.txt'), @stderr_file.read
+  end
 
-  # test :histogram do
-  #   YouPlot::Command.new(['histogram', '-H', '-d,', '-t', 'IRIS-HISTOGRAM']).run
-  #   assert_equal fixture('iris-histogram.txt'), @stderr_file.read
-  # end
+  test :histogram do
+    YouPlot::Command.new(['histogram']).run
+    assert_equal fixture('simple-histogram.txt'), @stderr_file.read
+  end
 
-  # test :line do
-  #   YouPlot::Command.new(['line', '-H', '-d,', '-t', 'IRIS-LINEPLOT']).run
-  #   assert_equal fixture('iris-lineplot.txt'), @stderr_file.read
-  # end
+  test :line do
+    YouPlot::Command.new(['line']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  end
 
-  # test :lineplot do
-  #   YouPlot::Command.new(['lineplot', '-H', '-d,', '-t', 'IRIS-LINEPLOT']).run
-  #   assert_equal fixture('iris-lineplot.txt'), @stderr_file.read
-  # end
+  test :lineplot do
+    YouPlot::Command.new(['lineplot']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  end
 
-  # test :lines do
-  #   YouPlot::Command.new(['lines', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
-  #   assert_equal fixture('iris-lineplots.txt'), @stderr_file.read
-  # end
+  test :lines do
+    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+      YouPlot::Command.new(['lines']).run
+    end
+  end
 
-  # test :lineplots do
-  #   YouPlot::Command.new(['lineplots', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
-  #   assert_equal fixture('iris-lineplots.txt'), @stderr_file.read
-  # end
+  test :lineplots do
+    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+      YouPlot::Command.new(['lineplots']).run
+    end
+  end
 
-  # test :s do
-  #   YouPlot::Command.new(['s', '-H', '-d,', '-t', 'IRIS-SCATTER']).run
-  #   assert_equal fixture('iris-scatter.txt'), @stderr_file.read
-  # end
+  test :s do
+    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+      YouPlot::Command.new(['s']).run
+    end
+  end
 
-  # test :scatter do
-  #   YouPlot::Command.new(['scatter', '-H', '-d,', '-t', 'IRIS-SCATTER']).run
-  #   assert_equal fixture('iris-scatter.txt'), @stderr_file.read
-  # end
+  test :scatter do
+    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+      YouPlot::Command.new(['scatter']).run
+    end
+  end
 
-  # test :d do
-  #   YouPlot::Command.new(['d', '-H', '-d,', '-t', 'IRIS-DENSITY']).run
-  #   assert_equal fixture('iris-density.txt'), @stderr_file.read
-  # end
+  test :d do
+    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+      YouPlot::Command.new(['d']).run
+    end
+  end
 
-  # test :density do
-  #   YouPlot::Command.new(['density', '-H', '-d,', '-t', 'IRIS-DENSITY']).run
-  #   assert_equal fixture('iris-density.txt'), @stderr_file.read
-  # end
+  test :density do
+    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+      YouPlot::Command.new(['density']).run
+    end
+  end
 
-  # test :box do
-  #   YouPlot::Command.new(['box', '-H', '-d,', '-t', 'IRIS-BOXPLOT']).run
-  #   assert_equal fixture('iris-boxplot.txt'), @stderr_file.read
-  # end
+  test :box do
+    YouPlot::Command.new(['box']).run
+    assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
+  end
 
-  # test :boxplot do
-  #   YouPlot::Command.new(['boxplot', '-H', '-d,', '-t', 'IRIS-BOXPLOT']).run
-  #   assert_equal fixture('iris-boxplot.txt'), @stderr_file.read
-  # end
+  test :boxplot do
+    YouPlot::Command.new(['boxplot']).run
+    assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
+  end
 
   # test :c do
   #   omit
@@ -117,36 +124,15 @@ class YouPlotSimpleTest < Test::Unit::TestCase
   #   assert_equal fixture('iris-count.txt'), @stderr_file.read
   # end
 
-  # test :plot_output_stdout do
-  #   YouPlot::Command.new(['bar', '-o', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
-  #   assert_equal '', @stderr_file.read
-  # end
+  test :plot_output_stdout do
+    YouPlot::Command.new(['line', '-o']).run
+    assert_equal '', @stderr_file.read
+    assert_equal fixture('simple-lineplot.txt'), @stdout_file.read
+  end
 
-  # test :data_output_stdout do
-  #   YouPlot::Command.new(['bar', '-O', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
-  #   assert_equal fixture('iris-barplot.txt'), @stderr_file.read
-  #   assert_equal File.read(File.expand_path('../fixtures/iris.csv', __dir__)), @stdout_file.read
-  # end
-
-  # %i[colors color colours colour].each do |cmd_name|
-  #   test cmd_name do
-  #     YouPlot::Command.new([cmd_name.to_s]).run
-  #     assert_equal fixture('colors.txt'), @stderr_file.read
-  #     assert_equal '', @stdout_file.read
-  #   end
-  # end
-
-  # test :colors_output_stdout do
-  #   YouPlot::Command.new(['colors', '-o']).run
-  #   assert_equal '', @stderr_file.read
-  #   assert_equal fixture('colors.txt'), @stdout_file.read
-  # end
-
-  # test :unrecognized_command do
-  #   assert_raise(YouPlot::Command::Parser::Error) do
-  #     YouPlot::Command.new(['abracadabra', '--hadley', '--wickham']).run
-  #   end
-  #   assert_equal '', @stderr_file.read
-  #   assert_equal '', @stdout_file.read
-  # end
+  test :data_output_stdout do
+    YouPlot::Command.new(['box', '-O']).run
+    assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
+    assert_equal fixture('simple.tsv'), @stdout_file.read
+  end
 end
