@@ -3,7 +3,7 @@
 require 'tempfile'
 require_relative '../test_helper'
 
-class YouPlotCommandTest < Test::Unit::TestCase
+class YouPlotIRISTest < Test::Unit::TestCase
   class << self
     def startup
       @stdin  = $stdin.dup

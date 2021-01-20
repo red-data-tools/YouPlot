@@ -37,7 +37,19 @@ module YouPlot
           labels = series[x_col]
           values = series[y_col].map(&:to_f)
         end
-        UnicodePlot.barplot(labels, values, **params.to_hc)
+        begin
+          UnicodePlot.barplot(labels, values, **params.to_hc)
+        # UnicodePlot error:
+        # All values have to be positive. Negative bars are not supported.
+        rescue ArgumentError => e
+          if YouPlot.run_as_executable?
+            warn e.backtrace[0]
+            warn "\e[35m#{e}\e[0m"
+            exit 1
+          else
+            raise e
+          end
+        end
       end
 
       def histogram(data, params)
