@@ -76,7 +76,7 @@ module YouPlot
           parser.on('-m', '--margin INT', Numeric, 'number of spaces to the left of the plot') do |v|
             params.margin = v
           end
-          parser.on('-p', '--padding INT', Numeric, 'space of the left and right of the plot') do |v|
+          parser.on('--padding INT', Numeric, 'space of the left and right of the plot') do |v|
             params.padding = v
           end
           parser.on('-c', '--color VAL', String, 'color of the drawing') do |v|
@@ -85,7 +85,7 @@ module YouPlot
           parser.on('--[no-]labels', TrueClass, 'hide the labels') do |v|
             params.labels = v
           end
-          parser.on('--progress', TrueClass, 'progressive mode [experimental]') do |v|
+          parser.on('-p', '--progress', TrueClass, 'progressive mode [experimental]') do |v|
             options[:progressive] = v
           end
           parser.on('--encoding STR', String, 'Specify the input encoding') do |v|
