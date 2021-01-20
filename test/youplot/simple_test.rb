@@ -153,8 +153,53 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot-xlabel.txt'), @stderr_file.read
   end
 
+  test :line_x do
+    YouPlot::Command.new(['line', '-x', 'X-LABEL']).run
+    assert_equal fixture('simple-lineplot-xlabel.txt'), @stderr_file.read
+  end
+
   test :line_ylabel do
     YouPlot::Command.new(['line', '--ylabel', 'Y-LABEL']).run
     assert_equal fixture('simple-lineplot-ylabel.txt'), @stderr_file.read
+  end
+
+  test :line_y do
+    YouPlot::Command.new(['line', '-y', 'Y-LABEL']).run
+    assert_equal fixture('simple-lineplot-ylabel.txt'), @stderr_file.read
+  end
+
+  test :line_width do
+    YouPlot::Command.new(['line', '--width', '17']).run
+    assert_equal fixture('simple-lineplot-width-17.txt'), @stderr_file.read
+  end
+
+  test :line_w do
+    YouPlot::Command.new(['line', '--w', '17']).run
+    assert_equal fixture('simple-lineplot-width-17.txt'), @stderr_file.read
+  end
+
+  test :line_height do
+    YouPlot::Command.new(['line', '--height', '17']).run
+    assert_equal fixture('simple-lineplot-height-17.txt'), @stderr_file.read
+  end
+
+  test :line_h do
+    YouPlot::Command.new(['line', '--height', '17']).run
+    assert_equal fixture('simple-lineplot-height-17.txt'), @stderr_file.read
+  end
+
+  test :line_margin do
+    YouPlot::Command.new(['line', '--margin', '17']).run
+    assert_equal fixture('simple-lineplot-margin-17.txt'), @stderr_file.read
+  end
+
+  test :line_m do
+    YouPlot::Command.new(['line', '--m', '17']).run
+    assert_equal fixture('simple-lineplot-margin-17.txt'), @stderr_file.read
+  end
+
+  test :line_padding do
+    YouPlot::Command.new(['line', '--padding', '17']).run
+    assert_equal fixture('simple-lineplot-padding-17.txt'), @stderr_file.read
   end
 end
