@@ -70,7 +70,8 @@ module YouPlot
           parser.on('-h', '--height INT', Numeric, 'number of rows') do |v|
             params.height = v
           end
-          parser.on('-b', '--border STR', String, 'specify the style of the bounding box') do |v|
+          border_options = UnicodePlot::BORDER_MAP.keys.join(', ')
+          parser.on('-b', '--border STR', String, 'specify the style of the bounding box', "(#{border_options})") do |v|
             params.border = v.to_sym
           end
           parser.on('-m', '--margin INT', Numeric, 'number of spaces to the left of the plot') do |v|
