@@ -202,4 +202,14 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     YouPlot::Command.new(['line', '--padding', '17']).run
     assert_equal fixture('simple-lineplot-padding-17.txt'), @stderr_file.read
   end
+
+  test :line_border_corners do
+    YouPlot::Command.new(['line', '--border', 'corners']).run
+    assert_equal fixture('simple-lineplot-border-corners.txt'), @stderr_file.read
+  end
+
+  test :line_border_barplot do
+    YouPlot::Command.new(['line', '--border', 'barplot']).run
+    assert_equal fixture('simple-lineplot-border-barplot.txt'), @stderr_file.read
+  end
 end
