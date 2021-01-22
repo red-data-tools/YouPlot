@@ -212,4 +212,34 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     YouPlot::Command.new(['line', '--border', 'barplot']).run
     assert_equal fixture('simple-lineplot-border-barplot.txt'), @stderr_file.read
   end
+
+  test :line_canvas_ascii do
+    YouPlot::Command.new(['line', '--canvas', 'ascii']).run
+    assert_equal fixture('simple-lineplot-canvas-ascii.txt'), @stderr_file.read
+  end
+
+  test :line_canvas_braille do
+    YouPlot::Command.new(['line', '--canvas', 'braille']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  end
+
+  test :line_canvas_density do
+    YouPlot::Command.new(['line', '--canvas', 'density']).run
+    assert_equal fixture('simple-lineplot-canvas-density.txt'), @stderr_file.read
+  end
+
+  test :line_canvas_dot do
+    YouPlot::Command.new(['line', '--canvas', 'dot']).run
+    assert_equal fixture('simple-lineplot-canvas-dot.txt'), @stderr_file.read
+  end
+
+  # test :line_canvas_block do
+  #   YouPlot::Command.new(['line', '--canvas', 'block']).run
+  #   assert_equal fixture('simple-lineplot-canvas-dot.txt'), @stderr_file.read
+  # end
+
+  test :hist_symbol_atmark do
+    YouPlot::Command.new(['hist', '--symbol', '@']).run
+    assert_equal fixture('simple-histogram-symbol-@.txt'), @stderr_file.read
+  end
 end
