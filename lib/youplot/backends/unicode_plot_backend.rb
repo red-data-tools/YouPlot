@@ -190,18 +190,24 @@ module YouPlot
       def check_series_size(data, fmt)
         series = data.series
         if series.size == 1
-          warn 'youplot: There is only one series of input data. Please check the delimiter.'
-          warn ''
-          warn "  Headers: \e[35m#{data.headers.inspect}\e[0m"
-          warn "  The first item is: \e[35m\"#{series[0][0]}\"\e[0m"
-          warn "  The last item is : \e[35m\"#{series[0][-1]}\"\e[0m"
+          warn <<~EOS
+            youplot: There is only one series of input data. Please check the delimiter.
+
+            Headers: \e[35m#{data.headers.inspect}\e[0m
+            The first item is: \e[35m\"#{series[0][0]}\"\e[0m
+            The last item is : \e[35m\"#{series[0][-1]}\"\e[0m
+          EOS
+          # Note: Error messages cannot be colored.
           YouPlot.run_as_executable ? exit(1) : raise(Error)
         end
         if fmt == 'xyxy' && series.size.odd?
-          warn 'YouPlot: In the xyxy format, the number of series must be even.'
-          warn ''
-          warn "  Number of series: \e[35m#{series.size}\e[0m"
-          warn "  Headers: \e[35m#{data.headers.inspect}\e[0m"
+          warn <<~EOS
+            YouPlot: In the xyxy format, the number of series must be even.
+
+            Number of series: \e[35m#{series.size}\e[0m
+            Headers: \e[35m#{data.headers.inspect}\e[0m
+          EOS
+          # Note: Error messages cannot be colored.
           YouPlot.run_as_executable ? exit(1) : raise(Error)
         end
       end
