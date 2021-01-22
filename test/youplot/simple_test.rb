@@ -242,4 +242,22 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     YouPlot::Command.new(['hist', '--symbol', '@']).run
     assert_equal fixture('simple-histogram-symbol-@.txt'), @stderr_file.read
   end
+
+  test :line_xlim do
+    YouPlot::Command.new(['line', '--xlim', '-1,5']).run
+    assert_equal fixture('simple-lineplot-xlim--1-5.txt'), @stderr_file.read
+  end
+
+  test :line_ylim do
+    YouPlot::Command.new(['line', '--ylim', '-25,50']).run
+    assert_equal fixture('simple-lineplot-ylim--25-50.txt'), @stderr_file.read
+  end
+
+
+  test :xlim_and_ylim do
+    YouPlot::Command.new(['line', '--xlim', '-1,5', '--ylim', '-25,50']).run
+    assert_equal fixture('simple-lineplot-xlim--1-5-ylim--25-50.txt'), @stderr_file.read
+  end
+
+  
 end
