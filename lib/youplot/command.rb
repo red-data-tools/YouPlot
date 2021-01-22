@@ -65,7 +65,17 @@ module YouPlot
 
       pp @data if options[:debug]
 
-      plot = create_plot
+      if YouPlot.run_as_executable?
+        begin
+          plot = create_plot
+        rescue ArgumentError => e
+          warn e.backtrace[0]
+          warn "\e[35m#{e}\e[0m"
+          exit 1
+        end
+      else
+        plot = create_plot
+      end
       output_plot(plot)
     end
 
