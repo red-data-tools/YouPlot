@@ -254,10 +254,18 @@ class YouPlotSimpleTest < Test::Unit::TestCase
   end
 
 
-  test :xlim_and_ylim do
+  test :line_xlim_and_ylim do
     YouPlot::Command.new(['line', '--xlim', '-1,5', '--ylim', '-25,50']).run
     assert_equal fixture('simple-lineplot-xlim--1-5-ylim--25-50.txt'), @stderr_file.read
   end
 
-  
+  test :line_grid do
+    YouPlot::Command.new(['line', '--grid']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  end
+
+  test :line_no_grid do
+    YouPlot::Command.new(['line', '--no-grid']).run
+    assert_equal fixture('simple-lineplot-no-grid.txt'), @stderr_file.read
+  end
 end
