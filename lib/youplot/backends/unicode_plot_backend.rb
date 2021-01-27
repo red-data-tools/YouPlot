@@ -185,7 +185,7 @@ module YouPlot
             The first item is: \e[35m\"#{series[0][0]}\"\e[0m
             The last item is : \e[35m\"#{series[0][-1]}\"\e[0m
           EOS
-          # Note: Error messages cannot be colored.
+          # NOTE: Error messages cannot be colored.
           YouPlot.run_as_executable ? exit(1) : raise(Error)
         end
         if fmt == 'xyxy' && series.size.odd?
@@ -195,7 +195,7 @@ module YouPlot
             Number of series: \e[35m#{series.size}\e[0m
             Headers: \e[35m#{data.headers.inspect}\e[0m
           EOS
-          # Note: Error messages cannot be colored.
+          # NOTE: Error messages cannot be colored.
           YouPlot.run_as_executable ? exit(1) : raise(Error)
         end
       end

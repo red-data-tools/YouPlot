@@ -253,7 +253,6 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot-ylim--25-50.txt'), @stderr_file.read
   end
 
-
   test :line_xlim_and_ylim do
     YouPlot::Command.new(['line', '--xlim', '-1,5', '--ylim', '-25,50']).run
     assert_equal fixture('simple-lineplot-xlim--1-5-ylim--25-50.txt'), @stderr_file.read
