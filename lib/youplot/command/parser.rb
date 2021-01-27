@@ -152,7 +152,7 @@ module YouPlot
       def sub_parser_add_xscale
         xscale_options = UnicodePlot::ValueTransformer::PREDEFINED_TRANSFORM_FUNCTIONS.keys.join(', ')
         sub_parser.on_head('--xscale STR', String, "axis scaling (#{xscale_options})") do |v|
-          params.xscale = v
+          params.xscale = v.to_sym
         end
       end
 
