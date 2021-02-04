@@ -90,6 +90,12 @@ module YouPlot
           parser.on('-p', '--progress', TrueClass, 'progressive mode [experimental]') do |v|
             options[:progressive] = v
           end
+          parser.on('-C', '--color-output', TrueClass, 'colorize even if writing to a pipe') do |v|
+            UnicodePlot::StyledPrinter.define_method(:color?){ |o| true }
+          end
+          parser.on('-M', '--monochrome', TrueClass, 'no colouring even if writing to a tty') do |v|
+            UnicodePlot::StyledPrinter.define_method(:color?){ |o| false }
+          end
           parser.on('--encoding STR', String, 'Specify the input encoding') do |v|
             options[:encoding] = v
           end
