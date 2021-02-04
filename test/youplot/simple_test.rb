@@ -174,7 +174,7 @@ class YouPlotSimpleTest < Test::Unit::TestCase
   end
 
   test :line_w do
-    YouPlot::Command.new(['line', '--w', '17']).run
+    YouPlot::Command.new(['line', '-w', '17']).run
     assert_equal fixture('simple-lineplot-width-17.txt'), @stderr_file.read
   end
 
@@ -184,7 +184,7 @@ class YouPlotSimpleTest < Test::Unit::TestCase
   end
 
   test :line_h do
-    YouPlot::Command.new(['line', '--height', '17']).run
+    YouPlot::Command.new(['line', '-h', '17']).run
     assert_equal fixture('simple-lineplot-height-17.txt'), @stderr_file.read
   end
 
@@ -194,7 +194,7 @@ class YouPlotSimpleTest < Test::Unit::TestCase
   end
 
   test :line_m do
-    YouPlot::Command.new(['line', '--m', '17']).run
+    YouPlot::Command.new(['line', '-m', '17']).run
     assert_equal fixture('simple-lineplot-margin-17.txt'), @stderr_file.read
   end
 
@@ -208,8 +208,18 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot-border-corners.txt'), @stderr_file.read
   end
 
+  test :line_b_corners do
+    YouPlot::Command.new(['line', '-b', 'corners']).run
+    assert_equal fixture('simple-lineplot-border-corners.txt'), @stderr_file.read
+  end
+
   test :line_border_barplot do
     YouPlot::Command.new(['line', '--border', 'barplot']).run
+    assert_equal fixture('simple-lineplot-border-barplot.txt'), @stderr_file.read
+  end
+
+  test :line_b_barplot do
+    YouPlot::Command.new(['line', '-b', 'barplot']).run
     assert_equal fixture('simple-lineplot-border-barplot.txt'), @stderr_file.read
   end
 
