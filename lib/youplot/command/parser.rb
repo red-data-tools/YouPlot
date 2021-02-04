@@ -22,6 +22,7 @@ module YouPlot
           pass: false,
           output: $stderr,
           fmt: 'xyy',
+          progressive: false,
           encoding: nil,
           color_names: false,
           debug: false
