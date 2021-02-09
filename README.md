@@ -216,6 +216,8 @@ uplot colors
 
 ## Contributing
 
+YouPlot is a library under development, so even small improvements like typofix are welcome! Please feel free to send us your pull requests.
+
 * [Report bugs](https://github.com/kojix2/youplot/issues)
 * Fix bugs and [submit pull requests](https://github.com/kojix2/youplot/pulls)
 * Write, clarify, or fix documentation
