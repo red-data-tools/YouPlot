@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/5798442/103439598-9e952a00-4c81-11eb-881f-67c593bb7861.png" width="75%" height="75%" />
-</p>
+  <img src="logo.svg" width=80%" height="80%" />
+</7>
 
 ![Build Status](https://github.com/kojix2/youplot/workflows/test/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
