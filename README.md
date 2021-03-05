@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.svg" width="100%" height="100%" />
+  <img src="logo.svg" width="60%" height="60%" />
 </7>
 
 ![Build Status](https://github.com/kojix2/youplot/workflows/test/badge.svg)
