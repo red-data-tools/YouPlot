@@ -228,8 +228,8 @@ YouPlot is a library under development, so even small improvements like typofix 
 ### Development
 
 ```sh
-git clone https://github.com/your_name/GR.rb # Clone the Git repo
-cd GR.rb
+# fork the main repository by clicking the Fork button. 
+git clone https://github.com/your_name/YouPlot
 bundle install             # Install the gem dependencies
 bundle exec rake test      # Run the test
 bundle exec rake install   # Installation from source code
