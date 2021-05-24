@@ -130,15 +130,15 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 Wouldn't it be a pain to have to run R, Python, Julia, gnuplot or whatever REPL just to check your data?
 YouPlot is a command line tool for this purpose. With YouPlot, you can continue working without leaving your terminal and shell.
 
-### how to use YouPlot?
+### How to use YouPlot?
 
 `uplot` is the shortened form of `youplot`. You can use either.
 
-|                                   |                                                |
-|-----------------------------------|------------------------------------------------|
-| Reads data from standard input    | `cat data.tsv \| uplot <command> [options]`    |
-| Reads data from files             | `uplot <command> [options] data.tsv ...`       |
-| Outputs data from stdin to stdout | `pipeline1 \| uplot <command> -O \| pipeline2` |
+| Command                                        | Description                       |
+|------------------------------------------------|-----------------------------------|
+| `cat data.tsv \| uplot <command> [options]`    | Take input from stdin             |
+| `uplot <command> [options] data.tsv ...`       | Take input from files             |
+| `pipeline1 \| uplot <command> -O \| pipeline2` | Outputs data from stdin to stdout |
 
 ### Where to output the plot?
 
@@ -148,7 +148,8 @@ The output file or stream for the plot can be specified with the `-o` option.
 ### Where to output the input data?
 
 By default, the input data is not shown anywhere.
-The `-O` option, with no arguments, outputs the input data directly to the standard output. This is useful when passing data to a subsequent pipeline.
+The `-O` option, with no arguments, outputs the input data directly to the standard output. 
+This is useful when passing data to a subsequent pipeline.
 
 ### What types of plots are available?
 
@@ -176,11 +177,21 @@ If your input data contains a header line, you need to specify the `-H` option.
 
 ### How to specify the delimiter?
 
-Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. You do not need to use `-d` option for tab-delimited text since the default value is tab.
+Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. 
+You do not need to use `-d` option for tab-delimited text since the default value is tab.
 
 ### Is there a way to specify a column as the x-axis or y-axis?
 
-Not yet. In principle, YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first row is the X axis, the second row is series 1, the third row is series 2, and so on. If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. The　`--fmt xyy`, `--fmt xyxy` and `--fmt yx` options give you a few more choices. See `youplot <command> --help` for more details. YouPlot has limited functionalities, but you can use shell scripts such as `awk '{print $2, $1}'` to swap lines.
+Not yet. 
+YouPlot treats the first column as the X axis and the second column as the Y axis. 
+When working with multiple series, the first column is the X axis, the second column is series Y1, the third column is series Y2, and so on. 
+If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. 
+
+* `--fmt xyy` `--fmt xyxy` `--fmt yx` options give you a few more choices. 
+See `youplot <command> --help` for more details. 
+
+* Use `awk '{print $2, $1}'` to swap lines.
+* Use `paste` to concatenate series.
 
 ### How to plot real-time data?
 
@@ -216,14 +227,15 @@ uplot colors
 
 ## Contributing
 
-YouPlot is a library under development, so even small improvements like typofix are welcome! Please feel free to send us your pull requests.
+YouPlot is a library under development, so even small improvements like typofix are welcome!
+Please feel free to send us your pull requests.
 
 * [Report bugs](https://github.com/kojix2/youplot/issues)
 * Fix bugs and [submit pull requests](https://github.com/kojix2/youplot/pulls)
 * Write, clarify, or fix documentation
   * English corrections by native speakers are welcome.
 * Suggest or add new features
-
+* Make a donation
 
 ### Development
 
