@@ -106,8 +106,8 @@ In this example, YouPlot counts the number of chromosomes where the gene is loca
 
 ```sh
 cat gencode.v35.annotation.gff3 \
-| grep -v '#' | grep 'gene' | cut -f1 | \
- uplot count -t "The number of human gene annotations per chromosome"  -c blue
+| grep -v '#' | grep 'gene' | cut -f1 \
+| uplot count -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
 <p align="center">
@@ -119,7 +119,7 @@ This is fine in most cases, as long as the data size is small. If you want to vi
 
 ```sh
 cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
-|sort | uniq -c | sort -nrk2 | awk '{print $2,$1}' \
+| sort | uniq -c | sort -nrk2 | awk '{print $2,$1}' \
 | uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
