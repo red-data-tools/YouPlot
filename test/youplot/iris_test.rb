@@ -141,7 +141,7 @@ class YouPlotIRISTest < Test::Unit::TestCase
   end
 
   test :unrecognized_command do
-    assert_raise(YouPlot::Command::Parser::Error) do
+    assert_raise(YouPlot::Parser::Error) do
       YouPlot::Command.new(['abracadabra', '--hadley', '--wickham']).run
     end
     assert_equal '', @stderr_file.read

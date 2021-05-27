@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'dsv'
-require_relative 'command/parser'
+require_relative 'parser'
 
 # FIXME
 require_relative 'backends/unicode_plot_backend'

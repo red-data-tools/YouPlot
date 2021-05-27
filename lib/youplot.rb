@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'unicode_plot'
-require 'youplot/version'
-require 'youplot/dsv'
-require 'youplot/parameters'
-require 'youplot/command'
+require_relative 'youplot/version'
+require_relative 'youplot/dsv'
+require_relative 'youplot/parameters'
+require_relative 'youplot/command'
 
 module YouPlot
   class << self
