@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'enumerable/statistics'
+
 module YouPlot
   # plotting functions.
   module Backends
@@ -7,17 +9,8 @@ module YouPlot
       module_function
 
       def count_values(arr, tally: true)
-        # tally was added in Ruby 2.7
-        if tally && Enumerable.method_defined?(:tally)
-          arr.tally
-        else
-          # https://github.com/marcandre/backports
-          arr.each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }
-             .tap { |h| h.default = nil }
-        end
-          .sort { |a, b| a[1] <=> b[1] }
-          .reverse
-          .transpose
+        a = arr.value_counts
+        [a.keys, a.values]
       end
     end
   end
