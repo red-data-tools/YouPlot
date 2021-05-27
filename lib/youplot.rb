@@ -3,6 +3,7 @@
 require 'unicode_plot'
 require 'youplot/version'
 require 'youplot/dsv'
+require 'youplot/parameters'
 require 'youplot/command'
 
 module YouPlot

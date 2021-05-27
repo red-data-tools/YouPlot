@@ -2,7 +2,6 @@
 
 require 'optparse'
 require_relative 'options'
-require_relative 'plot_params'
 
 module YouPlot
   class Command
@@ -28,7 +27,7 @@ module YouPlot
           debug: false
         )
 
-        @params = PlotParams.new
+        @params = Parameters.new
       end
 
       def create_default_parser
