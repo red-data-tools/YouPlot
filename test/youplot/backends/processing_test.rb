@@ -2,7 +2,7 @@
 
 require_relative '../../test_helper'
 
-class YouPlotCommandTest < Test::Unit::TestCase
+class ProcessingTest < Test::Unit::TestCase
   test :count_values do
     @m = YouPlot::Backends::Processing
     assert_equal([%i[a b c], [3, 2, 1]], @m.count_values(%i[a a a b b c]))
