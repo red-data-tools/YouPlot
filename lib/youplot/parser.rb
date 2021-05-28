@@ -33,7 +33,7 @@ module YouPlot
       OptionParser.new do |parser|
         parser.program_name  = 'YouPlot'
         parser.version       = YouPlot::VERSION
-        parser.summary_width = 24
+        parser.summary_width = 23
         parser.on_tail('') # Add a blank line at the end
         parser.separator('')
         parser.on('Common options:')
