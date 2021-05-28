@@ -112,17 +112,15 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
   end
 
-  # test :c do
-  #   omit
-  #   YouPlot::Command.new(['count', '-H', '-d,']).run
-  #   assert_equal fixture('iris-count.txt'), @stderr_file.read
-  # end
+  test :c do
+    YouPlot::Command.new(['count']).run
+    assert_equal fixture('simple-count.txt'), @stderr_file.read
+  end
 
-  # test :count do
-  #   omit
-  #   YouPlot::Command.new(['c', '-H', '-d,']).run
-  #   assert_equal fixture('iris-count.txt'), @stderr_file.read
-  # end
+  test :count do
+    YouPlot::Command.new(['c']).run
+    assert_equal fixture('simple-count.txt'), @stderr_file.read
+  end
 
   test :plot_output_stdout do
     YouPlot::Command.new(['line', '-o']).run
