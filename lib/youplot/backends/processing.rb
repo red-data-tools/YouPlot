@@ -11,10 +11,11 @@ module YouPlot
         if tally && Enumerable.method_defined?(:tally)
           arr.tally
         else
-          # https://github.com/marcandre/backports
-          arr.each_with_object(Hash.new(0)) { |item, res| res[item] += 1 }
-             .tap { |h| h.default = nil }
+          # value_counts Enumerable::Statistics
+          arr.value_counts(dropna: false)
         end
+          # faster than `.sort_by{|a| a[1]}`, `.sort_by(a:last)`
+          #             `.sort{ |a, b| -a[1] <=> -b[1] }
           .sort { |a, b| a[1] <=> b[1] }
           .reverse
           .transpose
