@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'processing'
 require 'unicode_plot'
 
 module YouPlot
@@ -15,7 +16,7 @@ module YouPlot
         series = data.series
         # `uplot count`
         if count
-          series = series[0].value_counts.yield_self { |h| [h.keys, h.values] }
+          series = Processing.count_values(series[0])
           params.title = headers[0] if headers
         end
         if series.size == 1
