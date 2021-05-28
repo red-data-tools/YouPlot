@@ -6,7 +6,7 @@ require 'unicode_plot'
 module YouPlot
   # plotting functions.
   module Backends
-    module UnicodePlotBackend
+    module UnicodePlot
       class Error < StandardError; end
 
       module_function
@@ -39,7 +39,7 @@ module YouPlot
           labels = series[x_col]
           values = series[y_col].map(&:to_f)
         end
-        UnicodePlot.barplot(labels, values, **params.to_hc)
+        ::UnicodePlot.barplot(labels, values, **params.to_hc)
       end
 
       def histogram(data, params)
@@ -47,7 +47,7 @@ module YouPlot
         series = data.series
         params.title ||= data.headers[0] if headers
         values = series[0].map(&:to_f)
-        UnicodePlot.histogram(values, **params.to_hc)
+        ::UnicodePlot.histogram(values, **params.to_hc)
       end
 
       def line(data, params, fmt = nil)
@@ -57,7 +57,7 @@ module YouPlot
           # If there is only one series, it is assumed to be sequential data.
           params.ylabel ||= headers[0] if headers
           y = series[0].map(&:to_f)
-          UnicodePlot.lineplot(y, **params.to_hc)
+          ::UnicodePlot.lineplot(y, **params.to_hc)
         else
           # If there are 2 or more series...
           if fmt == 'yx'
@@ -75,7 +75,7 @@ module YouPlot
           end
           x = series[x_col].map(&:to_f)
           y = series[y_col].map(&:to_f)
-          UnicodePlot.lineplot(x, y, **params.to_hc)
+          ::UnicodePlot.lineplot(x, y, **params.to_hc)
         end
       end
 
@@ -94,9 +94,9 @@ module YouPlot
         end
         params.xlim ||= series[0].flatten.minmax # why need?
         params.ylim ||= series[1..-1].flatten.minmax # why need?
-        plot = UnicodePlot.public_send(method1, series[0], series[1], **params.to_hc)
+        plot = ::UnicodePlot.public_send(method1, series[0], series[1], **params.to_hc)
         2.upto(series.size - 1) do |i|
-          UnicodePlot.public_send(method2, plot, series[0], series[i], name: headers&.[](i))
+          ::UnicodePlot.public_send(method2, plot, series[0], series[i], name: headers&.[](i))
         end
         plot
       end
@@ -112,9 +112,9 @@ module YouPlot
         params.xlim ||= series2.map(&:first).flatten.minmax # why need?
         params.ylim ||= series2.map(&:last).flatten.minmax # why need?
         x1, y1 = series2.shift
-        plot = UnicodePlot.public_send(method1, x1, y1, **params.to_hc)
+        plot = ::UnicodePlot.public_send(method1, x1, y1, **params.to_hc)
         series2.each_with_index do |(xi, yi), i|
-          UnicodePlot.public_send(method2, plot, xi, yi, name: headers&.[]((i + 1) * 2))
+          ::UnicodePlot.public_send(method2, plot, xi, yi, name: headers&.[]((i + 1) * 2))
         end
         plot
       end
@@ -152,13 +152,13 @@ module YouPlot
         series = data.series
         headers ||= (1..series.size).map(&:to_s)
         series.map! { |s| s.map(&:to_f) }
-        UnicodePlot.boxplot(headers, series, **params.to_hc)
+        ::UnicodePlot.boxplot(headers, series, **params.to_hc)
       end
 
       def colors(color_names = false)
         # FIXME
         s = String.new
-        UnicodePlot::StyledPrinter::TEXT_COLORS.each do |k, v|
+        ::UnicodePlot::StyledPrinter::TEXT_COLORS.each do |k, v|
           s << v
           s << k.to_s
           unless color_names

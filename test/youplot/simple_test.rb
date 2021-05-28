@@ -67,37 +67,37 @@ class YouPlotSimpleTest < Test::Unit::TestCase
   end
 
   test :lines do
-    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['lines']).run
     end
   end
 
   test :lineplots do
-    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['lineplots']).run
     end
   end
 
   test :s do
-    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['s']).run
     end
   end
 
   test :scatter do
-    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['scatter']).run
     end
   end
 
   test :d do
-    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['d']).run
     end
   end
 
   test :density do
-    assert_raise(YouPlot::Backends::UnicodePlotBackend::Error) do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['density']).run
     end
   end

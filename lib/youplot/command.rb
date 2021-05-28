@@ -4,7 +4,7 @@ require_relative 'dsv'
 require_relative 'parser'
 
 # FIXME
-require_relative 'backends/unicode_plot_backend'
+require_relative 'backends/unicode_plot'
 
 module YouPlot
   Data = Struct.new(:headers, :series)
@@ -19,7 +19,7 @@ module YouPlot
       @command = nil
       @params  = nil
       @options = nil
-      @backend = YouPlot::Backends::UnicodePlotBackend
+      @backend = YouPlot::Backends::UnicodePlot
     end
 
     def run_as_executable
