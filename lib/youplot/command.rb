@@ -102,8 +102,17 @@ module YouPlot
     end
 
     def read_dsv(input)
-      input = input.dup.force_encoding(options[:encoding]).encode('utf-8') if options[:encoding]
-      DSV.parse(input, options[:delimiter], options[:headers], options[:transpose])
+      if options[:encoding]
+        input.force_encoding(options[:encoding])
+             .encode!('utf-8')
+      end
+      begin
+        DSV.parse(input, options[:delimiter], options[:headers], options[:transpose])
+      rescue CSV::MalformedCSVError => e
+        warn 'Failed to parse the text. '
+        warn 'Please try to set the correct character encoding with --encoding option.'
+        raise e
+      end
     end
 
     def create_plot
