@@ -1,6 +1,6 @@
 <p align="center">
   <img src="logo.svg" width="60%" height="60%" />
-</7>
+</p>
 
 ![Build Status](https://github.com/kojix2/youplot/workflows/test/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
