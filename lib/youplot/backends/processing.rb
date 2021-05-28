@@ -14,11 +14,12 @@ module YouPlot
           # value_counts Enumerable::Statistics
           arr.value_counts(dropna: false)
         end
-          .sort { |a, b| a[1] <=> b[1] }
-          .reverse
+          .sort do |a, b|
+            r = b[1] <=> a[1]           # compare values
+            r = a[0] <=> b[0] if r == 0 # If the values are the same, compare by name
+            r
+          end
           .transpose
-        # faster than `.sort_by{|a| a[1]}`, `.sort_by(a:last)`
-        #             `.sort{ |a, b| -a[1] <=> -b[1] }
       end
     end
   end
