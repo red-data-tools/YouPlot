@@ -89,10 +89,10 @@ module YouPlot
           options[:progressive] = v
         end
         parser.on('-C', '--color-output', TrueClass, 'colorize even if writing to a pipe') do |_v|
-          UnicodePlot::StyledPrinter.define_method(:color?) { |_o| true }
+          UnicodePlot::IOContext.define_method(:color?) { true } # FIXME
         end
         parser.on('-M', '--monochrome', TrueClass, 'no colouring even if writing to a tty') do |_v|
-          UnicodePlot::StyledPrinter.define_method(:color?) { |_o| false }
+          UnicodePlot::IOContext.define_method(:color?) { false } # FIXME
         end
         parser.on('--encoding STR', String, 'Specify the input encoding') do |v|
           options[:encoding] = v
