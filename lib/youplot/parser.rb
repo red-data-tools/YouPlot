@@ -4,6 +4,7 @@ require 'optparse'
 require_relative 'options'
 
 module YouPlot
+  # Class for parsing command line options
   class Parser
     class Error < StandardError; end
 

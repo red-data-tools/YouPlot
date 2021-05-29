@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# UnicodePlot - Plot your data by Unicode characters
+# https://github.com/red-data-tools/unicode_plot.rb
+
 require_relative 'processing'
 require 'unicode_plot'
 
