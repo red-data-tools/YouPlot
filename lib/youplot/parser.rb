@@ -186,6 +186,22 @@ module YouPlot
       end
     end
 
+    def sub_parser_add_fmt_xyxy
+      sub_parser.on_head('--fmt STR', String,
+                         'xyxy : header is like x1, y1, x2, y2, x3, y3...',
+                         'xyy  : header is like x, y1, y2, y2, y3...') do |v|
+        options[:fmt] = v
+      end
+    end
+
+    def sub_parser_add_fmt_yx
+      sub_parser.on_head('--fmt STR', String,
+                         'xy : header is like x, y...',
+                         'yx : header is like y, x...') do |v|
+        options[:fmt] = v
+      end
+    end
+
     def create_sub_parser
       @sub_parser = create_base_parser
       sub_parser.banner = \
@@ -206,9 +222,7 @@ module YouPlot
 
       when :barplot, :bar
         sub_parser_add_symbol
-        sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-          options[:fmt] = v
-        end
+        sub_parser_add_fmt_yx
         sub_parser_add_xscale
 
       when :count, :c
@@ -227,39 +241,28 @@ module YouPlot
       when :lineplot, :line
         sub_parser_add_canvas
         sub_parser_add_grid
-        sub_parser.on_head('--fmt STR', String, 'xy : header is like x, y...', 'yx : header is like y, x...') do |v|
-          options[:fmt] = v
-        end
+        sub_parser_add_fmt_yx
         sub_parser_add_ylim
         sub_parser_add_xlim
 
       when :lineplots, :lines
         sub_parser_add_canvas
         sub_parser_add_grid
-        sub_parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
-                           'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-          options[:fmt] = v
-        end
+        sub_parser_add_fmt_xyxy
         sub_parser_add_ylim
         sub_parser_add_xlim
 
       when :scatter, :s
         sub_parser_add_canvas
         sub_parser_add_grid
-        sub_parser.on_head('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
-                           'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-          options[:fmt] = v
-        end
+        sub_parser_add_fmt_xyxy
         sub_parser_add_ylim
         sub_parser_add_xlim
 
       when :density, :d
         sub_parser_add_canvas
         sub_parser_add_grid
-        sub_parser.on('--fmt STR', String, 'xyxy : header is like x1, y1, x2, y2, x3, y3...',
-                      'xyy  : header is like x, y1, y2, y2, y3...') do |v|
-          options[:fmt] = v
-        end
+        sub_parser_add_fmt_xyxy
         sub_parser_add_ylim
         sub_parser_add_xlim
 
