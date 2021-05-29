@@ -28,6 +28,7 @@ class YouPlotIRISTest < Test::Unit::TestCase
 
   def teardown
     @stderr_file.close
+    @stdout_file.close
   end
 
   def fixture(fname)

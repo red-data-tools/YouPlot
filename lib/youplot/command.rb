@@ -182,9 +182,9 @@ module YouPlot
 
     def output_plot(plot)
       case options[:output]
-      when IO
+      when IO, StringIO
         plot.render(options[:output])
-      else
+      when String, Tempfile
         File.open(options[:output], 'w') do |f|
           plot.render(f)
         end
@@ -193,7 +193,7 @@ module YouPlot
 
     def output_plot_progressive(plot)
       case options[:output]
-      when IO
+      when IO, StringIO
         # RefactorMe
         out = StringIO.new(String.new)
         def out.tty?
