@@ -33,21 +33,34 @@ module YouPlot
       @options ||= parser.options
       @params  ||= parser.params
 
+      # color command
       if %i[colors color colours colour].include? @command
         plot = create_plot
         output_plot(plot)
-      elsif options[:progressive]
+        return
+      end
+
+      # progressive mode
+      if options[:progressive]
         stop = false
         Signal.trap(:INT) { stop = true }
-        options[:output].print "\e[?25l" # make cursor invisible
+
+        # make cursor invisible
+        options[:output].print "\e[?25l"
+
+        # mainloop
         while (input = Kernel.gets)
           n = main_progressive(input)
           break if stop
 
           options[:output].print "\e[#{n}F"
         end
+
         options[:output].print "\e[0J"
-        options[:output].print "\e[?25h" # make cursor visible
+        # make cursor visible
+        options[:output].print "\e[?25h"
+
+      # normal mode
       else
         # Sometimes the input file does not end with a newline code.
         while (input = Kernel.gets(nil))
@@ -59,23 +72,32 @@ module YouPlot
     private
 
     def main(input)
+      # Outputs input data to a file or stdout.
       output_data(input)
 
-      @data = read_dsv(input)
+      @data = parse_dsv(input)
 
+      # Debug mode, show parsed results
       pp @data if options[:debug]
 
+      # When run as a program instead of a library
       if YouPlot.run_as_executable?
         begin
           plot = create_plot
         rescue ArgumentError => e
+          # Show only one line of error.
           warn e.backtrace[0]
+          # Show error message in purple
           warn "\e[35m#{e}\e[0m"
+          # Explicitly terminated with exit code: 1
           exit 1
         end
+
+      # When running YouPlot as a library (e.g. for testing)
       else
         plot = create_plot
       end
+
       output_plot(plot)
     end
 
@@ -95,24 +117,28 @@ module YouPlot
       @raw_data << input
 
       # FIXME
-      @data = read_dsv(@raw_data)
+      @data = parse_dsv(@raw_data)
 
       plot = create_plot
       output_plot_progressive(plot)
     end
 
-    def read_dsv(input)
+    def parse_dsv(input)
+      # If encoding is specified, convert to UTF-8
       if options[:encoding]
         input.force_encoding(options[:encoding])
              .encode!('utf-8')
       end
+
       begin
-        DSV.parse(input, options[:delimiter], options[:headers], options[:transpose])
+        data = DSV.parse(input, options[:delimiter], options[:headers], options[:transpose])
       rescue CSV::MalformedCSVError => e
         warn 'Failed to parse the text. '
         warn 'Please try to set the correct character encoding with --encoding option.'
         raise e
       end
+
+      data
     end
 
     def create_plot
