@@ -15,8 +15,10 @@ module YouPlot
           arr.value_counts(dropna: false)
         end
           .sort do |a, b|
-            r = b[1] <=> a[1]           # compare values
-            r = a[0] <=> b[0] if r == 0 # If the values are the same, compare by name
+            # compare values
+            r = b[1] <=> a[1]
+            # If the values are the same, compare by name
+            r = a[0] <=> b[0] if r == 0
             r
           end
           .transpose

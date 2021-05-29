@@ -34,11 +34,8 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     File.read(File.expand_path("../fixtures/#{fname}", __dir__))
   end
 
-  test :bar do
-    assert_raise(ArgumentError) do
-      YouPlot::Command.new(['bar']).run
-    end
-  end
+  # Single command
+  # The goal is to verify that the command works without any options.
 
   test :barplot do
     assert_raise(ArgumentError) do
@@ -46,9 +43,10 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
-  test :hist do
-    YouPlot::Command.new(['hist']).run
-    assert_equal fixture('simple-histogram.txt'), @stderr_file.read
+  test :bar do
+    assert_raise(ArgumentError) do
+      YouPlot::Command.new(['bar']).run
+    end
   end
 
   test :histogram do
@@ -56,9 +54,9 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-histogram.txt'), @stderr_file.read
   end
 
-  test :line do
-    YouPlot::Command.new(['line']).run
-    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
+  test :hist do
+    YouPlot::Command.new(['hist']).run
+    assert_equal fixture('simple-histogram.txt'), @stderr_file.read
   end
 
   test :lineplot do
@@ -66,10 +64,9 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
   end
 
-  test :lines do
-    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
-      YouPlot::Command.new(['lines']).run
-    end
+  test :line do
+    YouPlot::Command.new(['line']).run
+    assert_equal fixture('simple-lineplot.txt'), @stderr_file.read
   end
 
   test :lineplots do
@@ -78,9 +75,9 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
-  test :s do
+  test :lines do
     assert_raise(YouPlot::Backends::UnicodePlot::Error) do
-      YouPlot::Command.new(['s']).run
+      YouPlot::Command.new(['lines']).run
     end
   end
 
@@ -90,9 +87,9 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
-  test :d do
+  test :s do
     assert_raise(YouPlot::Backends::UnicodePlot::Error) do
-      YouPlot::Command.new(['d']).run
+      YouPlot::Command.new(['s']).run
     end
   end
 
@@ -102,9 +99,10 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
-  test :box do
-    YouPlot::Command.new(['box']).run
-    assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
+  test :d do
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
+      YouPlot::Command.new(['d']).run
+    end
   end
 
   test :boxplot do
@@ -112,13 +110,18 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
   end
 
-  test :c do
-    YouPlot::Command.new(['count']).run
-    assert_equal fixture('simple-count.txt'), @stderr_file.read
+  test :box do
+    YouPlot::Command.new(['box']).run
+    assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
   end
 
   test :count do
     YouPlot::Command.new(['c']).run
+    assert_equal fixture('simple-count.txt'), @stderr_file.read
+  end
+
+  test :c do
+    YouPlot::Command.new(['count']).run
     assert_equal fixture('simple-count.txt'), @stderr_file.read
   end
 
