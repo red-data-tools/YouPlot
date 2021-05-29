@@ -29,7 +29,7 @@ module YouPlot
       @params = Parameters.new
     end
 
-    def create_default_parser
+    def create_base_parser
       OptionParser.new do |parser|
         parser.program_name  = 'YouPlot'
         parser.version       = YouPlot::VERSION
@@ -111,7 +111,7 @@ module YouPlot
     end
 
     def create_main_parser
-      @main_parser = create_default_parser
+      @main_parser = create_base_parser
       main_parser.banner = \
         <<~MSG
 
@@ -186,7 +186,7 @@ module YouPlot
     end
 
     def create_sub_parser
-      @sub_parser = create_default_parser
+      @sub_parser = create_base_parser
       sub_parser.banner = \
         <<~MSG
 
