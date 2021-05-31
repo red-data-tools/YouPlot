@@ -14,12 +14,12 @@ module YouPlot
 
       module_function
 
-      def barplot(data, params, fmt = nil, count: false)
+      def barplot(data, params, fmt = nil, count: false, reverse: false)
         headers = data.headers
         series = data.series
         # `uplot count`
         if count
-          series = Processing.count_values(series[0])
+          series = Processing.count_values(series[0], reverse: reverse)
           params.title = headers[0] if headers
         end
         if series.size == 1

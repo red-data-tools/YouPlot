@@ -146,7 +146,7 @@ module YouPlot
       when :bar, :barplot
         @backend.barplot(data, params, options[:fmt])
       when :count, :c
-        @backend.barplot(data, params, count: true)
+        @backend.barplot(data, params, count: true, reverse: options[:reverse])
       when :hist, :histogram
         @backend.histogram(data, params)
       when :line, :lineplot

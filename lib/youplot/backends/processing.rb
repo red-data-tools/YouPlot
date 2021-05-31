@@ -6,22 +6,30 @@ module YouPlot
     module Processing
       module_function
 
-      def count_values(arr, tally: true)
+      def count_values(arr, tally: true, reverse: false)
         # tally was added in Ruby 2.7
-        if tally && Enumerable.method_defined?(:tally)
-          arr.tally
-        else
-          # value_counts Enumerable::Statistics
-          arr.value_counts(dropna: false)
-        end
-          .sort do |a, b|
-            # compare values
-            r = b[1] <=> a[1]
-            # If the values are the same, compare by name
-            r = a[0] <=> b[0] if r == 0
-            r
+        result = \
+          if tally && Enumerable.method_defined?(:tally)
+            arr.tally
+          else
+            # value_counts Enumerable::Statistics
+            arr.value_counts(dropna: false)
           end
-          .transpose
+
+        # sorting
+        result = result.sort do |a, b|
+          # compare values
+          r = b[1] <=> a[1]
+          # If the values are the same, compare by name
+          r = a[0] <=> b[0] if r == 0
+          r
+        end
+
+        # --reverse option
+        result.reverse! if reverse
+
+        # prepare for barplot
+        result.transpose
       end
     end
   end

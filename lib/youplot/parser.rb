@@ -23,6 +23,7 @@ module YouPlot
         fmt: 'xyy',
         progressive: false,
         encoding: nil,
+        reverse: false,
         color_names: false,
         debug: false
       )
@@ -163,7 +164,8 @@ module YouPlot
     end
 
     def sub_parser_add_canvas
-      sub_parser.on_head('--canvas STR', String, 'type of canvas') do |v|
+      canvas_types = UnicodePlot::Canvas::CANVAS_CLASS_MAP.keys.join(", ")
+      sub_parser.on_head('--canvas STR', String, "type of canvas", "(#{canvas_types})") do |v|
         params.canvas = v.to_sym
       end
     end
@@ -226,6 +228,9 @@ module YouPlot
         sub_parser_add_xscale
 
       when :count, :c
+        sub_parser.on_head('-r', '--reverse', TrueClass, 'reverse the result of comparisons') do |v|
+          options.reverse = v
+        end
         sub_parser_add_symbol
         sub_parser_add_xscale
 
@@ -270,7 +275,7 @@ module YouPlot
         sub_parser_add_xlim
 
       when :colors, :color, :colours, :colour
-        sub_parser.on_head('-n', '--names', 'show color names only', TrueClass) do |v|
+        sub_parser.on_head('-n', '--names', TrueClass, 'show color names only') do |v|
           options[:color_names] = v
         end
 

@@ -40,6 +40,8 @@ class YouPlotIRISTest < Test::Unit::TestCase
     assert_equal fixture('iris-barplot.txt'), @stderr_file.read
   end
 
+  # barplot doesn't make sense, but just to make sure it works.
+
   test :bar do
     YouPlot::Command.new(['bar', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run
     assert_equal fixture('iris-barplot.txt'), @stderr_file.read
@@ -54,6 +56,8 @@ class YouPlotIRISTest < Test::Unit::TestCase
     YouPlot::Command.new(['hist', '-H', '-d,', '-t', 'IRIS-HISTOGRAM']).run
     assert_equal fixture('iris-histogram.txt'), @stderr_file.read
   end
+
+  # Yeah, lineplot/lineplots don't make sense too.
 
   test :lineplot do
     YouPlot::Command.new(['lineplot', '-H', '-d,', '-t', 'IRIS-LINEPLOT']).run
@@ -105,15 +109,20 @@ class YouPlotIRISTest < Test::Unit::TestCase
     assert_equal fixture('iris-boxplot.txt'), @stderr_file.read
   end
 
-  # test :c do
-  #   YouPlot::Command.new(['count', '-H', '-d,']).run
-  #   assert_equal fixture('iris-count.txt'), @stderr_file.read
-  # end
+  # Yeah, lineplot/lineplots don't make sense too. 
+  # Just checking the behavior.
 
-  # test :count do
-  #   YouPlot::Command.new(['c', '-H', '-d,']).run
-  #   assert_equal fixture('iris-count.txt'), @stderr_file.read
-  # end
+  test :c do
+    YouPlot::Command.new(['count', '-H', '-d,']).run
+    assert_equal fixture('iris-count.txt'), @stderr_file.read
+  end
+
+  test :count do
+    YouPlot::Command.new(['c', '-H', '-d,']).run
+    assert_equal fixture('iris-count.txt'), @stderr_file.read
+  end
+
+  # Output options.
 
   test :plot_output_stdout do
     YouPlot::Command.new(['bar', '-o', '-H', '-d,', '-t', 'IRIS-BARPLOT']).run

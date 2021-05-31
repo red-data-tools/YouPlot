@@ -11,7 +11,8 @@ module YouPlot
     :fmt,
     :progressive,
     :encoding,
-    :color_names,
+    :reverse,      # count
+    :color_names,  # color
     :debug,
     keyword_init: true
   )
