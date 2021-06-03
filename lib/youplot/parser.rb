@@ -15,17 +15,16 @@ module YouPlot
       @command = nil
 
       @options = Options.new(
-        delimiter: "\t",
-        transpose: false,
-        headers: nil,
-        pass: false,
-        output: $stderr,
-        fmt: 'xyy',
-        progressive: false,
-        encoding: nil,
-        reverse: false,
-        color_names: false,
-        debug: false
+        "\t",    # elimiter:
+        false,   # transpose:
+        nil,     # headers:
+        false,   # pass:
+        $stderr, # output:
+        'xyy',   # fmt:
+        false,   # progressive:
+        nil,     # encoding:
+        false,   # color_names:
+        false    # debug:
       )
 
       @params = Parameters.new

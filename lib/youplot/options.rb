@@ -13,7 +13,6 @@ module YouPlot
     :encoding,
     :reverse,      # count
     :color_names,  # color
-    :debug,
-    keyword_init: true
+    :debug
   )
 end
