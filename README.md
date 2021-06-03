@@ -1,16 +1,19 @@
-<p align="center">
-  <img src="logo.svg" width="60%" height="60%" />
-</p>
+<div align="center">
+  <img src="logo.svg" width="66%" height="66%" />
+  
+  <hr>
+  
+  ![Build Status](https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg)
+  [![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
+  [![Docs Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://rubydoc.info/gems/youplot)
+  [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
+  [![DOI](https://zenodo.org/badge/283230219.svg)](https://zenodo.org/badge/latestdoi/283230219)
+  
+  YouPlot is a command line tool that draws plots in a terminal.
 
-![Build Status](https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg)
-[![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
-[![Docs Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://rubydoc.info/gems/youplot)
-[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
-[![DOI](https://zenodo.org/badge/283230219.svg)](https://zenodo.org/badge/latestdoi/283230219)
-
-YouPlot is a command line tool for Unicode Plotting working with data from standard stream.
-
-:bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
+  :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
+  
+</div>
 
 ## Installation
 
