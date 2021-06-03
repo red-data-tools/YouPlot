@@ -21,7 +21,7 @@ module YouPlot
           # compare values
           r = b[1] <=> a[1]
           # If the values are the same, compare by name
-          r = a[0] <=> b[0] if r == 0
+          r = a[0] <=> b[0] if r.zero?
           r
         end
 
