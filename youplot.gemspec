@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A command line tool for Unicode Plotting'
   spec.description   = 'A command line tool for Unicode Plotting'
-  spec.homepage      = 'https://github.com/kojix2/youplot'
+  spec.homepage      = 'https://github.com/red-data-tools/YouPlot'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 

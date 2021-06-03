@@ -118,7 +118,7 @@ module YouPlot
 
           Program: YouPlot (Tools for plotting on the terminal)
           Version: #{YouPlot::VERSION} (using UnicodePlot #{UnicodePlot::VERSION})
-          Source:  https://github.com/kojix2/youplot
+          Source:  https://github.com/red-data-tools/YouPlot
 
           Usage:   uplot <command> [options] <in.tsv>
 

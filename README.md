@@ -2,7 +2,7 @@
   <img src="logo.svg" width="60%" height="60%" />
 </p>
 
-![Build Status](https://github.com/kojix2/youplot/workflows/test/badge.svg)
+![Build Status](https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
 [![Docs Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://rubydoc.info/gems/youplot)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
@@ -230,8 +230,8 @@ uplot colors
 YouPlot is a library under development, so even small improvements like typofix are welcome!
 Please feel free to send us your pull requests.
 
-* [Report bugs](https://github.com/kojix2/youplot/issues)
-* Fix bugs and [submit pull requests](https://github.com/kojix2/youplot/pulls)
+* [Report bugs](https://github.com/red-data-tools/YouPlot/issues)
+* Fix bugs and [submit pull requests](https://github.com/red-data-tools/YouPlot/pulls)
 * Write, clarify, or fix documentation
   * English corrections by native speakers are welcome.
 * Suggest or add new features
@@ -249,7 +249,6 @@ bundle exec rake install   # Installation from source code
 
 ### Acknowledgements
 
-* [Red Data Tools](https://github.com/red-data-tools) - Technical support
 * [sampo grafiikka](https://jypg.net/sampo_grafiikka) - Project logo creation
 * [yutaas](https://github.com/yutaas) - English proofreading
 
