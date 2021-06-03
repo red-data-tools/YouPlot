@@ -163,8 +163,8 @@ module YouPlot
     end
 
     def sub_parser_add_canvas
-      canvas_types = UnicodePlot::Canvas::CANVAS_CLASS_MAP.keys.join(", ")
-      sub_parser.on_head('--canvas STR', String, "type of canvas", "(#{canvas_types})") do |v|
+      canvas_types = UnicodePlot::Canvas::CANVAS_CLASS_MAP.keys.join(', ')
+      sub_parser.on_head('--canvas STR', String, 'type of canvas', "(#{canvas_types})") do |v|
         params.canvas = v.to_sym
       end
     end

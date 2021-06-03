@@ -109,7 +109,7 @@ class YouPlotIRISTest < Test::Unit::TestCase
     assert_equal fixture('iris-boxplot.txt'), @stderr_file.read
   end
 
-  # Yeah, lineplot/lineplots don't make sense too. 
+  # Yeah, lineplot/lineplots don't make sense too.
   # Just checking the behavior.
 
   test :c do
