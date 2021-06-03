@@ -14,7 +14,7 @@ module YouPlot
 
       # Remove blank lines
       arr.delete_if do |i|
-        i == [] or i.all? nil
+        i == [] or i.all?(&:nil?)
       end
 
       # get header

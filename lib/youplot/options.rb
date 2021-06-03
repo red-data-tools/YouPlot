@@ -12,7 +12,7 @@ module YouPlot
     :progressive,
     :encoding,
     :color_names,
-    :debug,
-    keyword_init: true
+    :debug
+    # keyword_init: true
   )
 end
