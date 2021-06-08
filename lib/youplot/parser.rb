@@ -38,17 +38,13 @@ module YouPlot
         parser.on_tail('') # Add a blank line at the end
         parser.separator('')
         parser.on('Common options:')
-        parser.on('-o', '--output [FILE]', 'file to output plots to [stdout]',
-                  'If no option is specified, plot will print to stderr') do |v|
-          # uplot bar -o | foo
-          # uplot bar -o - -w 30 | foo
-          options[:output] = v.nil? || v == '-' ? $stdout : v
-        end
         parser.on('-O', '--pass [FILE]', 'file to output input data to [stdout]',
                   'for inserting YouPlot in the middle of Unix pipes') do |v|
-          # | uplot bar -O | foo
-          # | uplot bar -O - -w 30 | foo
-          options[:pass] = v.nil? || v == '-' ? $stdout : v
+          options[:pass] = v || $stdout
+        end
+        parser.on('-o', '--output [FILE]', 'file to output plots to [stdout]',
+                  'If no option is specified, plot will print to stderr') do |v|
+          options[:output] = v || $stdout
         end
         parser.on('-d', '--delimiter DELIM', String, 'use DELIM instead of [TAB] for field delimiter') do |v|
           options[:delimiter] = v
