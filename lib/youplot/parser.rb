@@ -64,7 +64,7 @@ module YouPlot
         parser.on('-y', '--ylabel STR', String, 'print string on the far left of the plot') do |v|
           params.ylabel = v
         end
-        parser.on('-w', '--width INT', Integer, 'number of characters per row') do |v|
+        parser.on('-w', '--width INT', Numeric, 'number of characters per row') do |v|
           params.width = v
         end
         parser.on('-h', '--height INT', Numeric, 'number of rows') do |v|
