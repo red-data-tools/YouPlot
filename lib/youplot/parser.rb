@@ -171,13 +171,13 @@ module YouPlot
 
     def sub_parser_add_xlim
       sub_parser.on_head('--xlim FLOAT,FLOAT', Array, 'plotting range for the x coordinate') do |v|
-        params.xlim = v
+        params.xlim = v.map(&:to_f)
       end
     end
 
     def sub_parser_add_ylim
       sub_parser.on_head('--ylim FLOAT,FLOAT', Array, 'plotting range for the y coordinate') do |v|
-        params.ylim = v
+        params.ylim = v.map(&:to_f)
       end
     end
 
