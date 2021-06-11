@@ -228,6 +228,12 @@ Options:
 uplot colors
 ```
 
+## Command line tools that are useful to use with YouPlot
+
+* [csvtk](https://github.com/shenwei356/csvtk)
+* [GNU datamash](https://www.gnu.org/software/datamash/)
+* [awk](https://www.gnu.org/software/gawk/)
+
 ## Contributing
 
 YouPlot is a library under development, so even small improvements like typofix are welcome!
