@@ -3,11 +3,11 @@
   
   <hr>
   
-  ![Build Status](https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg)
-  [![Gem Version](https://badge.fury.io/rb/youplot.svg)](https://badge.fury.io/rb/youplot)
-  [![Docs Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://rubydoc.info/gems/youplot)
-  [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
-  [![DOI](https://zenodo.org/badge/283230219.svg)](https://zenodo.org/badge/latestdoi/283230219)
+  <img alt="Build Status" src="https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg">
+  <a href="https://rubygems.org/gems/youplot/"><img alt="Gem Version" src="https://badge.fury.io/rb/youplot.svg"></a>
+  <a href="https://rubydoc.info/gems/youplot/"><img alt="Docs Stable" src="https://img.shields.io/badge/docs-stable-blue.svg"></a>
+  <a href="LICENSE.txt"><img alt="The MIT License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <a href="https://zenodo.org/badge/latestdoi/283230219"><img alt="DOI" src="https://zenodo.org/badge/283230219.svg"></a>
   
   YouPlot is a command line tool that draws plots in the terminal.
 
@@ -126,12 +126,7 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 
 ## Usage
 
-### Why YouPlot?
-
-Wouldn't it be a pain to have to run R, Python, Julia, gnuplot or whatever REPL just to check your data?
-YouPlot is a command line tool for this purpose. With YouPlot, you can continue working without leaving your terminal and shell.
-
-### How to use YouPlot?
+### Commands
 
 `uplot` is the shortened form of `youplot`. You can use either.
 
@@ -154,83 +149,65 @@ The following sub-commands are available.
 | scatter   | s     | draw a scatter plot                    |
 | density   | d     | draw a density plot                    |
 | boxplot   | box   | draw a horizontal boxplot              |
+|           |       |                                        |
+| count     | c     | draw a barplot based on the number of occurrences (slow) |
+|           |       |                                        |
+| colors    | color | show the list of available colors      |
 
-See Quick Start for `count`.
+### Output the plot
 
-| command   | short | how it works                                             |
-|-----------|-------|----------------------------------------------------------|
-| count     | c     |  draw a barplot based on the number of occurrences (slow) |
+* `-o`
+  * By default, the plot is output to **standard error output**.
+  * If you want to output to standard input, Use hyphen ` -o -` or no argument `uplot s -o | `.
 
-### Where to output the plot?
+### Output the input data
 
-By default, the plot is output to *standard error output*.
-The output file or stream for the plot can be specified with the `-o` option.
+* `-O`
+  * By default, the input data is not shown anywhere.
+  * If you want to pass the input data directly to the standard output, Use hyphen `-O -` or no argument `uplot s -O |`.
+  * This is useful when passing data to a subsequent pipeline.
 
-### Where to output the input data?
+### Header
 
-By default, the input data is not shown anywhere.
-The `-O` option, with no arguments, outputs the input data directly to the standard output. 
-This is useful when passing data to a subsequent pipeline.
+* `-H`
+  * If input data contains a header line, you need to specify the `-H` option.
 
-### What if the header line is included?
+### Delimiter
 
-If your input data contains a header line, you need to specify the `-H` option.
+* `-d`
+  * You do not need to use `-d` option for tab-delimited text since the default value is tab.
+  * To specify a blank space, you can use `uplot bar -d ' ' data.txt`. 
 
-### How to specify the delimiter?
+### Real-time data
 
-Use the `-d` option. To specify a blank space, you can use `uplot bar -d ' ' data.txt`. 
-You do not need to use `-d` option for tab-delimited text since the default value is tab.
+* `-p` `--progress`
+  * Experimental progressive mode is currently under development.
+  * `ruby -e 'loop{puts rand(100)}' | uplot line --progress`
 
-### Is there a way to specify a column as the x-axis or y-axis?
+### Show detailed options for subcommands
 
-Not yet. 
-YouPlot treats the first column as the X axis and the second column as the Y axis. 
-When working with multiple series, the first column is the X axis, the second column is series Y1, the third column is series Y2, and so on. 
-If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. 
+* `--help`
+  * The `--help` option will show more detailed options for each subcommand.
+  * `uplot hist --help`
 
-* `--fmt xyy` `--fmt xyxy` `--fmt yx` options give you a few more choices. 
-See `youplot <command> --help` for more details. 
+### Set columnss as x-axis or y-axis?
 
-* Use `awk '{print $2, $1}'` to swap lines.
-* Use `paste` to concatenate series.
+* YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first column is the X axis, the second column is series Y1, the third column is series Y2, and so on. 
+* If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. 
 
-### How to plot real-time data?
+* `--fmt`
+  * `--fmt xyy` `--fmt xyxy` `--fmt yx` options give you a few more choices. See `youplot <command> --help` for more details. 
+  * The fmt option may be renamed in the future. 
+  * The `-x` and `-y` options are currently used to specify labels `--xlabel` `--ylabel`, but may be used to specify columns in the future.
 
-Experimental progressive mode is currently under development.
+* Use `awk '{print $2, $1}'` to swap columns. Use `paste` to concatenate series.
 
-```sh
-ruby -e 'loop{puts rand(100)}' | uplot line --progress
-```
-
-### How to view detailed command line options?
-
-Use `--help` to print command-specific options.
-
-`uplot hist --help`
-
-```
-Usage: uplot histogram [options] <in.tsv>
-
-Options for histogram:
-        --symbol VAL         character to be used to plot the bars
-        --closed VAL         side of the intervals to be closed [left]
-    -n, --nbins VAL          approximate number of bins
-
-Options:
-...
-```
-
-### How to view the list of available colors?
-
-```sh
-uplot colors
-```
-
-## Command line tools that are useful to use with YouPlot
+## Tools that are useful to use with YouPlot
 
 * [csvtk](https://github.com/shenwei356/csvtk)
 * [GNU datamash](https://www.gnu.org/software/datamash/)
 * [awk](https://www.gnu.org/software/gawk/)
+* [xsv](https://github.com/BurntSushi/xsv)
 
 ## Contributing
 
@@ -252,6 +229,7 @@ git clone https://github.com/your_name/YouPlot
 bundle install             # Install the gem dependencies
 bundle exec rake test      # Run the test
 bundle exec rake install   # Installation from source code
+bundle exec exe/uplot      # Run youplot (Try out the edited code)
 ```
 
 ### Acknowledgements
