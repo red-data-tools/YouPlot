@@ -141,18 +141,7 @@ YouPlot is a command line tool for this purpose. With YouPlot, you can continue 
 | `uplot <command> [options] data.tsv ...`       | Take input from files             |
 | `pipeline1 \| uplot <command> -O \| pipeline2` | Outputs data from stdin to stdout |
 
-### Where to output the plot?
-
-By default, the plot is output to *standard error output*.
-The output file or stream for the plot can be specified with the `-o` option.
-
-### Where to output the input data?
-
-By default, the input data is not shown anywhere.
-The `-O` option, with no arguments, outputs the input data directly to the standard output. 
-This is useful when passing data to a subsequent pipeline.
-
-### What types of plots are available?
+### Subcommands
 
 The following sub-commands are available.
 
@@ -171,6 +160,17 @@ See Quick Start for `count`.
 | command   | short | how it works                                             |
 |-----------|-------|----------------------------------------------------------|
 | count     | c     |  draw a barplot based on the number of occurrences (slow) |
+
+### Where to output the plot?
+
+By default, the plot is output to *standard error output*.
+The output file or stream for the plot can be specified with the `-o` option.
+
+### Where to output the input data?
+
+By default, the input data is not shown anywhere.
+The `-O` option, with no arguments, outputs the input data directly to the standard output. 
+This is useful when passing data to a subsequent pipeline.
 
 ### What if the header line is included?
 
