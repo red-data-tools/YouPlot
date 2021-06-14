@@ -190,7 +190,7 @@ The following sub-commands are available.
   * The `--help` option will show more detailed options for each subcommand.
   * `uplot hist --help`
 
-### Set columnss as x-axis or y-axis?
+### Set columns as x-axis or y-axis?
 
 * YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first column is the X axis, the second column is series Y1, the third column is series Y2, and so on. 
 * If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. 
