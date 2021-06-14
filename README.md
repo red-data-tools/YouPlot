@@ -113,15 +113,15 @@ cat gencode.v35.annotation.gff3 \
 </p>
 
 In this example, YouPlot counts the number of chromosomes where genes are located. 
-* [GENCODE - Human Release 38](https://www.gencodegenes.org/human/)
+* [GENCODE - Human Release](https://www.gencodegenes.org/human/)
 
 Note: `count` is not very fast because it runs in a Ruby script.
 This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
 
 ```sh
 cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
-| sort | uniq -c | sort -nrk2 | awk '{print $2,$1}' \
-| uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
+| sort | uniq -c | sort -nrk1 \
+| uplot bar --fmt yx -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
 ## Usage
