@@ -9,7 +9,7 @@
   [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
   [![DOI](https://zenodo.org/badge/283230219.svg)](https://zenodo.org/badge/latestdoi/283230219)
   
-  YouPlot is a command line tool that draws plots in a terminal.
+  YouPlot is a command line tool that draws plots in the terminal.
 
   :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
   
@@ -23,8 +23,7 @@ gem install youplot
 
 ## Quick Start
 
-* `cat data.tsv | uplot <command> [options]` or
-* `uplot <command> [options] <data.tsv>`
+`uplot <command> [options] <data.tsv>`
 
 ### barplot
 
@@ -103,10 +102,6 @@ curl -sL https://git.io/IRIStsv \
 
 ### count
 
-In this example, YouPlot counts the number of chromosomes where the gene is located from the human gene annotation file and it creates a bar chart. The human gene annotation file can be downloaded from the following website.
-
-* https://www.gencodegenes.org/human/
-
 ```sh
 cat gencode.v35.annotation.gff3 \
 | grep -v '#' | grep 'gene' | cut -f1 \
@@ -116,6 +111,9 @@ cat gencode.v35.annotation.gff3 \
 <p align="center">
   <img alt="count" src="https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png">
 </p>
+
+In this example, YouPlot counts the number of chromosomes where genes are located. 
+* [GENCODE - Human Release 38](https://www.gencodegenes.org/human/)
 
 Note: `count` is not very fast because it runs in a Ruby script.
 This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
