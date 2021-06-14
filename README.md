@@ -9,7 +9,7 @@
   [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
   [![DOI](https://zenodo.org/badge/283230219.svg)](https://zenodo.org/badge/latestdoi/283230219)
   
-  YouPlot is a command line tool that draws plots in a terminal.
+  YouPlot is a command line tool that draws plots in the terminal.
 
   :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
   
@@ -23,8 +23,7 @@ gem install youplot
 
 ## Quick Start
 
-* `cat data.tsv | uplot <command> [options]` or
-* `uplot <command> [options] <data.tsv>`
+`uplot <command> [options] <data.tsv>`
 
 ### barplot
 
@@ -103,10 +102,6 @@ curl -sL https://git.io/IRIStsv \
 
 ### count
 
-In this example, YouPlot counts the number of chromosomes where the gene is located from the human gene annotation file and it creates a bar chart. The human gene annotation file can be downloaded from the following website.
-
-* https://www.gencodegenes.org/human/
-
 ```sh
 cat gencode.v35.annotation.gff3 \
 | grep -v '#' | grep 'gene' | cut -f1 \
@@ -117,13 +112,16 @@ cat gencode.v35.annotation.gff3 \
   <img alt="count" src="https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png">
 </p>
 
+In this example, YouPlot counts the number of chromosomes where genes are located. 
+* [GENCODE - Human Release](https://www.gencodegenes.org/human/)
+
 Note: `count` is not very fast because it runs in a Ruby script.
 This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.
 
 ```sh
 cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
-| sort | uniq -c | sort -nrk2 | awk '{print $2,$1}' \
-| uplot bar -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
+| sort | uniq -c | sort -nrk1 \
+| uplot bar --fmt yx -d ' ' -t "The number of human gene annotations per chromosome"  -c blue
 ```
 
 ## Usage
@@ -143,18 +141,7 @@ YouPlot is a command line tool for this purpose. With YouPlot, you can continue 
 | `uplot <command> [options] data.tsv ...`       | Take input from files             |
 | `pipeline1 \| uplot <command> -O \| pipeline2` | Outputs data from stdin to stdout |
 
-### Where to output the plot?
-
-By default, the plot is output to *standard error output*.
-The output file or stream for the plot can be specified with the `-o` option.
-
-### Where to output the input data?
-
-By default, the input data is not shown anywhere.
-The `-O` option, with no arguments, outputs the input data directly to the standard output. 
-This is useful when passing data to a subsequent pipeline.
-
-### What types of plots are available?
+### Subcommands
 
 The following sub-commands are available.
 
@@ -173,6 +160,17 @@ See Quick Start for `count`.
 | command   | short | how it works                                             |
 |-----------|-------|----------------------------------------------------------|
 | count     | c     |  draw a barplot based on the number of occurrences (slow) |
+
+### Where to output the plot?
+
+By default, the plot is output to *standard error output*.
+The output file or stream for the plot can be specified with the `-o` option.
+
+### Where to output the input data?
+
+By default, the input data is not shown anywhere.
+The `-O` option, with no arguments, outputs the input data directly to the standard output. 
+This is useful when passing data to a subsequent pipeline.
 
 ### What if the header line is included?
 
