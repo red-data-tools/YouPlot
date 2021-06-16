@@ -198,7 +198,7 @@ The following sub-commands are available.
 * `--fmt`
   * `--fmt xyy` `--fmt xyxy` `--fmt yx` options give you a few more choices. See `youplot <command> --help` for more details. 
   * The fmt option may be renamed in the future. 
-  * The `-x` and `-y` options are currently used to specify labels `--xlabel` `--ylabel`, but may be used to specify columns in the future.
+  * The `-x` and `-y` options might be used to specify columns in the future.
 
 * Use `awk '{print $2, $1}'` to swap columns. Use `paste` to concatenate series.
 
