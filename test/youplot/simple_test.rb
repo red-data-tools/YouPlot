@@ -155,18 +155,8 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot-xlabel.txt'), @stderr_file.read
   end
 
-  test :line_x do
-    YouPlot::Command.new(['line', '-x', 'X-LABEL']).run
-    assert_equal fixture('simple-lineplot-xlabel.txt'), @stderr_file.read
-  end
-
   test :line_ylabel do
     YouPlot::Command.new(['line', '--ylabel', 'Y-LABEL']).run
-    assert_equal fixture('simple-lineplot-ylabel.txt'), @stderr_file.read
-  end
-
-  test :line_y do
-    YouPlot::Command.new(['line', '-y', 'Y-LABEL']).run
     assert_equal fixture('simple-lineplot-ylabel.txt'), @stderr_file.read
   end
 

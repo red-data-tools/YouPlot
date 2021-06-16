@@ -58,10 +58,10 @@ module YouPlot
         parser.on('-t', '--title STR', String, 'print string on the top of plot') do |v|
           params.title = v
         end
-        parser.on('-x', '--xlabel STR', String, 'print string on the bottom of the plot') do |v|
+        parser.on('--xlabel STR', String, 'print string on the bottom of the plot') do |v|
           params.xlabel = v
         end
-        parser.on('-y', '--ylabel STR', String, 'print string on the far left of the plot') do |v|
+        parser.on('--ylabel STR', String, 'print string on the far left of the plot') do |v|
           params.ylabel = v
         end
         parser.on('-w', '--width INT', Numeric, 'number of characters per row') do |v|
