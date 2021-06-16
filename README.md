@@ -202,6 +202,16 @@ The following sub-commands are available.
 
 * Use `awk '{print $2, $1}'` to swap columns. Use `paste` to concatenate series.
 
+## Categorical data
+
+* With gne datamash, you can manage to handle categorized data. 
+  * `cat test/fixtures/iris.csv | sed '/^$/d' | datamash --header-in --output-delimiter=: -t, -g5 collapse 3,4 | cut -f2-3 -d: | sed 's/:/\n/g' | uplot s -d, -T --fmt xyxy`
+  * This is not so easy...
+
+## Time series
+
+* Not yet supported.
+
 ## Tools that are useful to use with YouPlot
 
 * [csvtk](https://github.com/shenwei356/csvtk)
