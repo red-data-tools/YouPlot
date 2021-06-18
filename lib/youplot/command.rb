@@ -169,7 +169,7 @@ module YouPlot
     def output_data(input)
       # Pass the input to subsequent pipelines
       case options[:pass]
-      when IO
+      when IO, StringIO
         options[:pass].print(input)
       else
         if options[:pass]
