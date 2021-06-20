@@ -1,18 +1,15 @@
 <div align="center">
-  <img src="logo.svg" width="66%" height="66%" />
-  
+  <img src="logo.svg">
   <hr>
-  
   <img alt="Build Status" src="https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg">
   <a href="https://rubygems.org/gems/youplot/"><img alt="Gem Version" src="https://badge.fury.io/rb/youplot.svg"></a>
+  <a href="https://zenodo.org/badge/latestdoi/283230219"><img alt="DOI" src="https://zenodo.org/badge/283230219.svg"></a>
   <a href="https://rubydoc.info/gems/youplot/"><img alt="Docs Stable" src="https://img.shields.io/badge/docs-stable-blue.svg"></a>
   <a href="LICENSE.txt"><img alt="The MIT License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-  <a href="https://zenodo.org/badge/latestdoi/283230219"><img alt="DOI" src="https://zenodo.org/badge/283230219.svg"></a>
   
   YouPlot is a command line tool that draws plots in the terminal.
 
   :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
-  
 </div>
 
 ## Installation
@@ -22,6 +19,8 @@ gem install youplot
 ```
 
 ## Quick Start
+
+<img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png" width=160> <img alt="histogram" src="https://user-images.githubusercontent.com/5798442/101999820-21cafc00-3d24-11eb-86db-e410d19b07df.png" width=160> <img alt="scatter" src="https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png" width=160> <img alt="density" src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png" width=160> <img alt="boxplot" src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png" width=160>
 
 `uplot <command> [options] <data.tsv>`
 
@@ -35,7 +34,7 @@ curl -sL https://git.io/ISLANDScsv \
 ```
 
 <p align="center">
-<img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
+  <img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
 </p>
 
 ### histogram
