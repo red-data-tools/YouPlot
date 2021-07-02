@@ -6,6 +6,27 @@
 require_relative 'processing'
 require 'unicode_plot'
 
+# If the line color is specified as a number, the program will display an error
+# message to the user and exit. Remove this patch when UnicodePlot is improved.
+
+module UnicodePlot
+  class << self
+    alias lineplot_original lineplot
+    def lineplot(*args, **kw)
+      if kw[:color].is_a? Numeric
+        warn <<~EOS
+          YouPlot: Line colors cannot be specified by numerical values.
+
+          For more information, please see the following issue.
+          https://github.com/red-data-tools/unicode_plot.rb/issues/34
+        EOS
+        YouPlot.run_as_executable ? exit(1) : raise(Error)
+      end
+      lineplot_original(*args, **kw)
+    end
+  end
+end
+
 module YouPlot
   # plotting functions.
   module Backends
@@ -182,7 +203,7 @@ module YouPlot
         series = data.series
         if series.size == 1
           warn <<~EOS
-            youplot: There is only one series of input data. Please check the delimiter.
+            YouPlot: There is only one series of input data. Please check the delimiter.
 
             Headers: \e[35m#{data.headers.inspect}\e[0m
             The first item is: \e[35m\"#{series[0][0]}\"\e[0m
