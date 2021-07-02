@@ -7,7 +7,7 @@
   <a href="https://rubydoc.info/gems/youplot/"><img alt="Docs Stable" src="https://img.shields.io/badge/docs-stable-blue.svg"></a>
   <a href="LICENSE.txt"><img alt="The MIT License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   
-  YouPlot is a command line tool that draws plots in the terminal.
+  YouPlot is a command line tool that draws plots on the terminal.
 
   :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
 </div>
@@ -189,7 +189,7 @@ The following sub-commands are available.
   * The `--help` option will show more detailed options for each subcommand.
   * `uplot hist --help`
 
-### Set columns as x-axis or y-axis?
+### Set columns as x-axis or y-axis
 
 * YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first column is the X axis, the second column is series Y1, the third column is series Y2, and so on. 
 * If you pass only one column of data for `line` and `bar`, YouPlot will automatically use a sequential number starting from 1 as the X-axis. 
@@ -203,7 +203,7 @@ The following sub-commands are available.
 
 ### Categorical data
 
-* With gne datamash, you can manage to handle categorized data. 
+* With GNU datamash, you can manage to handle categorized data. 
   * `cat test/fixtures/iris.csv | sed '/^$/d' | datamash --header-in --output-delimiter=: -t, -g5 collapse 3,4 | cut -f2-3 -d: | sed 's/:/\n/g' | uplot s -d, -T --fmt xyxy`
   * This is not so easy...
 
