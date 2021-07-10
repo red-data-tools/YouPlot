@@ -13,6 +13,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
       - run: gem install bundler
       - run: bundle install
       - run: bundle exec rake test
