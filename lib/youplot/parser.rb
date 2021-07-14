@@ -95,7 +95,7 @@ module YouPlot
         parser.on('-M', '--monochrome', TrueClass, 'no colouring even if writing to a tty') do |_v|
           UnicodePlot::IOContext.define_method(:color?) { false } # FIXME
         end
-        parser.on('--encoding STR', String, 'Specify the input encoding') do |v|
+        parser.on('--encoding STR', String, 'specify the input encoding') do |v|
           options[:encoding] = v
         end
         # Optparse adds the help option, but it doesn't show up in usage.
