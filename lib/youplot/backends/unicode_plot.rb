@@ -128,8 +128,8 @@ module YouPlot
       def plot_xyxy(data, method1, params)
         headers = data.headers
         series2 = data.series
-                     .map { |s| s.map(&:to_f) }
-                     .each_slice(2).to_a
+                      .map { |s| s.map(&:to_f) }
+                      .each_slice(2).to_a
         method2 = get_method2(method1)
         params.name ||= headers[0] if headers
         params.xlim ||= series2.map(&:first).flatten.minmax # why need?
