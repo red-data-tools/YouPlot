@@ -241,6 +241,10 @@ bundle exec rake install   # Installation from source code
 bundle exec exe/uplot      # Run youplot (Try out the edited code)
 ```
 
+    Do you need commit rights to my repository?
+    Do you want to get admin rights and take over the project?
+    If so, please feel free to contact us.
+
 ### Acknowledgements
 
 * [sampo grafiikka](https://jypg.net/sampo_grafiikka) - Project logo creation
