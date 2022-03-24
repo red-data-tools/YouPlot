@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.27
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><div align="center">
+  <img src="logo.svg">
+  <hr>
+  <img alt="Build Status" src="https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg">
+  <a href="https://rubygems.org/gems/youplot/"><img alt="Gem Version" src="https://badge.fury.io/rb/youplot.svg"></a>
+  <a href="https://zenodo.org/badge/latestdoi/283230219"><img alt="DOI" src="https://zenodo.org/badge/283230219.svg"></a>
+  <a href="https://rubydoc.info/gems/youplot/"><img alt="Docs Stable" src="https://img.shields.io/badge/docs-stable-blue.svg"></a>
+  <a href="LICENSE.txt"><img alt="The MIT License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  
+  YouPlot is a command line tool that draws plots on the terminal.
+
+  :bar_chart: Powered by [UnicodePlot](https://github.com/red-data-tools/unicode_plot.rb)
+</div>
+<h2 id="label-Installation">Installation</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_youplot'>youplot</span>
+</code></pre>
+
+<h2 id="label-Quick+Start">Quick Start</h2>
+
+<p>&lt;img alt=“barplot” src=“<img src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png" />” width=160&gt; &lt;img alt=“histogram” src=“<img src="https://user-images.githubusercontent.com/5798442/101999820-21cafc00-3d24-11eb-86db-e410d19b07df.png" />” width=160&gt; &lt;img alt=“scatter” src=“<img src="https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png" />” width=160&gt; &lt;img alt=“density” src=“<img src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png" />” width=160&gt; &lt;img alt=“boxplot” src=“<img src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png" />” width=160&gt;</p>
+
+<p><code>uplot &lt;command&gt; [options] &lt;data.tsv&gt;</code></p>
+
+<h3 id="label-barplot">barplot</h3>
+
+<pre class="code ruby"><code class="ruby">curl -sL https://git.io/ISLANDScsv \
+| sort -nk2 -t, \
+| tail -n15 \
+| uplot bar -d, -t &quot;Areas of the World&#39;s Major Landmasses&quot;
+</code></pre>
+<p align="center">
+  <img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
+</p>
+<h3 id="label-histogram">histogram</h3>
+
+<pre class="code ruby"><code class="ruby">echo -e &quot;from numpy import random;&quot; \
+        &quot;n = random.randn(10000);&quot;  \
+        &quot;print(&#39;\\\n&#39;.join(str(i) for i in n))&quot; \
+| python \
+| uplot hist --nbins 20
+</code></pre>
+<p align="center">
+  <img alt="histogram" src="https://user-images.githubusercontent.com/5798442/101999820-21cafc00-3d24-11eb-86db-e410d19b07df.png">
+</p>
+<h3 id="label-lineplot">lineplot</h3>
+
+<pre class="code ruby"><code class="ruby">curl -sL https://git.io/AirPassengers \
+| cut -f2,3 -d, \
+| uplot line -d, -w 50 -h 15 -t AirPassengers --xlim 1950,1960 --ylim 0,600
+</code></pre>
+<p align="center">
+  <img alt="lineplot" src="https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png">
+</p>
+<h3 id="label-scatter">scatter</h3>
+
+<pre class="code ruby"><code class="ruby">curl -sL https://git.io/IRIStsv \
+| cut -f1-4 \
+| uplot scatter -H -t IRIS
+</code></pre>
+<p align="center">
+  <img alt="scatter" src="https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png">
+</p>
+<h3 id="label-density">density</h3>
+
+<pre class="code ruby"><code class="ruby">curl -sL https://git.io/IRIStsv \
+| cut -f1-4 \
+| uplot density -H -t IRIS
+</code></pre>
+<p align="center">
+  <img alt="density" src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png">
+</p>
+<h3 id="label-boxplot">boxplot</h3>
+
+<pre class="code ruby"><code class="ruby">curl -sL https://git.io/IRIStsv \
+| cut -f1-4 \
+| uplot boxplot -H -t IRIS
+</code></pre>
+<p align="center">
+  <img alt="boxplot" src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png">
+</p>
+<h3 id="label-count">count</h3>
+
+<pre class="code ruby"><code class="ruby">cat gencode.v35.annotation.gff3 \
+| grep -v &#39;#&#39; | grep &#39;gene&#39; | cut -f1 \
+| uplot count -t &quot;The number of human gene annotations per chromosome&quot;  -c blue
+</code></pre>
+<p align="center">
+  <img alt="count" src="https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png">
+</p>
+<p>In this example, YouPlot counts the number of chromosomes where genes are located. * <a href="https://www.gencodegenes.org/human/">GENCODE - Human Release</a></p>
+
+<p>Note: <code>count</code> is not very fast because it runs in a Ruby script. This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.</p>
+
+<pre class="code ruby"><code class="ruby">cat gencode.v35.annotation.gff3 | grep -v &#39;#&#39; | grep &#39;gene&#39; | cut -f1 \
+| sort | uniq -c | sort -nrk1 \
+| uplot bar --fmt yx -d &#39; &#39; -t &quot;The number of human gene annotations per chromosome&quot;  -c blue
+</code></pre>
+
+<h2 id="label-Usage">Usage</h2>
+
+<h3 id="label-Commands">Commands</h3>
+
+<p><code>uplot</code> is the shortened form of <code>youplot</code>. You can use either.</p>
+
+<table role="table">
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`cat data.tsv \</td>
+<td>uplot &lt;command&gt; [options]`</td>
+<td>Take input from stdin</td>
+</tr>
+<tr>
+<td>`uplot &lt;command&gt; [options] data.tsv ...`</td>
+<td>Take input from files</td>
+</tr>
+<tr>
+<td>`pipeline1 \</td>
+<td>uplot &lt;command&gt; -O \</td>
+<td>pipeline2`</td>
+<td>Outputs data from stdin to stdout</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="label-Subcommands">Subcommands</h3>
+
+<p>The following sub-commands are available.</p>
+
+<table role="table">
+<thead>
+<tr>
+<th>command</th>
+<th>short</th>
+<th>how it works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>barplot</td>
+<td>bar</td>
+<td>draw a horizontal barplot</td>
+</tr>
+<tr>
+<td>histogram</td>
+<td>hist</td>
+<td>draw a horizontal histogram</td>
+</tr>
+<tr>
+<td>lineplot</td>
+<td>line</td>
+<td>draw a line chart</td>
+</tr>
+<tr>
+<td>lineplots</td>
+<td>lines</td>
+<td>draw a line chart with multiple series</td>
+</tr>
+<tr>
+<td>scatter</td>
+<td>s</td>
+<td>draw a scatter plot</td>
+</tr>
+<tr>
+<td>density</td>
+<td>d</td>
+<td>draw a density plot</td>
+</tr>
+<tr>
+<td>boxplot</td>
+<td>box</td>
+<td>draw a horizontal boxplot</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>count</td>
+<td>c</td>
+<td>draw a barplot based on the number of occurrences (slow)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>colors</td>
+<td>color</td>
+<td>show the list of available colors</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="label-Output+the+plot">Output the plot</h3>
+<ul><li>
+<p><code>-o</code></p>
+</li><li>
+<p>By default, the plot is output to <strong>standard error output</strong>.</p>
+</li><li>
+<p>If you want to output to standard input, Use hyphen <code>-o -</code> or no argument <code>uplot s -o |</code>.</p>
+</li></ul>
+
+<h3 id="label-Output+the+input+data">Output the input data</h3>
+<ul><li>
+<p><code>-O</code></p>
+</li><li>
+<p>By default, the input data is not shown anywhere.</p>
+</li><li>
+<p>If you want to pass the input data directly to the standard output, Use hyphen <code>-O -</code> or no argument <code>uplot s -O |</code>.</p>
+</li><li>
+<p>This is useful when passing data to a subsequent pipeline.</p>
+</li></ul>
+
+<h3 id="label-Header">Header</h3>
+<ul><li>
+<p><code>-H</code></p>
+</li><li>
+<p>If input data contains a header line, you need to specify the <code>-H</code> option.</p>
+</li></ul>
+
+<h3 id="label-Delimiter">Delimiter</h3>
+<ul><li>
+<p><code>-d</code></p>
+</li><li>
+<p>You do not need to use <code>-d</code> option for tab-delimited text since the default value is tab.</p>
+</li><li>
+<p>To specify a blank space, you can use <code>uplot bar -d &#39; &#39; data.txt</code>.</p>
+</li></ul>
+
+<h3 id="label-Real-time+data">Real-time data</h3>
+<ul><li>
+<p><code>-p</code> <code>--progress</code></p>
+</li><li>
+<p>Experimental progressive mode is currently under development.</p>
+</li><li>
+<p><code>ruby -e &#39;loop{puts rand(100)}&#39; | uplot line --progress</code></p>
+</li></ul>
+
+<h3 id="label-Show+detailed+options+for+subcommands">Show detailed options for subcommands</h3>
+<ul><li>
+<p><code>--help</code></p>
+</li><li>
+<p>The <code>--help</code> option will show more detailed options for each subcommand.</p>
+</li><li>
+<p><code>uplot hist --help</code></p>
+</li></ul>
+
+<h3 id="label-Set+columns+as+x-axis+or+y-axis">Set columns as x-axis or y-axis</h3>
+<ul><li>
+<p>YouPlot treats the first column as the X axis and the second column as the Y axis. When working with multiple series, the first column is the X axis, the second column is series Y1, the third column is series Y2, and so on.</p>
+</li><li>
+<p>If you pass only one column of data for <code>line</code> and <code>bar</code>, YouPlot will automatically use a sequential number starting from 1 as the X-axis.</p>
+</li><li>
+<p><code>--fmt</code></p>
+</li><li>
+<p><code>--fmt xyy</code> <code>--fmt xyxy</code> <code>--fmt yx</code> options give you a few more choices. See <code>youplot &lt;command&gt; --help</code> for more details.</p>
+</li><li>
+<p>The fmt option may be renamed in the future.</p>
+</li><li>
+<p>The <code>-x</code> and <code>-y</code> options might be used to specify columns in the future.</p>
+</li><li>
+<p>Use <code>awk &#39;{print $2, $1}&#39;</code> to swap columns. Use <code>paste</code> to concatenate series.</p>
+</li></ul>
+
+<h3 id="label-Categorical+data">Categorical data</h3>
+<ul><li>
+<p>With GNU datamash, you can manage to handle categorized data.</p>
+</li><li>
+<p><code>cat test/fixtures/iris.csv | sed &#39;/^$/d&#39; | datamash --header-in --output-delimiter=: -t, -g5 collapse 3,4 | cut -f2-3 -d: | sed &#39;s/:/\n/g&#39; | uplot s -d, -T --fmt xyxy</code></p>
+</li><li>
+<p>This is not so easy…</p>
+</li></ul>
+
+<h3 id="label-Time+series">Time series</h3>
+<ul><li>
+<p>Not yet supported.</p>
+</li></ul>
+
+<h2 id="label-Tools+that+are+useful+to+use+with+YouPlot">Tools that are useful to use with YouPlot</h2>
+<ul><li>
+<p><a href="https://github.com/shenwei356/csvtk">csvtk</a></p>
+</li><li>
+<p><a href="https://www.gnu.org/software/datamash/">GNU datamash</a></p>
+</li><li>
+<p><a href="https://www.gnu.org/software/gawk/">awk</a></p>
+</li><li>
+<p><a href="https://github.com/BurntSushi/xsv">xsv</a></p>
+</li></ul>
+
+<h2 id="label-Contributing">Contributing</h2>
+
+<p>YouPlot is a library under development, so even small improvements like typofix are welcome! Please feel free to send us your pull requests.</p>
+<ul><li>
+<p><a href="https://github.com/red-data-tools/YouPlot/issues">Report bugs</a></p>
+</li><li>
+<p>Fix bugs and <a href="https://github.com/red-data-tools/YouPlot/pulls">submit pull requests</a></p>
+</li><li>
+<p>Write, clarify, or fix documentation</p>
+</li><li>
+<p>English corrections by native speakers are welcome.</p>
+</li><li>
+<p>Suggest or add new features</p>
+</li><li>
+<p>Make a donation</p>
+</li></ul>
+
+<h3 id="label-Development">Development</h3>
+
+<pre class="code ruby"><code class="ruby"># fork the main repository by clicking the Fork button. 
+git clone https://github.com/your_name/YouPlot
+bundle install             # Install the gem dependencies
+bundle exec rake test      # Run the test
+bundle exec rake install   # Installation from source code
+bundle exec exe/uplot      # Run youplot (Try out the edited code)
+</code></pre>
+
+<pre class="code ruby"><code class="ruby">Do you need commit rights to my repository?
+Do you want to get admin rights and take over the project?
+If so, please feel free to contact us.
+</code></pre>
+
+<h3 id="label-Acknowledgements">Acknowledgements</h3>
+<ul><li>
+<p><a href="https://jypg.net/sampo_grafiikka">sampo grafiikka</a> - Project logo creation</p>
+</li><li>
+<p><a href="https://github.com/yutaas">yutaas</a> - English proofreading</p>
+</li></ul>
+
+<h2 id="label-License">License</h2>
+
+<p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Thu Mar 24 09:50:44 2022 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.27 (ruby-3.1.1).
+</div>
+
+    </div>
+  </body>
+</html>
