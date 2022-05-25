@@ -667,7 +667,13 @@
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/command.rb', line 30</span>
@@ -708,9 +714,15 @@
   <span class='comment'># normal mode
 </span>  <span class='kw'>else</span>
     <span class='comment'># Sometimes the input file does not end with a newline code.
-</span>    <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
+</span>    <span class='kw'>begin</span>
+      <span class='kw'>begin</span>
+        <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
+      <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+        <span class='id identifier rubyid_warn'>warn</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
+        <span class='kw'>next</span>
+      <span class='kw'>end</span>
       <span class='id identifier rubyid_main'>main</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
+    <span class='kw'>end</span> <span class='kw'>until</span> <span class='id identifier rubyid_input'>input</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -755,7 +767,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed May 25 07:07:34 2022 by
+  Generated on Wed May 25 07:24:37 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.1.2).
 </div>
