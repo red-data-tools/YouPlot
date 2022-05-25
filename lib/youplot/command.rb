@@ -135,7 +135,8 @@ module YouPlot
       rescue CSV::MalformedCSVError => e
         warn 'Failed to parse the text. '
         warn 'Please try to set the correct character encoding with --encoding option.'
-        raise e
+        warn e.backtrace.grep(/youplot/).first
+        exit 1
       end
 
       data
