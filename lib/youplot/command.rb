@@ -63,9 +63,15 @@ module YouPlot
       # normal mode
       else
         # Sometimes the input file does not end with a newline code.
-        while (input = Kernel.gets(nil))
+        begin
+          begin
+            input = Kernel.gets(nil)
+          rescue Errno::ENOENT => e
+            warn e.message
+            next
+          end
           main(input)
-        end
+        end until input
       end
     end
 
@@ -135,6 +141,10 @@ module YouPlot
       rescue CSV::MalformedCSVError => e
         warn 'Failed to parse the text. '
         warn 'Please try to set the correct character encoding with --encoding option.'
+        warn e.backtrace.grep(/youplot/).first
+        exit 1
+      rescue ArgumentError => e
+        warn 'Failed to parse the text. '
         warn e.backtrace.grep(/youplot/).first
         exit 1
       end
