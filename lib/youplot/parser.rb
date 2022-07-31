@@ -9,7 +9,8 @@ module YouPlot
     class Error < StandardError; end
 
     attr_reader :command, :options, :params,
-                :main_parser, :sub_parser
+                :main_parser, :sub_parser,
+                :config_file, :config
 
     def initialize
       @command = nil
@@ -28,6 +29,54 @@ module YouPlot
       )
 
       @params = Parameters.new
+
+      if @config_file = find_config_file
+        ENV['MYYOUPLOTRC'] = @config_file
+        @config = read_config_file(config_file)
+        configure(config)
+      end
+    end
+
+    def candidate_paths
+      paths = []
+      paths << ENV['MYYOUPLOTRC'] if ENV['MYYOUPLOTRC']
+      paths << '.youplot.yml'
+      paths << '.youplotrc'
+      paths << File.join(ENV['HOME'], '.youplotrc') if ENV['HOME']
+      paths << File.join(ENV['HOME'], '.youplot.yml') if ENV['HOME']
+      paths
+    end
+
+    def find_config_file
+      config_file_path = nil
+      candidate_paths.each do |file|
+        path = File.expand_path(file)
+        if File.exist?(path)
+          config_file_path = path
+          break
+        end
+      end
+      config_file_path
+    end
+
+    def read_config_file(path)
+      require 'yaml'
+      YAML.load_file(path)
+    end
+
+    def configure(config)
+      option_member = @options.members
+      params_member = @params.members
+      config.each do |k, v|
+        k = k.to_sym
+        if option_member.include?(k)
+          @options[k] = v
+        elsif params_member.include?(k)
+          @params[k] = v
+        else
+          raise Error, "Unknown option/param: #{k}"
+        end
+      end
     end
 
     def create_base_parser
@@ -276,6 +325,8 @@ module YouPlot
         sub_parser.on_head('-n', '--names', TrueClass, 'show color names only') do |v|
           options[:color_names] = v
         end
+
+      when :config
 
       else
         error_message = "uplot: unrecognized command '#{command}'"
