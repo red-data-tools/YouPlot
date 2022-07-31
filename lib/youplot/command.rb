@@ -40,6 +40,24 @@ module YouPlot
         return
       end
 
+      # config command
+      if @command == :config
+        if ENV['MYYOUPLOTRC']
+          puts "config file : #{ENV['MYYOUPLOTRC']}"
+          puts parser.config.inspect
+        else
+          puts <<~EOS
+            You don't have a config file. The default config file paths are:
+            ./.youplot.yml, ./.youplotrc, ~/.youplot.yml, ~/.youplotrc
+            You can specify a config file with the environment variable MYYOUPLOTRC.
+            File format is YAML. For example:
+            width : 40
+            height : 20
+          EOS
+        end
+        return
+      end
+
       # progressive mode
       if options[:progressive]
         stop = false
