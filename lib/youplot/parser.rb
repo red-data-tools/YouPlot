@@ -65,13 +65,14 @@ module YouPlot
     end
 
     def configure(config)
-      option_member = @options.members
-      params_member = @params.members
+      option_members = @options.members
+      param_members = @params.members
+      # It would be more useful to be able to configure by plot type
       config.each do |k, v|
         k = k.to_sym
-        if option_member.include?(k)
+        if option_members.include?(k)
           @options[k] = v
-        elsif params_member.include?(k)
+        elsif param_members.include?(k)
           @params[k] = v
         else
           raise Error, "Unknown option/param: #{k}"
