@@ -1193,19 +1193,21 @@
 77
 78
 79
-80</pre>
+80
+81</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_option_member'>option_member</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span>
-  <span class='id identifier rubyid_params_member'>params_member</span> <span class='op'>=</span> <span class='ivar'>@params</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+  <span class='id identifier rubyid_option_members'>option_members</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span>
+  <span class='id identifier rubyid_param_members'>param_members</span> <span class='op'>=</span> <span class='ivar'>@params</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span>
+  <span class='comment'># It would be more useful to be able to configure by plot type
+</span>  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
     <span class='id identifier rubyid_k'>k</span> <span class='op'>=</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_option_member'>option_member</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_option_members'>option_members</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span>
       <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_params_member'>params_member</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_param_members'>param_members</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span>
       <span class='ivar'>@params</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Parser/Error.html" title="YouPlot::Parser::Error (class)">Error</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unknown option/param: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_k'>k</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1232,7 +1234,6 @@
       <pre class="lines">
 
 
-82
 83
 84
 85
@@ -1311,10 +1312,11 @@
 158
 159
 160
-161</pre>
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_base_parser'>create_base_parser</span>
   <span class='const'>OptionParser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_parser'>parser</span><span class='op'>|</span>
@@ -1416,7 +1418,6 @@
       <pre class="lines">
 
 
-163
 164
 165
 166
@@ -1451,10 +1452,11 @@
 195
 196
 197
-198</pre>
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_main_parser'>create_main_parser</span>
   <span class='ivar'>@main_parser</span> <span class='op'>=</span> <span class='id identifier rubyid_create_base_parser'>create_base_parser</span>
@@ -1512,7 +1514,6 @@
       <pre class="lines">
 
 
-254
 255
 256
 257
@@ -1598,10 +1599,11 @@
 337
 338
 339
-340</pre>
+340
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_sub_parser'>create_sub_parser</span>
   <span class='ivar'>@sub_parser</span> <span class='op'>=</span> <span class='id identifier rubyid_create_base_parser'>create_base_parser</span>
@@ -1756,7 +1758,6 @@
       <pre class="lines">
 
 
-342
 343
 344
 345
@@ -1772,10 +1773,11 @@
 355
 356
 357
-358</pre>
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 343</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_options'>parse_options</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span> <span class='op'>=</span> <span class='const'>ARGV</span><span class='rparen'>)</span>
   <span class='kw'>begin</span>
@@ -1846,15 +1848,15 @@
       <pre class="lines">
 
 
-213
 214
 215
 216
 217
-218</pre>
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_canvas'>sub_parser_add_canvas</span>
   <span class='id identifier rubyid_canvas_types'>canvas_types</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../UnicodePlot.html" title="UnicodePlot (module)">UnicodePlot</a></span></span><span class='op'>::</span><span class='const'>Canvas</span><span class='op'>::</span><span class='const'>CANVAS_CLASS_MAP</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1882,16 +1884,16 @@
       <pre class="lines">
 
 
-238
 239
 240
 241
 242
 243
-244</pre>
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_fmt_xyxy'>sub_parser_add_fmt_xyxy</span>
   <span class='id identifier rubyid_sub_parser'>sub_parser</span><span class='period'>.</span><span class='id identifier rubyid_on_head'>on_head</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--fmt STR</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>String</span><span class='comma'>,</span>
@@ -1920,16 +1922,16 @@
       <pre class="lines">
 
 
-246
 247
 248
 249
 250
 251
-252</pre>
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_fmt_yx'>sub_parser_add_fmt_yx</span>
   <span class='id identifier rubyid_sub_parser'>sub_parser</span><span class='period'>.</span><span class='id identifier rubyid_on_head'>on_head</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--fmt STR</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>String</span><span class='comma'>,</span>
@@ -1958,14 +1960,14 @@
       <pre class="lines">
 
 
-232
 233
 234
 235
-236</pre>
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 233</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_grid'>sub_parser_add_grid</span>
   <span class='id identifier rubyid_sub_parser'>sub_parser</span><span class='period'>.</span><span class='id identifier rubyid_on_head'>on_head</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--[no-]grid</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>TrueClass</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>draws grid-lines at the origin</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
@@ -1992,14 +1994,14 @@
       <pre class="lines">
 
 
-200
 201
 202
 203
-204</pre>
+204
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_symbol'>sub_parser_add_symbol</span>
   <span class='id identifier rubyid_sub_parser'>sub_parser</span><span class='period'>.</span><span class='id identifier rubyid_on_head'>on_head</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--symbol STR</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>String</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>character to be used to plot the bars</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
@@ -2026,14 +2028,14 @@
       <pre class="lines">
 
 
-220
 221
 222
 223
-224</pre>
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 221</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_xlim'>sub_parser_add_xlim</span>
   <span class='id identifier rubyid_sub_parser'>sub_parser</span><span class='period'>.</span><span class='id identifier rubyid_on_head'>on_head</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--xlim FLOAT,FLOAT</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>Array</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>plotting range for the x coordinate</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
@@ -2060,15 +2062,15 @@
       <pre class="lines">
 
 
-206
 207
 208
 209
 210
-211</pre>
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_xscale'>sub_parser_add_xscale</span>
   <span class='id identifier rubyid_xscale_options'>xscale_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../UnicodePlot.html" title="UnicodePlot (module)">UnicodePlot</a></span></span><span class='op'>::</span><span class='const'>ValueTransformer</span><span class='op'>::</span><span class='const'>PREDEFINED_TRANSFORM_FUNCTIONS</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -2096,14 +2098,14 @@
       <pre class="lines">
 
 
-226
 227
 228
 229
-230</pre>
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 227</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sub_parser_add_ylim'>sub_parser_add_ylim</span>
   <span class='id identifier rubyid_sub_parser'>sub_parser</span><span class='period'>.</span><span class='id identifier rubyid_on_head'>on_head</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--ylim FLOAT,FLOAT</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='const'>Array</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>plotting range for the y coordinate</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
@@ -2120,7 +2122,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Jul 31 13:38:09 2022 by
+  Generated on Tue Aug  2 08:00:16 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
