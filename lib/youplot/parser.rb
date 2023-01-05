@@ -30,14 +30,14 @@ module YouPlot
 
       @params = Parameters.new
 
-      if @config_file = find_config_file
-        ENV['MYYOUPLOTRC'] = @config_file
-        @config = read_config_file(config_file)
-        configure(config)
+      if find_config_file
+        read_config_file
+        configure
       end
     end
 
-    def candidate_paths
+    def config_file_candidate_paths
+      # keep the order of the paths
       paths = []
       paths << ENV['MYYOUPLOTRC'] if ENV['MYYOUPLOTRC']
       paths << '.youplot.yml'
@@ -48,23 +48,23 @@ module YouPlot
     end
 
     def find_config_file
-      config_file_path = nil
-      candidate_paths.each do |file|
+      config_file_candidate_paths.each do |file|
         path = File.expand_path(file)
         if File.exist?(path)
-          config_file_path = path
-          break
+          @config_file = path
+          ENV['MYYOUPLOTRC'] = path
+          return @config_file
         end
       end
-      config_file_path
+      nil
     end
 
-    def read_config_file(path)
+    def read_config_file
       require 'yaml'
-      YAML.load_file(path)
+      @config = YAML.load_file(config_file)
     end
 
-    def configure(config)
+    def configure
       option_members = @options.members
       param_members = @params.members
       # It would be more useful to be able to configure by plot type
