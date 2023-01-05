@@ -366,6 +366,9 @@ module YouPlot
           options[:color_names] = v
         end
 
+      # Currently it simply displays the configuration file,
+      # but in the future this may be changed to open a text editor like Vim
+      # to edit the configuration file.
       when :config
         show_config_info
 
