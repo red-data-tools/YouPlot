@@ -1715,7 +1715,10 @@
 377
 378
 379
-380</pre>
+380
+381
+382
+383</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 291</span>
@@ -1798,7 +1801,10 @@
       <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:color_names</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
     <span class='kw'>end</span>
 
-  <span class='kw'>when</span> <span class='symbol'>:config</span>
+  <span class='comment'># Currently it simply displays the configuration file,
+</span>  <span class='comment'># but in the future this may be changed to open a text editor like Vim
+</span>  <span class='comment'># to edit the configuration file.
+</span>  <span class='kw'>when</span> <span class='symbol'>:config</span>
     <span class='id identifier rubyid_show_config_info'>show_config_info</span>
 
   <span class='kw'>else</span>
@@ -1876,9 +1882,6 @@
       <pre class="lines">
 
 
-382
-383
-384
 385
 386
 387
@@ -1894,10 +1897,13 @@
 397
 398
 399
-400</pre>
+400
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 382</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_options'>parse_options</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span> <span class='op'>=</span> <span class='const'>ARGV</span><span class='rparen'>)</span>
   <span class='kw'>begin</span>
@@ -2336,7 +2342,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jan  5 04:41:18 2023 by
+  Generated on Thu Jan  5 04:46:00 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.2.0).
 </div>
