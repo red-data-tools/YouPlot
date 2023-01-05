@@ -30,10 +30,14 @@ module YouPlot
 
       @params = Parameters.new
 
-      if find_config_file
-        read_config_file
-        configure
-      end
+      apply_config_file
+    end
+
+    def apply_config_file
+      return unless find_config_file
+
+      read_config_file
+      configure
     end
 
     def config_file_candidate_paths
@@ -338,12 +342,11 @@ module YouPlot
 
       else
         error_message = "uplot: unrecognized command '#{command}'"
-        if YouPlot.run_as_executable?
-          warn error_message
-          exit 1
-        else
-          raise Error, error_message
-        end
+        raise Error, error_message unless YouPlot.run_as_executable?
+
+        warn error_message
+        exit 1
+
       end
     end
 
