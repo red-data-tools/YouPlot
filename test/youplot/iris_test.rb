@@ -69,12 +69,24 @@ class YouPlotIRISTest < Test::Unit::TestCase
     assert_equal fixture('iris-lineplot.txt'), @stderr_file.read
   end
 
+  # l is an undocumented alias of lineplot.
+  test :l do
+    YouPlot::Command.new(['l', '-H', '-d,', '-t', 'IRIS-LINEPLOT']).run
+    assert_equal fixture('iris-lineplot.txt'), @stderr_file.read
+  end
+
   test :lineplots do
     YouPlot::Command.new(['lineplots', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
     assert_equal fixture('iris-lineplots.txt'), @stderr_file.read
   end
 
   test :lines do
+    YouPlot::Command.new(['lines', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
+    assert_equal fixture('iris-lineplots.txt'), @stderr_file.read
+  end
+
+  # ls is an undocumented alias of lineplots.
+  test :ls do
     YouPlot::Command.new(['lines', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
     assert_equal fixture('iris-lineplots.txt'), @stderr_file.read
   end

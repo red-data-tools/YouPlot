@@ -178,9 +178,9 @@ module YouPlot
         @backend.barplot(data, params, count: true, reverse: options[:reverse])
       when :hist, :histogram
         @backend.histogram(data, params)
-      when :line, :lineplot
+      when :line, :lineplot, :l
         @backend.line(data, params, options[:fmt])
-      when :lines, :lineplots
+      when :lines, :lineplots, :ls
         @backend.lines(data, params, options[:fmt])
       when :scatter, :s
         @backend.scatter(data, params, options[:fmt])

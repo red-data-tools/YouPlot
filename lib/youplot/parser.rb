@@ -291,14 +291,14 @@ module YouPlot
           params.nbins = v
         end
 
-      when :lineplot, :line
+      when :lineplot, :line, :l
         sub_parser_add_canvas
         sub_parser_add_grid
         sub_parser_add_fmt_yx
         sub_parser_add_ylim
         sub_parser_add_xlim
 
-      when :lineplots, :lines
+      when :lineplots, :lines, :ls
         sub_parser_add_canvas
         sub_parser_add_grid
         sub_parser_add_fmt_xyxy
