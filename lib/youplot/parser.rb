@@ -50,11 +50,11 @@ module YouPlot
     def find_config_file
       config_file_candidate_paths.each do |file|
         path = File.expand_path(file)
-        if File.exist?(path)
-          @config_file = path
-          ENV['MYYOUPLOTRC'] = path
-          return @config_file
-        end
+        next unless File.exist?(path)
+
+        @config_file = path
+        ENV['MYYOUPLOTRC'] = path
+        return @config_file
       end
       nil
     end
