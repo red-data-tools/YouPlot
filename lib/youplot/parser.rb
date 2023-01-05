@@ -189,6 +189,7 @@ module YouPlot
               colors     color         show the list of available colors
 
           General options:
+              --config                 print config file info
               --help                   print command specific help menu
               --version                print the version of YouPlot
         MSG
@@ -198,11 +199,32 @@ module YouPlot
       main_parser.on('--help', 'print sub-command help menu') do
         show_main_help
       end
+
+      main_parser.on('--config', 'show config file info') do
+        show_config_info
+      end
     end
 
     def show_main_help(out = $stdout)
       out.puts main_parser.banner
       out.puts
+      exit if YouPlot.run_as_executable?
+    end
+
+    def show_config_info
+      if ENV['MYYOUPLOTRC']
+        puts "config file : #{ENV['MYYOUPLOTRC']}"
+        puts config.inspect
+      else
+        puts <<~EOS
+          You don't have a config file. The default config file paths are:
+          ./.youplot.yml, ./.youplotrc, ~/.youplot.yml, ~/.youplotrc
+          You can specify a config file with the environment variable MYYOUPLOTRC.
+          File format is YAML. For example:
+          width : 40
+          height : 20
+        EOS
+      end
       exit if YouPlot.run_as_executable?
     end
 
@@ -339,6 +361,7 @@ module YouPlot
         end
 
       when :config
+        show_config_info
 
       else
         error_message = "uplot: unrecognized command '#{command}'"
