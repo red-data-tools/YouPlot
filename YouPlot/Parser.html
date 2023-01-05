@@ -346,7 +346,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#candidate_paths-instance_method" title="#candidate_paths (instance method)">#<strong>candidate_paths</strong>  &#x21d2; Object </a>
+      <a href="#config_file_candidate_paths-instance_method" title="#config_file_candidate_paths (instance method)">#<strong>config_file_candidate_paths</strong>  &#x21d2; Object </a>
     
 
     
@@ -368,7 +368,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#configure-instance_method" title="#configure (instance method)">#<strong>configure</strong>(config)  &#x21d2; Object </a>
+      <a href="#configure-instance_method" title="#configure (instance method)">#<strong>configure</strong>  &#x21d2; Object </a>
     
 
     
@@ -526,7 +526,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#read_config_file-instance_method" title="#read_config_file (instance method)">#<strong>read_config_file</strong>(path)  &#x21d2; Object </a>
+      <a href="#read_config_file-instance_method" title="#read_config_file (instance method)">#<strong>read_config_file</strong>  &#x21d2; Object </a>
     
 
     
@@ -775,8 +775,7 @@
 34
 35
 36
-37
-38</pre>
+37</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 15</span>
@@ -799,10 +798,9 @@
 
   <span class='ivar'>@params</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Parameters.html" title="YouPlot::Parameters (class)">Parameters</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
-  <span class='kw'>if</span> <span class='ivar'>@config_file</span> <span class='op'>=</span> <span class='id identifier rubyid_find_config_file'>find_config_file</span>
-    <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MYYOUPLOTRC</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@config_file</span>
-    <span class='ivar'>@config</span> <span class='op'>=</span> <span class='id identifier rubyid_read_config_file'>read_config_file</span><span class='lparen'>(</span><span class='id identifier rubyid_config_file'>config_file</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_find_config_file'>find_config_file</span>
+    <span class='id identifier rubyid_read_config_file'>read_config_file</span>
+    <span class='id identifier rubyid_configure'>configure</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1124,9 +1122,9 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="candidate_paths-instance_method">
+  <h3 class="signature first" id="config_file_candidate_paths-instance_method">
   
-    #<strong>candidate_paths</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>config_file_candidate_paths</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1138,6 +1136,7 @@
       <pre class="lines">
 
 
+39
 40
 41
 42
@@ -1149,10 +1148,11 @@
 48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 39</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_candidate_paths'>candidate_paths</span>
-  <span class='id identifier rubyid_paths'>paths</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_config_file_candidate_paths'>config_file_candidate_paths</span>
+  <span class='comment'># keep the order of the paths
+</span>  <span class='id identifier rubyid_paths'>paths</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_paths'>paths</span> <span class='op'>&lt;&lt;</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MYYOUPLOTRC</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MYYOUPLOTRC</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_paths'>paths</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.youplot.yml</span><span class='tstring_end'>&#39;</span></span>
   <span class='id identifier rubyid_paths'>paths</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.youplotrc</span><span class='tstring_end'>&#39;</span></span>
@@ -1168,7 +1168,7 @@
       <div class="method_details ">
   <h3 class="signature " id="configure-instance_method">
   
-    #<strong>configure</strong>(config)  &#x21d2; <tt>Object</tt> 
+    #<strong>configure</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1199,7 +1199,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 67</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span>
   <span class='id identifier rubyid_option_members'>option_members</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span>
   <span class='id identifier rubyid_param_members'>param_members</span> <span class='op'>=</span> <span class='ivar'>@params</span><span class='period'>.</span><span class='id identifier rubyid_members'>members</span>
   <span class='comment'># It would be more useful to be able to configure by plot type
@@ -1728,15 +1728,15 @@
       <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_config_file'>find_config_file</span>
-  <span class='id identifier rubyid_config_file_path'>config_file_path</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_candidate_paths'>candidate_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config_file_candidate_paths'>config_file_candidate_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
     <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_config_file_path'>config_file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
-      <span class='kw'>break</span>
+      <span class='ivar'>@config_file</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
+      <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MYYOUPLOTRC</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
+      <span class='kw'>return</span> <span class='ivar'>@config_file</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_config_file_path'>config_file_path</span>
+  <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1804,7 +1804,7 @@
       <div class="method_details ">
   <h3 class="signature " id="read_config_file-instance_method">
   
-    #<strong>read_config_file</strong>(path)  &#x21d2; <tt>Object</tt> 
+    #<strong>read_config_file</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1824,9 +1824,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/parser.rb', line 62</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_read_config_file'>read_config_file</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_read_config_file'>read_config_file</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>yaml</span><span class='tstring_end'>&#39;</span></span>
-  <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='ivar'>@config</span> <span class='op'>=</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='id identifier rubyid_config_file'>config_file</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2122,7 +2122,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jan  5 01:54:00 2023 by
+  Generated on Thu Jan  5 02:42:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.2.0).
 </div>
