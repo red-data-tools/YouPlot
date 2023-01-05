@@ -227,7 +227,7 @@ module YouPlot
             height : 20
           By default, YouPlot will look for the configuration file in these locations:
           #{config_file_candidate_paths.map { |s| '  ' + s }.join("\n")}
-          If you have the file elsewhere, you can specify its location with the `MYYOUPLOTRC` environment variable..
+          If you have the file elsewhere, you can specify its location with the `MYYOUPLOTRC` environment variable.
         EOS
       end
       exit if YouPlot.run_as_executable?
