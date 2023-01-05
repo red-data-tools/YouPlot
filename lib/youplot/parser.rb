@@ -46,8 +46,12 @@ module YouPlot
       paths << ENV['MYYOUPLOTRC'] if ENV['MYYOUPLOTRC']
       paths << '.youplot.yml'
       paths << '.youplotrc'
-      paths << File.join(ENV['HOME'], '.youplotrc') if ENV['HOME']
-      paths << File.join(ENV['HOME'], '.youplot.yml') if ENV['HOME']
+      if ENV['HOME']
+        paths << File.join(ENV['HOME'], '.youplotrc')
+        paths << File.join(ENV['HOME'], '.youplot.yml')
+        paths << File.join(ENV['HOME'], '.config', 'youplot', 'youplotrc')
+        paths << File.join(ENV['HOME'], '.config', 'youplot', 'youplot.yml')
+      end
       paths
     end
 
@@ -217,12 +221,13 @@ module YouPlot
         puts config.inspect
       else
         puts <<~EOS
-          You don't have a config file. The default config file paths are:
-          ./.youplot.yml, ./.youplotrc, ~/.youplot.yml, ~/.youplotrc
-          You can specify a config file with the environment variable MYYOUPLOTRC.
-          File format is YAML. For example:
-          width : 40
-          height : 20
+          Configuration file not found.
+          It should be a YAML file, like this example:
+            width : 40
+            height : 20
+          By default, YouPlot will look for the configuration file in these locations:
+          #{config_file_candidate_paths.map { |s| '  ' + s }.join("\n")}
+          If you have the file elsewhere, you can specify its location with the `MYYOUPLOTRC` environment variable..
         EOS
       end
       exit if YouPlot.run_as_executable?
