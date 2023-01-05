@@ -81,7 +81,7 @@ module YouPlot
         elsif param_members.include?(k)
           @params[k] ||= v
         else
-          raise Error, "Unknown option/param: #{k}"
+          raise Error, "Unknown option/param in config file: #{k}"
         end
       end
     end
@@ -373,7 +373,7 @@ module YouPlot
         show_config_info
 
       else
-        error_message = "uplot: unrecognized command '#{command}'"
+        error_message = "YouPlot: unrecognized command '#{command}'"
         raise Error, error_message unless YouPlot.run_as_executable?
 
         warn error_message
@@ -386,7 +386,7 @@ module YouPlot
       begin
         create_main_parser.order!(argv)
       rescue OptionParser::ParseError => e
-        warn "uplot: #{e.message}"
+        warn "YouPlot: #{e.message}"
         exit 1 if YouPlot.run_as_executable?
       end
 
@@ -395,11 +395,16 @@ module YouPlot
       begin
         create_sub_parser&.parse!(argv)
       rescue OptionParser::ParseError => e
-        warn "uplot: #{e.message}"
+        warn "YouPlot: #{e.message}"
         exit 1 if YouPlot.run_as_executable?
       end
 
-      apply_config_file
+      begin
+        apply_config_file
+      rescue StandardError => e
+        warn "YouPlot: #{e.message}"
+        exit 1 if YouPlot.run_as_executable?
+      end
     end
   end
 end
