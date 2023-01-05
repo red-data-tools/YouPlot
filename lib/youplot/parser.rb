@@ -29,12 +29,10 @@ module YouPlot
       )
 
       @params = Parameters.new
-
-      apply_config_file
     end
 
     def apply_config_file
-      return unless find_config_file
+      return if !config_file && find_config_file.nil?
 
       read_config_file
       configure
@@ -79,9 +77,9 @@ module YouPlot
       config.each do |k, v|
         k = k.to_sym
         if option_members.include?(k)
-          @options[k] = v
+          @options[k] ||= v
         elsif param_members.include?(k)
-          @params[k] = v
+          @params[k] ||= v
         else
           raise Error, "Unknown option/param: #{k}"
         end
@@ -161,6 +159,9 @@ module YouPlot
         parser.on('--help', 'print sub-command help menu') do
           puts parser.help
           exit if YouPlot.run_as_executable?
+        end
+        parser.on('--config FILE', 'specify a config file') do |v|
+          @config_file = v
         end
         parser.on('--debug', TrueClass, 'print preprocessed data') do |v|
           options[:debug] = v
@@ -394,6 +395,8 @@ module YouPlot
         warn "uplot: #{e.message}"
         exit 1 if YouPlot.run_as_executable?
       end
+
+      apply_config_file
     end
   end
 end
