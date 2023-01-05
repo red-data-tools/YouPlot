@@ -211,6 +211,14 @@ The following sub-commands are available.
 
 * Not yet supported.
 
+### YouPlot Configuration (youplotrc)
+
+You can specify default options in a configuration file in YAML format. For more information, enter the following command.
+
+```
+uplot --config
+```
+
 ## Tools that are useful to use with YouPlot
 
 * [csvtk](https://github.com/shenwei356/csvtk)
