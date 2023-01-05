@@ -192,10 +192,14 @@ module YouPlot
       # Help for the main parser is simple.
       # Simply show the banner above.
       main_parser.on('--help', 'print sub-command help menu') do
-        puts main_parser.banner
-        puts
-        exit if YouPlot.run_as_executable?
+        show_main_help
       end
+    end
+
+    def show_main_help(out = $stdout)
+      out.puts main_parser.banner
+      out.puts
+      exit if YouPlot.run_as_executable?
     end
 
     def sub_parser_add_symbol
@@ -265,10 +269,13 @@ module YouPlot
       case command
 
       # If you type only `uplot` in the terminal.
+      # Output help to standard error output.
       when nil
-        warn main_parser.banner
-        warn "\n"
-        exit 1 if YouPlot.run_as_executable?
+        show_main_help($stderr)
+
+      # Output help to standard output.
+      when :help
+        show_main_help
 
       when :barplot, :bar
         sub_parser_add_symbol
