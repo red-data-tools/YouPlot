@@ -15,6 +15,10 @@
 ## Installation
 
 ```
+brew install youplot
+```
+
+```
 gem install youplot
 ```
 
