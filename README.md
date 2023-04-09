@@ -45,8 +45,10 @@ curl -sL https://git.io/ISLANDScsv \
   <img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
 </p>
 
+
+
 ```sh
-# For offline users
+# For offline user Sorts files in a directory by size and shows a bar graph.
 ls -l | awk '{print $9, $5}' | sort -nk 2 | uplot bar -d ' '
 ```
 
