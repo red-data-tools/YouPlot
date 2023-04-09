@@ -146,7 +146,7 @@ Count processes by user ID.
 ps -aux | awk '{print $1}' | uplot count
 ```
 
-Counts the number of chromosomes where genes are located. 
+Count the number of chromosomes where genes are located. 
 
 ```sh
 cat gencode.v35.annotation.gff3 \
