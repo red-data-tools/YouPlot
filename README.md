@@ -79,7 +79,7 @@ curl -sL https://git.io/AirPassengers \
 </p>
 
 ```sh
-# For offline users
+# For offline users: Calculates sin values (0-2*pi) and plots a sine wave.
 python -c '
 from math import sin, pi
 data = "\n".join(f"{i*pi/50}\t{sin(i*pi/50)}" for i in range(101))
