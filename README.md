@@ -45,6 +45,13 @@ curl -sL https://git.io/ISLANDScsv \
   <img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
 </p>
 
+
+
+```sh
+# For offline user: Sorts files in a directory by size and shows a bar graph.
+ls -l | awk '{print $9, $5}' | sort -nk 2 | uplot bar -d ' '
+```
+
 ### histogram
 
 ```sh
@@ -71,6 +78,14 @@ curl -sL https://git.io/AirPassengers \
   <img alt="lineplot" src="https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png">
 </p>
 
+```sh
+# For offline users: Calculates sin values (0-2*pi) and plots a sine wave.
+python -c '
+from math import sin, pi
+data = "\n".join(f"{i*pi/50}\t{sin(i*pi/50)}" for i in range(101))
+print(data)' | uplot line
+```
+
 ### scatter
 
 ```sh
@@ -82,6 +97,12 @@ curl -sL https://git.io/IRIStsv \
 <p align="center">
   <img alt="scatter" src="https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png">
 </p>
+
+
+```sh
+# For offline users
+cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot scatter -H -d, -t IRIS
+```
 
 ### density
 
@@ -95,6 +116,11 @@ curl -sL https://git.io/IRIStsv \
   <img alt="density" src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png">
 </p>
 
+```sh
+# For offline users
+cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot density -H -d, -t IRIS
+```
+
 ### boxplot
 
 ```sh
@@ -107,7 +133,20 @@ curl -sL https://git.io/IRIStsv \
   <img alt="boxplot" src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png">
 </p>
 
+```sh
+# For offline users
+cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot boxplot -H -d, -t IRIS
+```
+
 ### count
+
+Count processes by user ID.
+
+```sh
+ps -aux | awk '{print $1}' | uplot count
+```
+
+Count the number of chromosomes where genes are located. 
 
 ```sh
 cat gencode.v35.annotation.gff3 \
@@ -119,7 +158,6 @@ cat gencode.v35.annotation.gff3 \
   <img alt="count" src="https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png">
 </p>
 
-In this example, YouPlot counts the number of chromosomes where genes are located. 
 * [GENCODE - Human Release](https://www.gencodegenes.org/human/)
 
 Note: `count` is not very fast because it runs in a Ruby script.
