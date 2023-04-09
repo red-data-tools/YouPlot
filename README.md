@@ -48,7 +48,7 @@ curl -sL https://git.io/ISLANDScsv \
 
 
 ```sh
-# For offline user Sorts files in a directory by size and shows a bar graph.
+# For offline user: Sorts files in a directory by size and shows a bar graph.
 ls -l | awk '{print $9, $5}' | sort -nk 2 | uplot bar -d ' '
 ```
 
