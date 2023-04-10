@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.32
   
 </title>
 
@@ -97,12 +97,16 @@
 <p align="center">
   <img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
 </p>
+<pre class="code ruby"><code class="ruby"># For offline user: Sorts files in a directory by size and shows a bar graph.
+ls -l | awk &#39;{print $9, $5}&#39; | sort -nk 2 | uplot bar -d &#39; &#39;
+</code></pre>
+
 <h3 id="label-histogram">histogram</h3>
 
 <pre class="code ruby"><code class="ruby">echo -e &quot;from numpy import random;&quot; \
         &quot;n = random.randn(10000);&quot;  \
         &quot;print(&#39;\\\n&#39;.join(str(i) for i in n))&quot; \
-| python \
+| python3 \
 | uplot hist --nbins 20
 </code></pre>
 <p align="center">
@@ -117,6 +121,13 @@
 <p align="center">
   <img alt="lineplot" src="https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png">
 </p>
+<pre class="code ruby"><code class="ruby"># For offline users: Calculates sin values (0-2*pi) and plots a sine wave.
+python3 -c &#39;
+from math import sin, pi
+data = &quot;\n&quot;.join(f&quot;{i*pi/50}\t{sin(i*pi/50)}&quot; for i in range(101))
+print(data)&#39; | uplot line
+</code></pre>
+
 <h3 id="label-scatter">scatter</h3>
 
 <pre class="code ruby"><code class="ruby">curl -sL https://git.io/IRIStsv \
@@ -126,6 +137,10 @@
 <p align="center">
   <img alt="scatter" src="https://user-images.githubusercontent.com/5798442/101999827-27284680-3d24-11eb-9903-551857eaa69c.png">
 </p>
+<pre class="code ruby"><code class="ruby"># For offline users
+cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot scatter -H -d, -t IRIS
+</code></pre>
+
 <h3 id="label-density">density</h3>
 
 <pre class="code ruby"><code class="ruby">curl -sL https://git.io/IRIStsv \
@@ -135,6 +150,10 @@
 <p align="center">
   <img alt="density" src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png">
 </p>
+<pre class="code ruby"><code class="ruby"># For offline users
+cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot density -H -d, -t IRIS
+</code></pre>
+
 <h3 id="label-boxplot">boxplot</h3>
 
 <pre class="code ruby"><code class="ruby">curl -sL https://git.io/IRIStsv \
@@ -144,7 +163,18 @@
 <p align="center">
   <img alt="boxplot" src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png">
 </p>
+<pre class="code ruby"><code class="ruby"># For offline users
+cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot boxplot -H -d, -t IRIS
+</code></pre>
+
 <h3 id="label-count">count</h3>
+
+<p>Count processes by user ID.</p>
+
+<pre class="code ruby"><code class="ruby">ps aux | awk &#39;{print $1}&#39; | uplot count
+</code></pre>
+
+<p>Count the number of chromosomes where genes are located.</p>
 
 <pre class="code ruby"><code class="ruby">cat gencode.v35.annotation.gff3 \
 | grep -v &#39;#&#39; | grep &#39;gene&#39; | cut -f1 \
@@ -152,8 +182,9 @@
 </code></pre>
 <p align="center">
   <img alt="count" src="https://user-images.githubusercontent.com/5798442/101999832-30b1ae80-3d24-11eb-96fe-e5000bed1f5c.png">
-</p>
-<p>In this example, YouPlot counts the number of chromosomes where genes are located. * <a href="https://www.gencodegenes.org/human/">GENCODE - Human Release</a></p>
+</p><ul><li>
+<p><a href="https://www.gencodegenes.org/human/">GENCODE - Human Release</a></p>
+</li></ul>
 
 <p>Note: <code>count</code> is not very fast because it runs in a Ruby script. This is fine in most cases, as long as the data size is small. If you want to visualize huge data, it is faster to use a combination of common Unix commands as shown below.</p>
 
@@ -410,9 +441,9 @@ If so, please feel free to contact us.
 </div></div>
 
       <div id="footer">
-  Generated on Thu Apr  6 08:23:33 2023 by
+  Generated on Mon Apr 10 02:08:20 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.2.2).
+  0.9.32 (ruby-3.2.2).
 </div>
 
     </div>
