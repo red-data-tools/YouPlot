@@ -58,7 +58,7 @@ ls -l | awk '{print $9, $5}' | sort -nk 2 | uplot bar -d ' '
 echo -e "from numpy import random;" \
         "n = random.randn(10000);"  \
         "print('\\\n'.join(str(i) for i in n))" \
-| python \
+| python3 \
 | uplot hist --nbins 20
 ```
 
@@ -80,7 +80,7 @@ curl -sL https://git.io/AirPassengers \
 
 ```sh
 # For offline users: Calculates sin values (0-2*pi) and plots a sine wave.
-python -c '
+python3 -c '
 from math import sin, pi
 data = "\n".join(f"{i*pi/50}\t{sin(i*pi/50)}" for i in range(101))
 print(data)' | uplot line
@@ -143,7 +143,7 @@ cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot boxplot -H -d, -t IRIS
 Count processes by user ID.
 
 ```sh
-ps -aux | awk '{print $1}' | uplot count
+ps aux | awk '{print $1}' | uplot count
 ```
 
 Count the number of chromosomes where genes are located. 
