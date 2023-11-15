@@ -209,7 +209,7 @@ The following sub-commands are available.
 
 * `-o`
   * By default, the plot is output to **standard error output**.
-  * If you want to output to standard input, Use hyphen ` -o -` or no argument `uplot s -o | `.
+  * If you want to output to standard output, Use hyphen ` -o -` or no argument `uplot s -o | `.
 
 ### Output the input data
 
