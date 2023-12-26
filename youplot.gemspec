@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'A command line tool for Unicode Plotting'
   spec.homepage      = 'https://github.com/red-data-tools/YouPlot'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
 
   spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*']
   spec.bindir        = 'exe'
