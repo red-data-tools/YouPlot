@@ -189,7 +189,7 @@ module YouPlot
               scatter    s             draw a scatter plot
               density    d             draw a density plot
               boxplot    box           draw a horizontal boxplot
-              count      c             draw a baplot based on the number of
+              count      c             draw a barplot based on the number of
                                        occurrences (slow)
               colors     color         show the list of available colors
 
