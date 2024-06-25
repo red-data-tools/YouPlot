@@ -19,11 +19,11 @@ brew install youplot
 ```
 
 ```
-nix shell nixpkgs#youplot
+gem install youplot
 ```
 
 ```
-gem install youplot
+nix shell nixpkgs#youplot
 ```
 
 ```
