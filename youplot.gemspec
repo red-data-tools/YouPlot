@@ -19,5 +19,6 @@ Gem::Specification.new do |spec|
   spec.executables   = %w[uplot youplot]
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'csv'
   spec.add_dependency 'unicode_plot', '>= 0.0.5'
 end
