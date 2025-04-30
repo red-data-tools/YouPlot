@@ -6,8 +6,10 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'steep', require: false
-  gem 'typeprof'
+  if RUBY_VERSION >= '3.0'
+    gem 'steep', require: false
+    gem 'typeprof'
+  end
 end
 
 group :test do
