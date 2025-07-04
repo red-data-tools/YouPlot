@@ -311,7 +311,7 @@ bundle exec exe/uplot      # Run youplot (Try out the edited code)
 
 ### Acknowledgements
 
-* [sampo grafiikka](https://jypg.net/sampo_grafiikka) - Project logo creation
+* [sampo grafiikka](https://lepo.sampo-grafiikka.com/) - Project logo creation
 * [yutaas](https://github.com/yutaas) - English proofreading
 
 ## License
