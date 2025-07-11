@@ -1,0 +1,7 @@
+module YouPlot
+  module Backends
+    module Processing
+      def count_values: ([], ?tally: true, ?reverse: false) -> Array[Array[untyped]]
+    end
+  end
+end
