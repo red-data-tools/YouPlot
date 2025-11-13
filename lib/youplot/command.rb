@@ -3,7 +3,6 @@
 require_relative 'dsv'
 require_relative 'parser'
 
-# FIXME
 require_relative 'backends/unicode_plot'
 
 module YouPlot
