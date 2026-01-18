@@ -3,7 +3,6 @@
   <hr>
   <a href="https://github.com/red-data-tools/YouPlot/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/red-data-tools/YouPlot/workflows/test/badge.svg"></a>
   <a href="https://rubygems.org/gems/youplot/"><img alt="Gem Version" src="https://badge.fury.io/rb/youplot.svg"></a>
-  <a href="https://zenodo.org/badge/latestdoi/283230219"><img alt="DOI" src="https://zenodo.org/badge/283230219.svg"></a>
   <a href="https://rubydoc.info/gems/youplot/"><img alt="Docs Stable" src="https://img.shields.io/badge/docs-stable-blue.svg"></a>
   <a href="LICENSE.txt"><img alt="The MIT License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   
