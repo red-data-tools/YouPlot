@@ -6,7 +6,7 @@
 <title>
   Module: YouPlot::Backends::Processing
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.39
   
 </title>
 
@@ -101,6 +101,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#compare_integer_strings-class_method" title="compare_integer_strings (class method)">.<strong>compare_integer_strings</strong>(a, b)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Compares two numeric strings, handling leading zeros.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#count_values-class_method" title="count_values (class method)">.<strong>count_values</strong>(arr, tally: true, reverse: false)  &#x21d2; Object </a>
     
 
@@ -120,6 +144,126 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ensure_natural_tokens-class_method" title="ensure_natural_tokens (class method)">.<strong>ensure_natural_tokens</strong>(key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Memoizes token pairs for fallback chunked comparison.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#natural_compare-class_method" title="natural_compare (class method)">.<strong>natural_compare</strong>(a, b, cache = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Natural order comparison for tie-breaking when counts are equal.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#natural_sort_key-class_method" title="natural_sort_key (class method)">.<strong>natural_sort_key</strong>(value, cache = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Classifies a value for natural sorting and caches the result per label.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#natural_tokens-class_method" title="natural_tokens (class method)">.<strong>natural_tokens</strong>(str)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Splits a string into [type, token] pairs for natural comparison.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_numeric-class_method" title="parse_numeric (class method)">.<strong>parse_numeric</strong>(str)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parses a string as a numeric value if it matches pure number format.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -130,7 +274,70 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="count_values-class_method">
+  <h3 class="signature first" id="compare_integer_strings-class_method">
+  
+    .<strong>compare_integer_strings</strong>(a, b)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Compares two numeric strings, handling leading zeros. Order: by length (sans leading zeros), then numeric value, then original.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_compare_integer_strings'>compare_integer_strings</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_aa'>aa</span> <span class='op'>=</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A0+</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bb'>bb</span> <span class='op'>=</span> <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A0+</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_aa'>aa</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_aa'>aa</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_bb'>bb</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_bb'>bb</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_aa'>aa</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_bb'>bb</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_r'>r</span> <span class='kw'>unless</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_aa'>aa</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_bb'>bb</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_r'>r</span> <span class='kw'>unless</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_a'>a</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_b'>b</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="count_values-class_method">
   
     .<strong>count_values</strong>(arr, tally: true, reverse: false)  &#x21d2; <tt>Object</tt> 
   
@@ -168,7 +375,9 @@
 30
 31
 32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 9</span>
@@ -183,12 +392,14 @@
 </span>      <span class='id identifier rubyid_arr'>arr</span><span class='period'>.</span><span class='id identifier rubyid_value_counts'>value_counts</span><span class='lparen'>(</span><span class='label'>dropna:</span> <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
+  <span class='id identifier rubyid_sort_cache'>sort_cache</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
   <span class='comment'># sorting
 </span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='op'>|</span>
     <span class='comment'># compare values
 </span>    <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_b'>b</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_a'>a</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
     <span class='comment'># If the values are the same, compare by name
-</span>    <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_a'>a</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_b'>b</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+</span>    <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_natural_compare'>natural_compare</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_sort_cache'>sort_cache</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
     <span class='id identifier rubyid_r'>r</span>
   <span class='kw'>end</span>
 
@@ -203,14 +414,335 @@
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="ensure_natural_tokens-class_method">
+  
+    .<strong>ensure_natural_tokens</strong>(key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Memoizes token pairs for fallback chunked comparison.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 103</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ensure_natural_tokens'>ensure_natural_tokens</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_key'>key</span><span class='lbracket'>[</span><span class='symbol'>:tokens</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_natural_tokens'>natural_tokens</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="natural_compare-class_method">
+  
+    .<strong>natural_compare</strong>(a, b, cache = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Natural order comparison for tie-breaking when counts are equal. Fast paths handle text-only and pure numeric labels. Mixed labels still use chunked comparison (e.g. “chr1” vs “chr10”).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_natural_compare'>natural_compare</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_cache'>cache</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_aa'>aa</span> <span class='op'>=</span> <span class='id identifier rubyid_natural_sort_key'>natural_sort_key</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_cache'>cache</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bb'>bb</span> <span class='op'>=</span> <span class='id identifier rubyid_natural_sort_key'>natural_sort_key</span><span class='lparen'>(</span><span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_cache'>cache</span><span class='rparen'>)</span>
+
+  <span class='comment'># Fast path: both labels are text-only, so plain string comparison is enough.
+</span>  <span class='kw'>return</span> <span class='id identifier rubyid_aa'>aa</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_bb'>bb</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_aa'>aa</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:text</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_bb'>bb</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:text</span>
+
+  <span class='comment'># Fast path: both labels are pure numbers, so compare numerically first.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_aa'>aa</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:numeric</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_bb'>bb</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:numeric</span>
+    <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='id identifier rubyid_aa'>aa</span><span class='lbracket'>[</span><span class='symbol'>:numeric</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_bb'>bb</span><span class='lbracket'>[</span><span class='symbol'>:numeric</span><span class='rbracket'>]</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_r'>r</span> <span class='kw'>unless</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+    <span class='comment'># Tiebreaker for equivalent numeric values (e.g. &quot;1&quot; and &quot;01&quot;)
+</span>    <span class='kw'>return</span> <span class='id identifier rubyid_aa'>aa</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_bb'>bb</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Fallback path: at least one label mixes text and digits.
+</span>  <span class='id identifier rubyid_ta'>ta</span> <span class='op'>=</span> <span class='id identifier rubyid_ensure_natural_tokens'>ensure_natural_tokens</span><span class='lparen'>(</span><span class='id identifier rubyid_aa'>aa</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tb'>tb</span> <span class='op'>=</span> <span class='id identifier rubyid_ensure_natural_tokens'>ensure_natural_tokens</span><span class='lparen'>(</span><span class='id identifier rubyid_bb'>bb</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_max'>max</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_ta'>ta</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_tb'>tb</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+
+  <span class='int'>0</span><span class='period'>.</span><span class='id identifier rubyid_upto'>upto</span><span class='lparen'>(</span><span class='id identifier rubyid_max'>max</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+    <span class='id identifier rubyid_xa'>xa</span> <span class='op'>=</span> <span class='id identifier rubyid_ta'>ta</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_xb'>xb</span> <span class='op'>=</span> <span class='id identifier rubyid_tb'>tb</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span>
+
+    <span class='kw'>return</span> <span class='op'>-</span><span class='int'>1</span> <span class='kw'>if</span> <span class='id identifier rubyid_xa'>xa</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='kw'>return</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='id identifier rubyid_xb'>xb</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+    <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_xa'>xa</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:num</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_xb'>xb</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:num</span>
+          <span class='id identifier rubyid_compare_integer_strings'>compare_integer_strings</span><span class='lparen'>(</span><span class='id identifier rubyid_xa'>xa</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_xb'>xb</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_xa'>xa</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_xb'>xb</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+        <span class='kw'>end</span>
+
+    <span class='kw'>return</span> <span class='id identifier rubyid_r'>r</span> <span class='kw'>unless</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_aa'>aa</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_bb'>bb</span><span class='lbracket'>[</span><span class='symbol'>:string</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="natural_sort_key-class_method">
+  
+    .<strong>natural_sort_key</strong>(value, cache = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Classifies a value for natural sorting and caches the result per label.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 81</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_natural_sort_key'>natural_sort_key</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_cache'>cache</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_str'>str</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_cache'>cache</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\d</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_numeric'>numeric</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_numeric'>parse_numeric</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_numeric'>numeric</span>
+            <span class='comment'># Pure numeric labels get a dedicated fast path.
+</span>            <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='symbol'>:numeric</span><span class='comma'>,</span> <span class='label'>string:</span> <span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='label'>numeric:</span> <span class='id identifier rubyid_numeric'>numeric</span> <span class='rbrace'>}</span>
+          <span class='kw'>else</span>
+            <span class='comment'># Mixed labels fall back to chunked natural comparison.
+</span>            <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='symbol'>:mixed</span><span class='comma'>,</span> <span class='label'>string:</span> <span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='label'>tokens:</span> <span class='kw'>nil</span> <span class='rbrace'>}</span>
+          <span class='kw'>end</span>
+        <span class='kw'>else</span>
+          <span class='comment'># Text-only labels get a dedicated fast path.
+</span>          <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='symbol'>:text</span><span class='comma'>,</span> <span class='label'>string:</span> <span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='label'>tokens:</span> <span class='kw'>nil</span> <span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_cache'>cache</span> <span class='op'>?</span> <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_str'>str</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>:</span> <span class='id identifier rubyid_key'>key</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="natural_tokens-class_method">
+  
+    .<strong>natural_tokens</strong>(str)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Splits a string into [type, token] pairs for natural comparison. Type is :num for digit-only chunks, :text for anything else. E.g. “chr10” =&gt; [[:text, “chr”], [:num, “10”]]</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120
+121
+122
+123</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_natural_tokens'>natural_tokens</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\d+|\D+</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tok'>tok</span><span class='op'>|</span>
+    <span class='id identifier rubyid_kind'>kind</span> <span class='op'>=</span> <span class='id identifier rubyid_tok'>tok</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A\d+\z</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:num</span> <span class='op'>:</span> <span class='symbol'>:text</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_kind'>kind</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_numeric-class_method">
+  
+    .<strong>parse_numeric</strong>(str)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parses a string as a numeric value if it matches pure number format. Returns Float or nil.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/processing.rb', line 109</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_numeric'>parse_numeric</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A[+-]?(?:\d+(?:\.\d+)?|\.\d+)\z</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Sun Jan 18 12:05:34 2026 by
+  Generated on Thu Apr  9 07:45:03 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-4.0.1).
+  0.9.39 (ruby-4.0.2).
 </div>
 
     </div>
