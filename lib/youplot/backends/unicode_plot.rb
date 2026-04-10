@@ -61,7 +61,11 @@ module YouPlot
           end
           params.title ||= headers[y_col] if headers
           labels = series[x_col]
-          values = series[y_col].map(&:to_f)
+          values = if count
+                     series[y_col].map(&:to_i)
+                   else
+                     series[y_col].map(&:to_f)
+                   end
         end
         ::UnicodePlot.barplot(labels, values, **params.to_hc)
       end
@@ -215,14 +219,14 @@ module YouPlot
         # if fmt == 'xyxy' && series.size is odd, the number of series is not even.
         return unless fmt == 'xyxy' && series.size.odd?
 
-          warn <<~EOS
-            YouPlot: In the xyxy format, the number of series must be even.
+        warn <<~EOS
+          YouPlot: In the xyxy format, the number of series must be even.
 
-            Number of series: \e[35m#{series.size}\e[0m
-            Headers: \e[35m#{data.headers.inspect}\e[0m
-          EOS
-          # NOTE: Error messages cannot be colored.
-          YouPlot.run_as_executable ? exit(1) : raise(Error)
+          Number of series: \e[35m#{series.size}\e[0m
+          Headers: \e[35m#{data.headers.inspect}\e[0m
+        EOS
+        # NOTE: Error messages cannot be colored.
+        YouPlot.run_as_executable ? exit(1) : raise(Error)
       end
     end
   end
