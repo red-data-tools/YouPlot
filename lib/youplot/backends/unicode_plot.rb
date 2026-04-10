@@ -211,7 +211,10 @@ module YouPlot
           # NOTE: Error messages cannot be colored.
           YouPlot.run_as_executable ? exit(1) : raise(Error)
         end
-        if fmt == 'xyxy' && series.size.odd?
+
+        # if fmt == 'xyxy' && series.size is odd, the number of series is not even.
+        return unless fmt == 'xyxy' && series.size.odd?
+
           warn <<~EOS
             YouPlot: In the xyxy format, the number of series must be even.
 
@@ -220,7 +223,6 @@ module YouPlot
           EOS
           # NOTE: Error messages cannot be colored.
           YouPlot.run_as_executable ? exit(1) : raise(Error)
-        end
       end
     end
   end
