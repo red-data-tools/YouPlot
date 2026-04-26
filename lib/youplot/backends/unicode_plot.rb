@@ -204,20 +204,24 @@ module YouPlot
 
       def check_series_size(data, fmt)
         series = data.series
-        if series.size == 1
-          warn <<~EOS
-            YouPlot: There is only one series of input data. Please check the delimiter.
+        raise_if_single_series(data, series) if series.size == 1
+        raise_if_odd_series_for_xyxy(data, fmt, series)
+      end
 
-            Headers: \e[35m#{data.headers.inspect}\e[0m
-            The first item is: \e[35m\"#{series[0][0]}\"\e[0m
-            The last item is : \e[35m\"#{series[0][-1]}\"\e[0m
-          EOS
-          # NOTE: Error messages cannot be colored.
-          YouPlot.run_as_executable ? exit(1) : raise(Error)
-        end
+      def raise_if_single_series(data, series)
+        warn <<~EOS
+          YouPlot: There is only one series of input data. Please check the delimiter.
 
-        # if fmt == 'xyxy' && series.size is odd, the number of series is not even.
-        return unless fmt == 'xyxy' && series.size.odd?
+          Headers: \e[35m#{data.headers.inspect}\e[0m
+          The first item is: \e[35m\"#{series[0][0]}\"\e[0m
+          The last item is : \e[35m\"#{series[0][-1]}\"\e[0m
+        EOS
+        raise_plot_error
+      end
+
+      def raise_if_odd_series_for_xyxy(data, fmt, series)
+        return unless fmt == 'xyxy'
+        return if series.size.even?
 
         warn <<~EOS
           YouPlot: In the xyxy format, the number of series must be even.
@@ -225,6 +229,10 @@ module YouPlot
           Number of series: \e[35m#{series.size}\e[0m
           Headers: \e[35m#{data.headers.inspect}\e[0m
         EOS
+        raise_plot_error
+      end
+
+      def raise_plot_error
         # NOTE: Error messages cannot be colored.
         YouPlot.run_as_executable ? exit(1) : raise(Error)
       end

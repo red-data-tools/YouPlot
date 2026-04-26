@@ -76,6 +76,14 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
+  test :lineplots_fmt_xyxy_odd_series do
+    $stdin = File.open(File.expand_path('../fixtures/simple-xyxy-odd.tsv', __dir__), 'r')
+
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
+      YouPlot::Command.new(['lineplots', '--fmt', 'xyxy', '-H']).run
+    end
+  end
+
   test :lines do
     assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['lines']).run
