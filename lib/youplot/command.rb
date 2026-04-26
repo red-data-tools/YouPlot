@@ -184,9 +184,12 @@ module YouPlot
       # Then handle path strings and IO-like objects.
       case out
       when Tempfile
-        File.open(out.path, 'w') do |f|
-          f.print(input)
-        end
+        # Keep file descriptor state consistent with the Tempfile object.
+        out.truncate(0)   # clear existing content
+        out.rewind        # move pointer to the beginning
+        out.print(input)  # write new content
+        out.flush         # ensure content is written to disk
+        out.rewind        # move pointer back to the beginning for out.read
       when String
         File.open(out, 'w') do |f|
           f.print(input)
@@ -203,9 +206,12 @@ module YouPlot
       # Then handle path strings and IO-like objects.
       case out
       when Tempfile
-        File.open(out.path, 'w') do |f|
-          plot.render(f)
-        end
+        # Keep file descriptor state consistent with the Tempfile object.
+        out.truncate(0)   # clear existing content
+        out.rewind        # move pointer to the beginning
+        plot.render(out)  # write new content
+        out.flush         # ensure content is written to disk
+        out.rewind        # move pointer back to the beginning for out.read
       when String
         File.open(out, 'w') do |f|
           plot.render(f)
