@@ -178,26 +178,40 @@ module YouPlot
 
     def output_data(input)
       # Pass the input to subsequent pipelines
-      case options[:pass]
-      when IO, StringIO
-        options[:pass].print(input)
-      else
-        if options[:pass]
-          File.open(options[:pass], 'w') do |f|
-            f.print(input)
-          end
+      out = options[:pass]
+      # Handle Tempfile first to keep tests and behavior consistent.
+      # Ruby 2.7 Tempfile is Delegator-based and does not match IO/File checks.
+      # Then handle path strings and IO-like objects.
+      case out
+      when Tempfile
+        File.open(out.path, 'w') do |f|
+          f.print(input)
         end
+      when String
+        File.open(out, 'w') do |f|
+          f.print(input)
+        end
+      else
+        out.print(input) if out.respond_to?(:print)
       end
     end
 
     def output_plot(plot)
-      case options[:output]
-      when IO, StringIO
-        plot.render(options[:output])
-      when String, Tempfile
-        File.open(options[:output], 'w') do |f|
+      out = options[:output]
+      # Handle Tempfile first to keep tests and behavior consistent.
+      # Ruby 2.7 Tempfile is Delegator-based and does not match IO/File checks.
+      # Then handle path strings and IO-like objects.
+      case out
+      when Tempfile
+        File.open(out.path, 'w') do |f|
           plot.render(f)
         end
+      when String
+        File.open(out, 'w') do |f|
+          plot.render(f)
+        end
+      else
+        plot.render(out) if out.respond_to?(:write)
       end
     end
 
