@@ -83,7 +83,9 @@ class YouPlotParserTest < Test::Unit::TestCase
       end
 
       assert_include output, "config file : #{config_path}"
-      assert_include output, '"width" => 80'
+      # Hash#inspect format differs by Ruby version:
+      # `"key" => val` (< 3.0) vs `"key"=>val` (>= 3.0)
+      assert_match(/"width"\s*=>\s*80/, output)
     end
   end
 end
