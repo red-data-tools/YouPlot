@@ -6,13 +6,13 @@
 <title>
   Module: YouPlot::Backends::Processing
   
-    &mdash; Documentation by YARD 0.9.39
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "YouPlot::Backends::Processing";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -78,7 +80,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/youplot/backends/processing.rb</dd>
+    <dd>lib/youplot/backends/processing.rb
+</dd>
   </dl>
   
 </div>
@@ -115,9 +118,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Compares two numeric strings, handling leading zeros.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Compares two numeric strings, handling leading zeros.</p></div></span>
   
 </li>
 
@@ -161,9 +162,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Memoizes token pairs for fallback chunked comparison.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Memoizes token pairs for fallback chunked comparison.</p></div></span>
   
 </li>
 
@@ -185,9 +184,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Natural order comparison for tie-breaking when counts are equal.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Natural order comparison for tie-breaking when counts are equal.</p></div></span>
   
 </li>
 
@@ -209,9 +206,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Classifies a value for natural sorting and caches the result per label.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Classifies a value for natural sorting and caches the result per label.</p></div></span>
   
 </li>
 
@@ -233,9 +228,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Splits a string into [type, token] pairs for natural comparison.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Splits a string into [type, token] pairs for natural comparison.</p></div></span>
   
 </li>
 
@@ -257,14 +250,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Parses a string as a numeric value if it matches pure number format.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Parses a string as a numeric value if it matches pure number format.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -284,9 +276,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Compares two numeric strings, handling leading zeros. Order: by length (sans leading zeros), then numeric value, then original.</p>
-
+    <p>Compares two numeric strings, handling leading zeros.
+Order: by length (sans leading zeros), then numeric value, then original.</p>
 
   </div>
 </div>
@@ -425,9 +416,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Memoizes token pairs for fallback chunked comparison.</p>
-
+    <p>Memoizes token pairs for fallback chunked comparison.</p>
 
   </div>
 </div>
@@ -466,9 +455,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Natural order comparison for tie-breaking when counts are equal. Fast paths handle text-only and pure numeric labels. Mixed labels still use chunked comparison (e.g. “chr1” vs “chr10”).</p>
-
+    <p>Natural order comparison for tie-breaking when counts are equal.
+Fast paths handle text-only and pure numeric labels.
+Mixed labels still use chunked comparison (e.g. &quot;chr1&quot; vs &quot;chr10&quot;).</p>
 
   </div>
 </div>
@@ -579,9 +568,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Classifies a value for natural sorting and caches the result per label.</p>
-
+    <p>Classifies a value for natural sorting and caches the result per label.</p>
 
   </div>
 </div>
@@ -654,9 +641,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Splits a string into [type, token] pairs for natural comparison. Type is :num for digit-only chunks, :text for anything else. E.g. “chr10” =&gt; [[:text, “chr”], [:num, “10”]]</p>
-
+    <p>Splits a string into [type, token] pairs for natural comparison.
+Type is :num for digit-only chunks, :text for anything else.
+E.g. &quot;chr10&quot; =&gt; [[:text, &quot;chr&quot;], [:num, &quot;10&quot;]]</p>
 
   </div>
 </div>
@@ -701,9 +688,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Parses a string as a numeric value if it matches pure number format. Returns Float or nil.</p>
-
+    <p>Parses a string as a numeric value if it matches pure number format.
+Returns Float or nil.</p>
 
   </div>
 </div>
@@ -740,9 +726,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Apr 10 05:54:56 2026 by
+  Generated on Sun Apr 26 11:05:44 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.39 (ruby-4.0.2).
+  0.9.43 (ruby-4.0.3).
 </div>
 
     </div>
