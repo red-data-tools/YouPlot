@@ -14,28 +14,14 @@ module YouPlot
 
     def initialize
       @command = nil
-
-      @options = Options.new(
-        "\t",    # elimiter:
-        false,   # transpose:
-        nil,     # headers:
-        false,   # pass:
-        $stderr, # output:
-        'xyy',   # fmt:
-        false,   # progressive:
-        nil,     # encoding:
-        false,   # color_names:
-        false    # debug:
-      )
-
-      @params = Parameters.new
+      @options = Options.new
+      @params  = Parameters.new
     end
 
     def apply_config_file
       return if !config_file && find_config_file.nil?
 
       read_config_file
-      configure
     end
 
     def config_file_candidate_paths
@@ -70,19 +56,42 @@ module YouPlot
       @config = YAML.load_file(config_file)
     end
 
-    def configure
-      option_members = @options.members
-      param_members = @params.members
-      # It would be more useful to be able to configure by plot type
-      config.each do |k, v|
-        k = k.to_sym
-        if option_members.include?(k)
-          @options[k] ||= v
-        elsif param_members.include?(k)
-          @params[k] ||= v
-        else
-          raise Error, "Unknown option/param in config file: #{k}"
+    # Resolve options by applying the following priority:
+    # 1. CLI options  -- cli_val = @options[k]
+    # 2. Config file  -- cfg_val = @config[k.to_s]
+    # 3. DEFAULTS     -- def_val from Options::DEFAULTS
+    def resolve_options
+      # Validate config keys up front.
+      if @config
+        known = (@options.members + @params.members).map(&:to_s)
+        @config.each_key do |k|
+          raise Error, "Unknown option/param in config file: #{k}" unless known.include?(k)
         end
+      end
+
+      Options::DEFAULTS.each do |k, def_val|
+        cfg_val = @config && @config[k.to_s]
+        cli_val = @options[k]
+        @options[k] = if !cli_val.nil? # can be false
+                        cli_val
+                      elsif !cfg_val.nil? # can be false
+                        cfg_val
+                      else
+                        def_val
+                      end
+      end
+
+      # $stderr is evaluated here, not in DEFAULTS.
+      # DEFAULTS is a constant, so values in it are fixed at class load time.
+      # Tests redirect $stderr = tempfile after load, so placing $stderr in DEFAULTS
+      # would capture the original stderr and ignore the test redirect.
+      @options[:output] = $stderr if @options[:output].nil?
+
+      @params.members.each do |k|
+        cfg_val = @config && @config[k.to_s]
+        cli_val = @params[k]
+        # no def_val for params
+        @params[k] = cfg_val if cli_val.nil? && !cfg_val.nil?
       end
     end
 
@@ -217,8 +226,8 @@ module YouPlot
     end
 
     def show_config_info
-      if ENV['MYYOUPLOTRC']
-        puts "config file : #{ENV['MYYOUPLOTRC']}"
+      if @config_file
+        puts "config file : #{@config_file}"
         puts config.inspect
       else
         puts <<~EOS
@@ -383,6 +392,9 @@ module YouPlot
     end
 
     def parse_options(argv = ARGV)
+      # keep original ARGV intact.
+      argv = argv.dup
+
       begin
         create_main_parser.order!(argv)
       rescue OptionParser::ParseError => e
@@ -399,12 +411,15 @@ module YouPlot
         exit 1 if YouPlot.run_as_executable?
       end
 
+      # Read config after CLI parsing, then resolve: defaults < config < CLI.
       begin
         apply_config_file
       rescue StandardError => e
         warn "YouPlot: #{e.message}"
         exit 1 if YouPlot.run_as_executable?
       end
+
+      resolve_options
     end
   end
 end
