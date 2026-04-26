@@ -188,7 +188,7 @@ module YouPlot
         out.truncate(0)   # clear existing content
         out.rewind        # move pointer to the beginning
         out.print(input)  # write new content
-        out.flush         # ensure content is written to disk
+        out.flush         # flush buffered writes before immediate read
         out.rewind        # move pointer back to the beginning for out.read
       when String
         File.open(out, 'w') do |f|
@@ -210,7 +210,7 @@ module YouPlot
         out.truncate(0)   # clear existing content
         out.rewind        # move pointer to the beginning
         plot.render(out)  # write new content
-        out.flush         # ensure content is written to disk
+        out.flush         # flush buffered writes before immediate read
         out.rewind        # move pointer back to the beginning for out.read
       when String
         File.open(out, 'w') do |f|
