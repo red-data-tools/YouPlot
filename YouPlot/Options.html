@@ -114,6 +114,50 @@
   
 
 </div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="DEFAULTS-constant" class="">DEFAULTS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Default values for options.
+These are applied in Parser#resolve_options.
+Based on the following priority:</p>
+<ol>
+<li>CLI options (highest priority)</li>
+<li>Config file options</li>
+<li>Default values (lowest priority) specified here.</li>
+</ol>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='label'>delimiter:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\t</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>transpose:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>headers:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>pass:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>output:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='comment'># resolved to $stderr at parse time (late binding)
+</span>  <span class='label'>fmt:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xyy</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>progressive:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>encoding:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>reverse:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>color_names:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>debug:</span> <span class='kw'>false</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
 
 
 
@@ -1038,7 +1082,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Apr 26 11:05:44 2026 by
+  Generated on Sun Apr 26 13:06:13 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-4.0.3).
 </div>
