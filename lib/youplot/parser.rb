@@ -393,7 +393,7 @@ module YouPlot
 
     def parse_options(argv = ARGV)
       # keep original ARGV intact.
-      argv = argv.dup
+      argv = argv.equal?(ARGV) ? argv : argv.dup
 
       begin
         create_main_parser.order!(argv)
