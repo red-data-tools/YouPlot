@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'tempfile'
+require 'stringio'
+
 require_relative 'dsv'
 require_relative 'parser'
 
