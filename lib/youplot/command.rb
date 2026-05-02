@@ -245,7 +245,7 @@ module YouPlot
         end
         options[:output].print "\e[0J"
         options[:output].flush
-        out.string.lines.size
+        lines.size
       else
         raise 'In progressive mode, output to a file is not possible.'
       end
