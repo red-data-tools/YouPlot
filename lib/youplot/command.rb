@@ -112,23 +112,93 @@ module YouPlot
     def main_progressive(input)
       output_data(input)
 
-      # FIXME
-      # Worked around the problem of not being able to draw
-      # plots when there is only one header line.
-      if @raw_data.nil?
-        @raw_data = String.new
-        if options[:headers]
-          @raw_data << input
-          return
-        end
-      end
-      @raw_data << input
+      row = parse_progressive_row(input)
+      return 0 if row.nil?
 
-      # FIXME
-      @data = parse_dsv(@raw_data)
+      @data = progressive_update_data(row)
+      return 0 if @data.nil?
 
       plot = create_plot
       output_plot_progressive(plot)
+    end
+
+    def parse_progressive_row(input)
+      line = normalize_input_encoding!(input)
+
+      begin
+        row = CSV.parse_line(line, col_sep: options[:delimiter])
+      rescue CSV::MalformedCSVError => e
+        warn 'Failed to parse the text. '
+        warn 'Please try to set the correct character encoding with --encoding option.'
+        warn e.backtrace.grep(/youplot/).first
+        exit 1
+      rescue ArgumentError => e
+        warn 'Failed to parse the text. '
+        warn e.backtrace.grep(/youplot/).first
+        exit 1
+      end
+
+      return nil if row.nil? || row.empty? || row.all?(&:nil?)
+
+      row
+    end
+
+    def progressive_update_data(row)
+      init_progressive_state
+
+      return nil if consume_progressive_header?(row)
+
+      append_progressive_row(row)
+      progressive_data
+    end
+
+    def init_progressive_state
+      return if @progressive_initialized
+
+      @progressive_initialized = true
+      @progressive_headers = options[:headers] ? [] : nil
+      @progressive_series = []
+      @progressive_header_consumed = false
+      @progressive_row_count = 0
+    end
+
+    def consume_progressive_header?(row)
+      return false unless options[:headers]
+      return false if options[:transpose]
+      return false if @progressive_header_consumed
+
+      @progressive_headers = row
+      @progressive_header_consumed = true
+      true
+    end
+
+    def append_progressive_row(row)
+      if options[:headers] && options[:transpose]
+        @progressive_headers << row[0]
+        @progressive_series << row[1..-1]
+      elsif options[:transpose]
+        @progressive_series << row
+      else
+        append_progressive_columns(row)
+      end
+    end
+
+    def progressive_data
+      DSV.build_data(@progressive_headers, @progressive_series)
+    end
+
+    def append_progressive_columns(row)
+      if row.size > @progressive_series.size
+        (@progressive_series.size...row.size).each do |i|
+          @progressive_series[i] = Array.new(@progressive_row_count, nil)
+        end
+      end
+
+      0.upto(@progressive_series.size - 1) do |i|
+        @progressive_series[i] << row[i]
+      end
+
+      @progressive_row_count += 1
     end
 
     def parse_dsv(input)
