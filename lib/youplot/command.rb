@@ -133,10 +133,7 @@ module YouPlot
 
     def parse_dsv(input)
       # If encoding is specified, convert to UTF-8
-      if options[:encoding]
-        input.force_encoding(options[:encoding])
-             .encode!('utf-8')
-      end
+      normalize_input_encoding!(input)
 
       begin
         data = DSV.parse(input, options[:delimiter], options[:headers], options[:transpose])
@@ -152,6 +149,13 @@ module YouPlot
       end
 
       data
+    end
+
+    def normalize_input_encoding!(input)
+      return input unless options[:encoding]
+
+      input.force_encoding(options[:encoding])
+           .encode!('utf-8')
     end
 
     def create_plot
