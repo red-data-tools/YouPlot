@@ -114,6 +114,28 @@ Extract header and series.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#build_data-class_method" title="build_data (class method)">.<strong>build_data</strong>(headers, series)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#get_headers-class_method" title="get_headers (class method)">.<strong>get_headers</strong>(arr, headers, transpose)  &#x21d2; Object </a>
     
 
@@ -199,6 +221,28 @@ Extract header and series.</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#validate_headers-class_method" title="validate_headers (class method)">.<strong>validate_headers</strong>(headers, series)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
     
   
@@ -210,7 +254,45 @@ Extract header and series.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="get_headers-class_method">
+  <h3 class="signature first" id="build_data-class_method">
+  
+    .<strong>build_data</strong>(headers, series)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_data'>build_data</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span>
+  <span class='comment'># Return if No header
+</span>  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="Data.html" title="YouPlot::Data (class)">Data</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_h_size'>h_size</span><span class='comma'>,</span> <span class='id identifier rubyid_s_size'>s_size</span> <span class='op'>=</span> <span class='id identifier rubyid_validate_headers'>validate_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Data.html" title="YouPlot::Data (class)">Data</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>==</span> <span class='id identifier rubyid_s_size'>s_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_headers-class_method">
   
     .<strong>get_headers</strong>(arr, headers, transpose)  &#x21d2; <tt>Object</tt> 
   
@@ -224,19 +306,19 @@ Extract header and series.</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63
-64
 65
-66</pre>
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_headers'>get_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_transpose'>transpose</span><span class='rparen'>)</span>
   <span class='comment'># header(-)
@@ -268,14 +350,6 @@ Extract header and series.</p>
       <pre class="lines">
 
 
-68
-69
-70
-71
-72
-73
-74
-75
 76
 77
 78
@@ -285,10 +359,18 @@ Extract header and series.</p>
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_series'>get_series</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_transpose'>transpose</span><span class='rparen'>)</span>
   <span class='comment'># header(-)
@@ -344,29 +426,7 @@ Extract header and series.</p>
 24
 25
 26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49</pre>
+27</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 11</span>
@@ -386,29 +446,7 @@ Extract header and series.</p>
   <span class='comment'># get series
 </span>  <span class='id identifier rubyid_series'>series</span> <span class='op'>=</span> <span class='id identifier rubyid_get_series'>get_series</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_transpose'>transpose</span><span class='rparen'>)</span>
 
-  <span class='comment'># Return if No header
-</span>  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="Data.html" title="YouPlot::Data (class)">Data</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-
-  <span class='comment'># Warn if header contains nil
-</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mHeaders contains nil in it.\e[0m</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
-
-  <span class='comment'># Warn if header contains &#39;&#39;
-</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mHeaders contains \&quot;\&quot; in it.\e[0m</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
-
-  <span class='comment'># Make sure the number of elements in the header matches the number of series.
-</span>  <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
-  <span class='id identifier rubyid_s_size'>s_size</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_s_size'>s_size</span>
-    <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mThe number of headers is greater than the number of series.\e[0m</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_exit'>exit</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../YouPlot.html" title="YouPlot (module)">YouPlot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run_as_executable?'><span class='object_link'><a href="../YouPlot.html#run_as_executable%3F-class_method" title="YouPlot.run_as_executable? (method)">run_as_executable?</a></span></span>
-
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_s_size'>s_size</span>
-    <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mThe number of headers is less than the number of series.\e[0m</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_exit'>exit</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../YouPlot.html" title="YouPlot (module)">YouPlot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run_as_executable?'><span class='object_link'><a href="../YouPlot.html#run_as_executable%3F-class_method" title="YouPlot.run_as_executable? (method)">run_as_executable?</a></span></span>
-  <span class='kw'>end</span>
-
-  <span class='const'><span class='object_link'><a href="Data.html" title="YouPlot::Data (class)">Data</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>==</span> <span class='id identifier rubyid_s_size'>s_size</span>
+  <span class='id identifier rubyid_build_data'>build_data</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -440,15 +478,81 @@ Extract header and series.</p>
       <pre class="lines">
 
 
-53
-54
-55</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transpose2'>transpose2</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='rparen'>)</span>
   <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:length</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_arr'>arr</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="validate_headers-class_method">
+  
+    .<strong>validate_headers</strong>(headers, series)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/dsv.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_validate_headers'>validate_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span>
+  <span class='comment'># Warn if header contains nil
+</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mHeaders contains nil in it.\e[0m</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
+
+  <span class='comment'># Warn if header contains &#39;&#39;
+</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mHeaders contains \&quot;\&quot; in it.\e[0m</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='comment'># Make sure the number of elements in the header matches the number of series.
+</span>  <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+  <span class='id identifier rubyid_s_size'>s_size</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_s_size'>s_size</span>
+    <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mThe number of headers is greater than the number of series.\e[0m</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_exit'>exit</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../YouPlot.html" title="YouPlot (module)">YouPlot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run_as_executable?'><span class='object_link'><a href="../YouPlot.html#run_as_executable%3F-class_method" title="YouPlot.run_as_executable? (method)">run_as_executable?</a></span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_h_size'>h_size</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_s_size'>s_size</span>
+    <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[35mThe number of headers is less than the number of series.\e[0m</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_exit'>exit</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../YouPlot.html" title="YouPlot (module)">YouPlot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run_as_executable?'><span class='object_link'><a href="../YouPlot.html#run_as_executable%3F-class_method" title="YouPlot.run_as_executable? (method)">run_as_executable?</a></span></span>
+  <span class='kw'>end</span>
+
+  <span class='lbracket'>[</span><span class='id identifier rubyid_h_size'>h_size</span><span class='comma'>,</span> <span class='id identifier rubyid_s_size'>s_size</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -460,7 +564,7 @@ Extract header and series.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Apr 27 04:00:31 2026 by
+  Generated on Sat May  2 04:42:24 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-4.0.3).
 </div>
