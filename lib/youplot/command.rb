@@ -55,7 +55,7 @@ module YouPlot
           n = main_progressive(input)
           break if stop
 
-          options[:output].print "\e[#{n}F"
+          options[:output].print "\e[#{n}F" if n && n > 0
         end
 
         options[:output].print "\e[0J"
