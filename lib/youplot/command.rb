@@ -44,23 +44,7 @@ module YouPlot
 
       # progressive mode
       if options[:progressive]
-        stop = false
-        Signal.trap(:INT) { stop = true }
-
-        # make cursor invisible
-        options[:output].print "\e[?25l"
-
-        # mainloop
-        while (input = Kernel.gets)
-          n = main_progressive(input)
-          break if stop
-
-          options[:output].print "\e[#{n}F" if n && n > 0
-        end
-
-        options[:output].print "\e[0J"
-        # make cursor visible
-        options[:output].print "\e[?25h"
+        run_progressive
 
       # normal mode
       else
@@ -78,6 +62,26 @@ module YouPlot
     end
 
     private
+
+    def run_progressive
+      stop = false
+      Signal.trap(:INT) { stop = true }
+
+      # make cursor invisible
+      options[:output].print "\e[?25l"
+
+      # mainloop
+      while (input = Kernel.gets)
+        n = main_progressive(input)
+        break if stop
+
+        options[:output].print "\e[#{n}F" if n && n > 0
+      end
+
+      options[:output].print "\e[0J"
+      # make cursor visible
+      options[:output].print "\e[?25h"
+    end
 
     def main(input)
       # Outputs input data to a file or stdout.
