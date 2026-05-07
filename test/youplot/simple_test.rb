@@ -84,6 +84,20 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
+  test :lineplots_progressive_restores_cursor_on_error do
+    $stdin = File.open(File.expand_path('../fixtures/simple-xyxy-odd.tsv', __dir__), 'r')
+
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
+      YouPlot::Command.new(['lineplots', '--fmt', 'xyxy', '-H', '-p']).run
+    end
+
+    @stderr_file.rewind
+    output = @stderr_file.read
+    assert_include output, "\e[?25l"
+    assert_include output, "\e[?25h"
+    assert_include output, "\e[0J"
+  end
+
   test :lines do
     assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['lines']).run
