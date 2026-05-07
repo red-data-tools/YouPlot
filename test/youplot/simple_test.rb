@@ -98,6 +98,18 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_include output, "\e[0J"
   end
 
+  test :line_progressive_moves_below_plot_before_cleanup do
+    YouPlot::Command.new(['line', '-p']).run
+
+    @stderr_file.rewind
+    output = @stderr_file.read
+    # Cleanup sequence at the end of progressive mode:
+    # - \e[\d+E : move cursor below the last rendered plot
+    # - \e[0J    : clear from cursor to end of screen
+    # - \e[?25h  : show cursor again
+    assert_match(/\e\[\d+E\e\[0J\e\[\?25h\z/, output)
+  end
+
   test :lines do
     assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['lines']).run

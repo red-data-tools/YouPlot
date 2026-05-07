@@ -66,6 +66,7 @@ module YouPlot
     def run_progressive
       out = progressive_output
       stop = false
+      last_rendered_lines = 0
       Signal.trap(:INT) { stop = true }
 
       # make cursor invisible
@@ -75,12 +76,14 @@ module YouPlot
       begin
         while (input = Kernel.gets)
           n = main_progressive(input)
+          # Track the latest plot height so cleanup can move below the plot.
+          last_rendered_lines = n if n && n > 0
           break if stop
 
           out.print "\e[#{n}F" if n && n > 0
         end
       ensure
-        sanitize_progressive_output(out)
+        sanitize_progressive_output(out, last_rendered_lines)
       end
     end
 
@@ -92,9 +95,12 @@ module YouPlot
       raise 'In progressive mode, output to a file is not possible.'
     end
 
-    def sanitize_progressive_output(out = progressive_output)
+    def sanitize_progressive_output(out = progressive_output, last_rendered_lines = 0)
+      # Move below the last rendered plot (CSI n E).
+      out.print "\e[#{last_rendered_lines}E" if last_rendered_lines > 0
+      # Clear from cursor to end of screen (CSI 0 J).
       out.print "\e[0J"
-      # make cursor visible
+      # Show cursor again (CSI ?25 h).
       out.print "\e[?25h"
     end
 
