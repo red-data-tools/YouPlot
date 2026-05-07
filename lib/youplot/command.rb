@@ -64,11 +64,12 @@ module YouPlot
     private
 
     def run_progressive
+      out = progressive_output
       stop = false
       Signal.trap(:INT) { stop = true }
 
       # make cursor invisible
-      options[:output].print "\e[?25l"
+      out.print "\e[?25l"
 
       # mainloop
       begin
@@ -76,17 +77,28 @@ module YouPlot
           n = main_progressive(input)
           break if stop
 
-          options[:output].print "\e[#{n}F" if n && n > 0
+          out.print "\e[#{n}F" if n && n > 0
         end
       ensure
-        sanitize_progressive_output
+        sanitize_progressive_output(out)
       end
     end
 
-    def sanitize_progressive_output
-      options[:output].print "\e[0J"
+    def progressive_output
+      case options[:output]
+      when String
+        raise 'In progressive mode, output to a file is not possible.'
+      else
+        return options[:output] if options[:output].respond_to?(:print)
+
+        raise 'In progressive mode, output to a file is not possible.'
+      end
+    end
+
+    def sanitize_progressive_output(out = progressive_output)
+      out.print "\e[0J"
       # make cursor visible
-      options[:output].print "\e[?25h"
+      out.print "\e[?25h"
     end
 
     def main(input)
