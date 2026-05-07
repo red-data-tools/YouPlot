@@ -637,23 +637,7 @@
 59
 60
 61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78</pre>
+62</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/command.rb', line 32</span>
@@ -673,23 +657,7 @@
 
   <span class='comment'># progressive mode
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:progressive</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_stop'>stop</span> <span class='op'>=</span> <span class='kw'>false</span>
-    <span class='const'>Signal</span><span class='period'>.</span><span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:INT</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_stop'>stop</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='rbrace'>}</span>
-
-    <span class='comment'># make cursor invisible
-</span>    <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[?25l</span><span class='tstring_end'>&quot;</span></span>
-
-    <span class='comment'># mainloop
-</span>    <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_n'>n</span> <span class='op'>=</span> <span class='id identifier rubyid_main_progressive'>main_progressive</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
-      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_stop'>stop</span>
-
-      <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_n'>n</span><span class='embexpr_end'>}</span><span class='tstring_content'>F</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_n'>n</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_n'>n</span> <span class='op'>&gt;</span> <span class='int'>0</span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[0J</span><span class='tstring_end'>&quot;</span></span>
-    <span class='comment'># make cursor visible
-</span>    <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\e[?25h</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_run_progressive'>run_progressive</span>
 
   <span class='comment'># normal mode
 </span>  <span class='kw'>else</span>
@@ -747,7 +715,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat May  2 05:08:59 2026 by
+  Generated on Thu May  7 00:52:31 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-4.0.3).
 </div>
