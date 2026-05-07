@@ -85,14 +85,11 @@ module YouPlot
     end
 
     def progressive_output
-      case options[:output]
-      when String
-        raise 'In progressive mode, output to a file is not possible.'
-      else
-        return options[:output] if options[:output].respond_to?(:print)
+      out = options[:output]
+      raise 'In progressive mode, output to a file is not possible.' if out.is_a?(String)
+      return out if out.respond_to?(:print) && out.respond_to?(:flush)
 
-        raise 'In progressive mode, output to a file is not possible.'
-      end
+      raise 'In progressive mode, output to a file is not possible.'
     end
 
     def sanitize_progressive_output(out = progressive_output)
@@ -321,26 +318,23 @@ module YouPlot
     end
 
     def output_plot_progressive(plot)
-      case options[:output]
-      when IO, StringIO
-        # RefactorMe
-        out = StringIO.new(String.new)
-        def out.tty?
-          true
-        end
-        plot.render(out)
-        lines = out.string.lines
-        lines.each do |line|
-          options[:output].print line.chomp
-          options[:output].print "\e[0K"
-          options[:output].puts
-        end
-        options[:output].print "\e[0J"
-        options[:output].flush
-        lines.size
-      else
-        raise 'In progressive mode, output to a file is not possible.'
+      target = progressive_output
+
+      # RefactorMe
+      out = StringIO.new(String.new)
+      def out.tty?
+        true
       end
+      plot.render(out)
+      lines = out.string.lines
+      lines.each do |line|
+        target.print line.chomp
+        target.print "\e[0K"
+        target.puts
+      end
+      target.print "\e[0J"
+      target.flush
+      lines.size
     end
   end
 end
