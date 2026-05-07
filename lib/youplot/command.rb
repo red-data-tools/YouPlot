@@ -71,14 +71,16 @@ module YouPlot
       options[:output].print "\e[?25l"
 
       # mainloop
-      while (input = Kernel.gets)
-        n = main_progressive(input)
-        break if stop
+      begin
+        while (input = Kernel.gets)
+          n = main_progressive(input)
+          break if stop
 
-        options[:output].print "\e[#{n}F" if n && n > 0
+          options[:output].print "\e[#{n}F" if n && n > 0
+        end
+      ensure
+        sanitize_progressive_output
       end
-
-      sanitize_progressive_output
     end
 
     def sanitize_progressive_output
