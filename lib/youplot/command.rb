@@ -78,6 +78,10 @@ module YouPlot
         options[:output].print "\e[#{n}F" if n && n > 0
       end
 
+      sanitize_progressive_output
+    end
+
+    def sanitize_progressive_output
       options[:output].print "\e[0J"
       # make cursor visible
       options[:output].print "\e[?25h"
