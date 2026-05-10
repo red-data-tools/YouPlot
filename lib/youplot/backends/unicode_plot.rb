@@ -35,6 +35,13 @@ module YouPlot
 
       module_function
 
+      def normalize_numeric_value(value, force_integer = false)
+        num = value.to_f
+        return num unless num.finite?
+        return num.to_i if force_integer
+        num == num.to_i ? num.to_i : num
+      end
+
       def barplot(data, params, fmt = nil, count: false, reverse: false)
         headers = data.headers
         series = data.series
@@ -47,7 +54,7 @@ module YouPlot
           # If there is only one series.use the line number for label.
           params.title ||= headers[0] if headers
           labels = Array.new(series[0].size) { |i| (i + 1).to_s }
-          values = series[0].map(&:to_f)
+          values = series[0].map { |v| normalize_numeric_value(v, count) }
         else
           # If there are 2 or more series...
           if fmt == 'yx'
@@ -61,11 +68,7 @@ module YouPlot
           end
           params.title ||= headers[y_col] if headers
           labels = series[x_col]
-          values = if count
-                     series[y_col].map(&:to_i)
-                   else
-                     series[y_col].map(&:to_f)
-                   end
+          values = series[y_col].map { |v| normalize_numeric_value(v, count) }
         end
         ::UnicodePlot.barplot(labels, values, **params.to_hc)
       end
