@@ -268,6 +268,50 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#integer_display_values%3F-class_method" title="integer_display_values? (class method)">.<strong>integer_display_values?</strong>(values, raw_values)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>True only for integer literals: &quot;3&quot; =&gt; true, &quot;3.0&quot; =&gt; false.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#integer_literal%3F-class_method" title="integer_literal? (class method)">.<strong>integer_literal?</strong>(value)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#line-class_method" title="line (class method)">.<strong>line</strong>(data, params, fmt = nil)  &#x21d2; Object </a>
     
 
@@ -524,8 +568,7 @@
 71
 72
 73
-74
-75</pre>
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 38</span>
@@ -542,6 +585,7 @@
     <span class='comment'># If there is only one series.use the line number for label.
 </span>    <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>||=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span>
     <span class='id identifier rubyid_labels'>labels</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_raw_values'>raw_values</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_f</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='comment'># If there are 2 or more series...
@@ -556,16 +600,14 @@
     <span class='kw'>end</span>
     <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>||=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='id identifier rubyid_y_col'>y_col</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span>
     <span class='id identifier rubyid_labels'>labels</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='id identifier rubyid_x_col'>x_col</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_raw_values'>raw_values</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='id identifier rubyid_y_col'>y_col</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_count'>count</span>
                <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='id identifier rubyid_y_col'>y_col</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_i</span><span class='rparen'>)</span>
              <span class='kw'>else</span>
                <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='id identifier rubyid_y_col'>y_col</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_f</span><span class='rparen'>)</span>
              <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='comment'># If all values are integers, display without decimal points (#44)
-</span>  <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_finite?'>finite?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>==</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='rbrace'>}</span>
-    <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_i</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_i</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_count'>count</span> <span class='op'>||</span> <span class='id identifier rubyid_integer_display_values?'>integer_display_values?</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_raw_values'>raw_values</span><span class='rparen'>)</span>
   <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../UnicodePlot.html" title="UnicodePlot (module)">UnicodePlot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_barplot'>barplot</span><span class='lparen'>(</span><span class='id identifier rubyid_labels'>labels</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_to_hc'>to_hc</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -588,16 +630,16 @@
       <pre class="lines">
 
 
-181
-182
-183
-184
-185
-186
-187</pre>
+191
+192
+193
+194
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_boxplot'>boxplot</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -626,14 +668,14 @@
       <pre class="lines">
 
 
-209
-210
-211
-212
-213</pre>
+219
+220
+221
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_series_size'>check_series_size</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_series'>series</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_series'>series</span>
@@ -660,16 +702,6 @@
       <pre class="lines">
 
 
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
 199
 200
 201
@@ -678,10 +710,20 @@
 204
 205
 206
-207</pre>
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_colors'>colors</span><span class='lparen'>(</span><span class='id identifier rubyid_color_names'>color_names</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='comment'># FIXME
@@ -722,13 +764,13 @@
       <pre class="lines">
 
 
-176
-177
-178
-179</pre>
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_density'>density</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xyy</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_series_size'>check_series_size</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span><span class='rparen'>)</span>
@@ -754,12 +796,12 @@
       <pre class="lines">
 
 
-114
-115
-116</pre>
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_method2'>get_method2</span><span class='lparen'>(</span><span class='id identifier rubyid_method1'>method1</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method1'>method1</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -784,16 +826,16 @@
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82
-83</pre>
+87
+88
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_histogram'>histogram</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -801,6 +843,114 @@
   <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>||=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_series'>series</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_f</span><span class='rparen'>)</span>
   <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../UnicodePlot.html" title="UnicodePlot (module)">UnicodePlot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_histogram'>histogram</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_to_hc'>to_hc</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="integer_display_values?-class_method">
+  
+    .<strong>integer_display_values?</strong>(values, raw_values)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>True only for integer literals: &quot;3&quot; =&gt; true, &quot;3.0&quot; =&gt; false.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_integer_display_values?'>integer_display_values?</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_raw_values'>raw_values</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_finite?'>finite?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>==</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='rbrace'>}</span> <span class='op'>&amp;&amp;</span>
+    <span class='id identifier rubyid_raw_values'>raw_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_integer_literal?'>integer_literal?</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="integer_literal?-class_method">
+  
+    .<strong>integer_literal?</strong>(value)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+82
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 82</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_integer_literal?'>integer_literal?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='comment'># Matches &quot;3&quot; and &quot;-12&quot;, but not &quot;3.0&quot;.
+</span>  <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A[+-]?\d+\z</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -822,16 +972,6 @@
       <pre class="lines">
 
 
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
 95
 96
 97
@@ -849,10 +989,20 @@
 109
 110
 111
-112</pre>
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_line'>line</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -902,13 +1052,13 @@
       <pre class="lines">
 
 
-166
-167
-168
-169</pre>
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lines'>lines</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xyy</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_series_size'>check_series_size</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span><span class='rparen'>)</span>
@@ -934,21 +1084,21 @@
       <pre class="lines">
 
 
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
 163
-164</pre>
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plot_fmt'>plot_fmt</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span><span class='comma'>,</span> <span class='id identifier rubyid_method1'>method1</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_fmt'>fmt</span>
@@ -982,25 +1132,25 @@
       <pre class="lines">
 
 
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
 146
 147
 148
 149
 150
-151</pre>
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plot_xyxy'>plot_xyxy</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_method1'>method1</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -1038,26 +1188,26 @@
       <pre class="lines">
 
 
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
 128
 129
 130
 131
 132
 133
-134</pre>
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plot_xyy'>plot_xyy</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_method1'>method1</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -1096,21 +1246,21 @@
       <pre class="lines">
 
 
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
 236
-237</pre>
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 236</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_raise_if_odd_series_for_xyxy'>raise_if_odd_series_for_xyxy</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fmt'>fmt</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xyxy</span><span class='tstring_end'>&#39;</span></span>
@@ -1144,19 +1294,19 @@
       <pre class="lines">
 
 
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224</pre>
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_raise_if_single_series'>raise_if_single_series</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_series'>series</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_warn'>warn</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -1188,13 +1338,13 @@
       <pre class="lines">
 
 
-239
-240
-241
-242</pre>
+249
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 249</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_raise_plot_error'>raise_plot_error</span>
   <span class='comment'># NOTE: Error messages cannot be colored.
@@ -1220,13 +1370,13 @@
       <pre class="lines">
 
 
-171
-172
-173
-174</pre>
+181
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/youplot/backends/unicode_plot.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scatter'>scatter</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xyy</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_series_size'>check_series_size</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_fmt'>fmt</span><span class='rparen'>)</span>
@@ -1242,7 +1392,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon May 18 12:40:19 2026 by
+  Generated on Mon May 18 13:15:26 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-4.0.4).
 </div>
