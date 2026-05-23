@@ -87,7 +87,7 @@ class YouPlotIRISTest < Test::Unit::TestCase
 
   # ls is an undocumented alias of lineplots.
   test :ls do
-    YouPlot::Command.new(['lines', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
+    YouPlot::Command.new(['ls', '-H', '-d,', '-t', 'IRIS-LINEPLOTS']).run
     assert_equal fixture('iris-lineplots.txt'), @stderr_file.read
   end
 

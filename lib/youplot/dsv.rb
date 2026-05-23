@@ -23,9 +23,24 @@ module YouPlot
       # get series
       series = get_series(arr, headers, transpose)
 
+      build_data(headers, series)
+    end
+
+    # Transpose different sized ruby arrays
+    # https://stackoverflow.com/q/26016632
+    def transpose2(arr)
+      Array.new(arr.map(&:length).max) { |i| arr.map { |e| e[i] } }
+    end
+
+    def build_data(headers, series)
       # Return if No header
       return Data.new(headers, series) if headers.nil?
 
+      h_size, s_size = validate_headers(headers, series)
+      Data.new(headers, series) if h_size == s_size
+    end
+
+    def validate_headers(headers, series)
       # Warn if header contains nil
       warn "\e[35mHeaders contains nil in it.\e[0m" if headers.include?(nil)
 
@@ -39,19 +54,12 @@ module YouPlot
       if h_size > s_size
         warn "\e[35mThe number of headers is greater than the number of series.\e[0m"
         exit 1 if YouPlot.run_as_executable?
-
       elsif h_size < s_size
         warn "\e[35mThe number of headers is less than the number of series.\e[0m"
         exit 1 if YouPlot.run_as_executable?
       end
 
-      Data.new(headers, series) if h_size == s_size
-    end
-
-    # Transpose different sized ruby arrays
-    # https://stackoverflow.com/q/26016632
-    def transpose2(arr)
-      Array.new(arr.map(&:length).max) { |i| arr.map { |e| e[i] } }
+      [h_size, s_size]
     end
 
     def get_headers(arr, headers, transpose)

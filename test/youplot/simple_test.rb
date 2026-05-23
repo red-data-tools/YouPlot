@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tempfile'
+require 'tmpdir'
 require_relative '../test_helper'
 
 class YouPlotSimpleTest < Test::Unit::TestCase
@@ -76,6 +77,40 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     end
   end
 
+  test :lineplots_fmt_xyxy_odd_series do
+    $stdin = File.open(File.expand_path('../fixtures/simple-xyxy-odd.tsv', __dir__), 'r')
+
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
+      YouPlot::Command.new(['lineplots', '--fmt', 'xyxy', '-H']).run
+    end
+  end
+
+  test :lineplots_progressive_restores_cursor_on_error do
+    $stdin = File.open(File.expand_path('../fixtures/simple-xyxy-odd.tsv', __dir__), 'r')
+
+    assert_raise(YouPlot::Backends::UnicodePlot::Error) do
+      YouPlot::Command.new(['lineplots', '--fmt', 'xyxy', '-H', '-p']).run
+    end
+
+    @stderr_file.rewind
+    output = @stderr_file.read
+    assert_include output, "\e[?25l"
+    assert_include output, "\e[?25h"
+    assert_include output, "\e[0J"
+  end
+
+  test :line_progressive_moves_below_plot_before_cleanup do
+    YouPlot::Command.new(['line', '-p']).run
+
+    @stderr_file.rewind
+    output = @stderr_file.read
+    # Cleanup sequence at the end of progressive mode:
+    # - \e[\d+E : move cursor below the last rendered plot
+    # - \e[0J    : clear from cursor to end of screen
+    # - \e[?25h  : show cursor again
+    assert_match(/\e\[\d+E\e\[0J\e\[\?25h\z/, output)
+  end
+
   test :lines do
     assert_raise(YouPlot::Backends::UnicodePlot::Error) do
       YouPlot::Command.new(['lines']).run
@@ -132,10 +167,34 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot.txt'), @stdout_file.read
   end
 
+  test :plot_output_hyphen_stdout do
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        YouPlot::Command.new(['line', '-o', '-', '-w', '17']).run
+
+        assert_equal '', @stderr_file.read
+        assert_equal fixture('simple-lineplot-width-17.txt'), @stdout_file.read
+        assert_false File.exist?('-')
+      end
+    end
+  end
+
   test :data_output_stdout do
     YouPlot::Command.new(['box', '-O']).run
     assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
     assert_equal fixture('simple.tsv'), @stdout_file.read
+  end
+
+  test :data_output_hyphen_stdout do
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        YouPlot::Command.new(['box', '-O', '-', '-t', 'BOX']).run
+
+        assert_include @stderr_file.read, 'BOX'
+        assert_equal fixture('simple.tsv'), @stdout_file.read
+        assert_false File.exist?('-')
+      end
+    end
   end
 
   test :line_transpose do

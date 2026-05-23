@@ -47,6 +47,7 @@ module YouPlot
           # If there is only one series.use the line number for label.
           params.title ||= headers[0] if headers
           labels = Array.new(series[0].size) { |i| (i + 1).to_s }
+          raw_values = series[0]
           values = series[0].map(&:to_f)
         else
           # If there are 2 or more series...
@@ -61,9 +62,26 @@ module YouPlot
           end
           params.title ||= headers[y_col] if headers
           labels = series[x_col]
-          values = series[y_col].map(&:to_f)
+          raw_values = series[y_col]
+          values = if count
+                     series[y_col].map(&:to_i)
+                   else
+                     series[y_col].map(&:to_f)
+                   end
         end
+        values = values.map(&:to_i) if count || integer_display_values?(values, raw_values)
         ::UnicodePlot.barplot(labels, values, **params.to_hc)
+      end
+
+      # True only for integer literals: "3" => true, "3.0" => false.
+      def integer_display_values?(values, raw_values)
+        values.all? { |v| v.finite? && v == v.to_i } &&
+          raw_values.all? { |v| integer_literal?(v) }
+      end
+
+      def integer_literal?(value)
+        # Matches "3" and "-12", but not "3.0".
+        value.to_s.match?(/\A[+-]?\d+\z/)
       end
 
       def histogram(data, params)
@@ -200,27 +218,37 @@ module YouPlot
 
       def check_series_size(data, fmt)
         series = data.series
-        if series.size == 1
-          warn <<~EOS
-            YouPlot: There is only one series of input data. Please check the delimiter.
+        raise_if_single_series(data, series) if series.size == 1
+        raise_if_odd_series_for_xyxy(data, fmt, series)
+      end
 
-            Headers: \e[35m#{data.headers.inspect}\e[0m
-            The first item is: \e[35m\"#{series[0][0]}\"\e[0m
-            The last item is : \e[35m\"#{series[0][-1]}\"\e[0m
-          EOS
-          # NOTE: Error messages cannot be colored.
-          YouPlot.run_as_executable ? exit(1) : raise(Error)
-        end
-        if fmt == 'xyxy' && series.size.odd?
-          warn <<~EOS
-            YouPlot: In the xyxy format, the number of series must be even.
+      def raise_if_single_series(data, series)
+        warn <<~EOS
+          YouPlot: There is only one series of input data. Please check the delimiter.
 
-            Number of series: \e[35m#{series.size}\e[0m
-            Headers: \e[35m#{data.headers.inspect}\e[0m
-          EOS
-          # NOTE: Error messages cannot be colored.
-          YouPlot.run_as_executable ? exit(1) : raise(Error)
-        end
+          Headers: \e[35m#{data.headers.inspect}\e[0m
+          The first item is: \e[35m\"#{series[0][0]}\"\e[0m
+          The last item is : \e[35m\"#{series[0][-1]}\"\e[0m
+        EOS
+        raise_plot_error
+      end
+
+      def raise_if_odd_series_for_xyxy(data, fmt, series)
+        return unless fmt == 'xyxy'
+        return if series.size.even?
+
+        warn <<~EOS
+          YouPlot: In the xyxy format, the number of series must be even.
+
+          Number of series: \e[35m#{series.size}\e[0m
+          Headers: \e[35m#{data.headers.inspect}\e[0m
+        EOS
+        raise_plot_error
+      end
+
+      def raise_plot_error
+        # NOTE: Error messages cannot be colored.
+        YouPlot.run_as_executable ? exit(1) : raise(Error)
       end
     end
   end
