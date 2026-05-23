@@ -39,6 +39,14 @@ class YouPlotParserTest < Test::Unit::TestCase
     $stdout = original_stdout
   end
 
+  def with_stdout(stdout)
+    original_stdout = $stdout
+    $stdout = stdout
+    yield
+  ensure
+    $stdout = original_stdout
+  end
+
   test :cli_overrides_config_file_values do
     with_temp_config(<<~YAML) do |config_path|
       width: 80
@@ -86,6 +94,20 @@ class YouPlotParserTest < Test::Unit::TestCase
       # Hash#inspect format differs by Ruby version:
       # `"key" => val` (< 3.0) vs `"key"=>val` (>= 3.0)
       assert_match(/"width"\s*=>\s*80/, output)
+    end
+  end
+
+  test :config_hyphen_output_uses_stdout do
+    stdout = StringIO.new
+
+    with_stdout(stdout) do
+      with_temp_config(%("output": "-"\n"pass": "-"\n)) do |config_path|
+        parser = YouPlot::Parser.new
+        parser.parse_options(['line', "--config=#{config_path}"])
+
+        assert_same stdout, parser.options.output
+        assert_same stdout, parser.options.pass
+      end
     end
   end
 end

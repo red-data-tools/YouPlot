@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tempfile'
+require 'tmpdir'
 require_relative '../test_helper'
 
 class YouPlotSimpleTest < Test::Unit::TestCase
@@ -166,10 +167,34 @@ class YouPlotSimpleTest < Test::Unit::TestCase
     assert_equal fixture('simple-lineplot.txt'), @stdout_file.read
   end
 
+  test :plot_output_hyphen_stdout do
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        YouPlot::Command.new(['line', '-o', '-', '-w', '17']).run
+
+        assert_equal '', @stderr_file.read
+        assert_equal fixture('simple-lineplot-width-17.txt'), @stdout_file.read
+        assert_false File.exist?('-')
+      end
+    end
+  end
+
   test :data_output_stdout do
     YouPlot::Command.new(['box', '-O']).run
     assert_equal fixture('simple-boxplot.txt'), @stderr_file.read
     assert_equal fixture('simple.tsv'), @stdout_file.read
+  end
+
+  test :data_output_hyphen_stdout do
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        YouPlot::Command.new(['box', '-O', '-', '-t', 'BOX']).run
+
+        assert_include @stderr_file.read, 'BOX'
+        assert_equal fixture('simple.tsv'), @stdout_file.read
+        assert_false File.exist?('-')
+      end
+    end
   end
 
   test :line_transpose do

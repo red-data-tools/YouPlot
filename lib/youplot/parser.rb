@@ -86,6 +86,8 @@ module YouPlot
       # Tests redirect $stderr = tempfile after load, so placing $stderr in DEFAULTS
       # would capture the original stderr and ignore the test redirect.
       @options[:output] = $stderr if @options[:output].nil?
+      @options[:output] = $stdout if @options[:output] == '-'
+      @options[:pass] = $stdout if @options[:pass] == '-'
 
       @params.members.each do |k|
         cfg_val = @config && @config[k.to_s]
@@ -105,11 +107,11 @@ module YouPlot
         parser.on('Common options:')
         parser.on('-O', '--pass [FILE]', 'file to output input data to [stdout]',
                   'for inserting YouPlot in the middle of Unix pipes') do |v|
-          options[:pass] = v || $stdout
+          options[:pass] = v.nil? || v == '-' ? $stdout : v
         end
         parser.on('-o', '--output [FILE]', 'file to output plots to [stdout]',
                   'If no option is specified, plot will print to stderr') do |v|
-          options[:output] = v || $stdout
+          options[:output] = v.nil? || v == '-' ? $stdout : v
         end
         parser.on('-d', '--delimiter DELIM', String, 'use DELIM instead of [TAB] for field delimiter') do |v|
           options[:delimiter] = v
