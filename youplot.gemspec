@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
 
-  spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*']
+  spec.files         = Dir['*.{md,txt}', 'logo.svg', '{lib,exe}/**/*']
   spec.bindir        = 'exe'
   spec.executables   = %w[uplot youplot]
   spec.require_paths = ['lib']
