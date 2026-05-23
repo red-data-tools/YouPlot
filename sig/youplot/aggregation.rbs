@@ -1,0 +1,5 @@
+module YouPlot
+  module Aggregation
+    def self.count_values: (Enumerable[untyped], ?tally: bool, ?reverse: bool) -> Array[Array[untyped]]
+  end
+end

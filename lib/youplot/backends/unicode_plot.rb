@@ -3,7 +3,7 @@
 # UnicodePlot - Plot your data by Unicode characters
 # https://github.com/red-data-tools/unicode_plot.rb
 
-require_relative 'processing'
+require_relative '../aggregation'
 require 'unicode_plot'
 
 # If the line color is specified as a number, the program will display an error
@@ -40,7 +40,7 @@ module YouPlot
         series = data.series
         # `uplot count`
         if count
-          series = Processing.count_values(series[0], reverse: reverse)
+          series = YouPlot::Aggregation.count_values(series[0], reverse: reverse)
           params.title = headers[0] if headers
         end
         if series.size == 1
