@@ -56,10 +56,9 @@ curl -sL https://git.io/ISLANDScsv \
   <img alt="barplot" src="https://user-images.githubusercontent.com/5798442/101999903-d36a2d00-3d24-11eb-9361-b89116f44122.png">
 </p>
 
-
+For offline users: sorts files in a directory by size and shows a bar graph.
 
 ```sh
-# For offline user: Sorts files in a directory by size and shows a bar graph.
 ls -l | awk '{print $9, $5}' | sort -nk 2 | uplot bar -d ' '
 ```
 
@@ -89,12 +88,15 @@ curl -sL https://git.io/AirPassengers \
   <img alt="lineplot" src="https://user-images.githubusercontent.com/5798442/101999825-24c5ec80-3d24-11eb-99f4-c642e8d221bc.png">
 </p>
 
+For offline users: calculates sin values from 0 to 2*pi and plots a sine wave.
+
 ```sh
-# For offline users: Calculates sin values (0-2*pi) and plots a sine wave.
-python3 -c '
+python3 - <<'PY' | uplot line
 from math import sin, pi
-data = "\n".join(f"{i*pi/50}\t{sin(i*pi/50)}" for i in range(101))
-print(data)' | uplot line
+
+for i in range(101):
+    print(f"{i*pi/50}\t{sin(i*pi/50)}")
+PY
 ```
 
 ### scatter
@@ -110,8 +112,9 @@ curl -sL https://git.io/IRIStsv \
 </p>
 
 
+For offline users:
+
 ```sh
-# For offline users
 cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot scatter -H -d, -t IRIS
 ```
 
@@ -127,8 +130,9 @@ curl -sL https://git.io/IRIStsv \
   <img alt="density" src="https://user-images.githubusercontent.com/5798442/101999828-2abbcd80-3d24-11eb-902c-2f44266fa6ae.png">
 </p>
 
+For offline users:
+
 ```sh
-# For offline users
 cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot density -H -d, -t IRIS
 ```
 
@@ -144,8 +148,9 @@ curl -sL https://git.io/IRIStsv \
   <img alt="boxplot" src="https://user-images.githubusercontent.com/5798442/101999830-2e4f5480-3d24-11eb-8891-728c18bf5b35.png">
 </p>
 
+For offline users:
+
 ```sh
-# For offline users
 cat test/fixtures/iris.csv | cut -f1-4 -d, | uplot boxplot -H -d, -t IRIS
 ```
 
@@ -187,7 +192,7 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 `uplot` is the shortened form of `youplot`. You can use either.
 
 | Command                                        | Description                       |
-|------------------------------------------------|-----------------------------------|
+| ---------------------------------------------- | --------------------------------- |
 | `cat data.tsv \| uplot <command> [options]`    | Take input from stdin             |
 | `uplot <command> [options] data.tsv ...`       | Take input from files             |
 | `pipeline1 \| uplot <command> -O \| pipeline2` | Outputs data from stdin to stdout |
@@ -196,19 +201,19 @@ cat gencode.v35.annotation.gff3 | grep -v '#' | grep 'gene' | cut -f1 \
 
 The following sub-commands are available.
 
-| command   | short | how it works                           |
-|-----------|-------|----------------------------------------|
-| barplot   | bar   | draw a horizontal barplot              |
-| histogram | hist  | draw a horizontal histogram            |
-| lineplot  | line  | draw a line chart                      |
-| lineplots | lines | draw a line chart with multiple series |
-| scatter   | s     | draw a scatter plot                    |
-| density   | d     | draw a density plot                    |
-| boxplot   | box   | draw a horizontal boxplot              |
-|           |       |                                        |
+| command   | short | how it works                                             |
+| --------- | ----- | -------------------------------------------------------- |
+| barplot   | bar   | draw a horizontal barplot                                |
+| histogram | hist  | draw a horizontal histogram                              |
+| lineplot  | line  | draw a line chart                                        |
+| lineplots | lines | draw a line chart with multiple series                   |
+| scatter   | s     | draw a scatter plot                                      |
+| density   | d     | draw a density plot                                      |
+| boxplot   | box   | draw a horizontal boxplot                                |
+|           |       |                                                          |
 | count     | c     | draw a barplot based on the number of occurrences (slow) |
-|           |       |                                        |
-| colors    | color | show the list of available colors      |
+|           |       |                                                          |
+| colors    | color | show the list of available colors                        |
 
 ### Output the plot
 
@@ -297,13 +302,14 @@ Please feel free to send us your pull requests.
 
 ### Development
 
+Fork the main repository by clicking the Fork button.
+
 ```sh
-# fork the main repository by clicking the Fork button. 
 git clone https://github.com/your_name/YouPlot
-bundle install             # Install the gem dependencies
-bundle exec rake test      # Run the test
-bundle exec rake install   # Installation from source code
-bundle exec exe/uplot      # Run youplot (Try out the edited code)
+bundle install
+bundle exec rake test
+bundle exec rake install
+bundle exec exe/uplot
 ```
 
     Do you need commit rights to my repository?
