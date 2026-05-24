@@ -97,6 +97,23 @@ class YouPlotParserTest < Test::Unit::TestCase
     end
   end
 
+  test :show_config_info_finds_default_config_file do
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        File.write('.youplot.yml', "width: 42\n")
+
+        parser = YouPlot::Parser.new
+        output = capture_stdout do
+          parser.show_config_info
+        end
+
+        assert_include output, 'config file : '
+        assert_include output, '.youplot.yml'
+        assert_match(/"width"\s*=>\s*42/, output)
+      end
+    end
+  end
+
   test :config_hyphen_output_uses_stdout do
     stdout = StringIO.new
 

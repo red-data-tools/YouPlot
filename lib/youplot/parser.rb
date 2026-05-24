@@ -228,6 +228,8 @@ module YouPlot
     end
 
     def show_config_info
+      ensure_config_loaded
+
       if @config_file
         puts "config file : #{@config_file}"
         puts config.inspect
@@ -243,6 +245,15 @@ module YouPlot
         EOS
       end
       exit if YouPlot.run_as_executable?
+    end
+
+    def ensure_config_loaded
+      apply_config_file unless config
+    rescue StandardError => e
+      raise unless YouPlot.run_as_executable?
+
+      warn "YouPlot: #{e.message}"
+      exit 1
     end
 
     def sub_parser_add_symbol
