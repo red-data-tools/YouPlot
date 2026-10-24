@@ -35,7 +35,7 @@ conda install -c conda-forge compilers
 gem install youplot
 ```
 
-:crystal_ball: [YouPlot2](https://github.com/red-data-tools/YouPlot2) - Experimental project with pre-built binaries
+:crystal_ball: [YouPlot2](https://github.com/red-data-tools/YouPlot2) - Portable version with pre-built binaries
 
 ## Quick Start
 
