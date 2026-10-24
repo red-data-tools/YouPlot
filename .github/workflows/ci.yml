@@ -1,5 +1,7 @@
 name: test
 on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
 jobs:
   build:
     name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
